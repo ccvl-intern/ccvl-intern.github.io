@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Unified and Adaptive Visual Parser">
+  <rect width="32" height="32" rx="4" fill="#ffffff"/>
+  <path d="M5 8.5 12 6v20l-7 2.5z" fill="#2459d3"/>
+  <path d="m13 6 7-2.5v20L13 26z" fill="#0b8c7d"/>
+  <path d="m21 3.5 6-2v20l-6 2z" fill="#d38b16"/>
+</svg>
