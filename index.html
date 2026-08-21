@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Unified and Adaptive Visual Parser for CogGym Reasoning turns video into explicit, inspectable evidence for physical-world reasoning.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="theme-color" content="#0b1324">
+  <title>Unified and Adaptive Visual Parser for CogGym Reasoning | CCVL</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="top">
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="Unified and Adaptive Visual Parser for CogGym Reasoning home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-copy"><b>Unified &amp; Adaptive Visual Parser</b><small>for CogGym Reasoning</small></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="#method">Method</a>
+        <a href="#representation">Representation</a>
+        <a href="#results">Results</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#analysis">Analysis</a>
+        <a class="nav-cta" href="https://github.com/ccvl-intern/ccvl-intern.github.io">Code</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/demos/bass-cannonball.gif" alt="">
+        <img src="assets/demos/hamrick-tower.gif" alt="">
+        <img src="assets/demos/smith-discontinuity.gif" alt="">
+      </div>
+      <div class="hero-shade"></div>
+      <div class="hero-content shell">
+        <p class="hero-context">Johns Hopkins University · CCVL</p>
+        <h1 id="hero-title">Unified and Adaptive Visual Parser for CogGym Reasoning</h1>
+        <p class="hero-summary">A plug-in visual parsing system that turns video into explicit object-centric evidence spanning identity, geometry, motion, visibility, relations, and events, then adapts that evidence to each reasoning task.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#gallery">Explore parsed scenes</a>
+          <a class="button button-secondary" href="#representation">Inspect the representation</a>
+        </div>
+        <p class="authors">Yuzhou Zhu · Jieneng Chen · Alan Yuille</p>
+      </div>
+      <div class="hero-caption"><span>2D dynamics</span><span>Frozen 3D</span><span>Dynamic 3D</span></div>
+    </section>
+
+    <section class="metric-rail" aria-label="Headline results">
+      <div class="shell metric-grid">
+        <div><strong data-stat="samples">280</strong><span>parsed videos</span></div>
+        <div><strong data-stat="studies">14</strong><span>physics studies</span></div>
+        <div><strong data-stat="mean-iou">84.14%</strong><span>mean sample IoU</span></div>
+        <div><strong data-stat="gain">+7.80 pp</strong><span>GPT full-evidence gain</span></div>
+      </div>
+    </section>
+
+    <section class="section section-intro" id="method">
+      <div class="shell two-column intro-layout">
+        <div>
+          <p class="section-index">01 · ParseAnything</p>
+          <h2>One interface for heterogeneous physical scenes.</h2>
+        </div>
+        <div class="lead-copy">
+          <p>Physical reasoning spans collisions, support, rotation, disappearance, path planning, and counterfactual events. ParseAnything separates the representation from rapidly changing foundation models, so each perception role can be replaced without changing the representation contract.</p>
+        </div>
+      </div>
+      <div class="shell stage-flow" aria-label="ParseAnything stages">
+        <article><span>01</span><h3>Identifier</h3><p>Question-conditioned entities, IDs, attributes, relations, and event hypotheses.</p><b>Qwen3-VL</b></article>
+        <article><span>02</span><h3>2D Mask</h3><p>Per-object masks, confidence, stable 2D boxes, and temporal visibility.</p><b>SAM3.1</b></article>
+        <article><span>03</span><h3>Analyzer</h3><p>Depth, point maps, camera intrinsics, camera pose, and 3D lifting.</p><b>VGGT-Omega</b></article>
+        <article><span>04</span><h3>Tracker</h3><p>Object-owned trajectories, confidence, visibility, and local rigid motion.</p><b>SpatialTrackerV2</b></article>
+      </div>
+      <figure class="pipeline-figure shell">
+        <img src="assets/pipeline.png" alt="Unified visual parsing architecture from video perception through structured storage, tools, and reasoning.">
+        <figcaption>Current end-to-end architecture. The public demo focuses on parsing, structured storage, validated tools, and downstream reasoning.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section section-dark" id="representation">
+      <div class="shell section-heading inverse">
+        <p class="section-index">02 · Representation</p>
+        <h2>Readable enough to inspect. Structured enough to compute.</h2>
+        <p>The canonical scene representation keeps compact metadata in JSON and stores dense masks, geometry, and tracks in typed arrays. Select a field family from a real accepted Hamrick reconstruction.</p>
+      </div>
+      <div class="shell representation-layout">
+        <div class="code-tool">
+          <div class="code-tabs" role="tablist" aria-label="Structured scene representation fields">
+            <button role="tab" aria-selected="true" data-code-tab="identity_relations_camera">Identity + camera</button>
+            <button role="tab" aria-selected="false" data-code-tab="direct_fields">Direct fields</button>
+            <button role="tab" aria-selected="false" data-code-tab="computed_fields">Computed fields</button>
+          </div>
+          <pre class="code-panel" tabindex="0"><code id="code-output">Loading accepted code…</code></pre>
+          <div class="code-status"><span>schema 2.0.0</span><span>prediction-only</span><span>10 tower blocks</span></div>
+        </div>
+        <div class="field-map">
+          <div>
+            <span class="field-letter">A</span>
+            <h3>Identity and relations</h3>
+            <p>Stable IDs, semantic attributes, scene context, pairwise relations, contacts, events, and calibrated camera state.</p>
+          </div>
+          <div>
+            <span class="field-letter">B</span>
+            <h3>Direct fields</h3>
+            <p>Question boxes, SAM masks, bbox2D sequences, raw image/world tracklets, depth, point maps, and provenance.</p>
+          </div>
+          <div>
+            <span class="field-letter">C</span>
+            <h3>Computed fields</h3>
+            <p>Centers, oriented bbox3D, size, velocity, acceleration, local SE(3), rigidity, visibility, and distance trends.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="shell section-heading">
+        <p class="section-index">03 · Quantitative results</p>
+        <h2>Parsing quality and reasoning performance.</h2>
+        <p>All headline numbers below are loaded from the structured Physics-280 audits. IoU is evaluation-only and never enters parser predictions or reasoning prompts.</p>
+      </div>
+      <div class="shell results-layout">
+        <section class="result-block" aria-labelledby="geometry-title">
+          <div class="result-title-row"><h3 id="geometry-title">Geometry across 14 studies</h3><span>20 samples / study</span></div>
+          <div class="geometry-summary">
+            <div><strong>84.14%</strong><span>Mean sample IoU</span></div>
+            <div><strong>81.42%</strong><span>Micro IoU</span></div>
+            <div><strong>98.42%</strong><span>Predicted-box coverage</span></div>
+          </div>
+          <div class="study-bars" id="study-bars" aria-label="Per-study mean IoU chart"></div>
+        </section>
+        <section class="result-block" aria-labelledby="reasoning-title">
+          <div class="result-title-row"><h3 id="reasoning-title">Reasoning conditions</h3><span>603 scored questions</span></div>
+          <div class="reasoning-bars" id="reasoning-bars" aria-label="Normalized reasoning score chart"></div>
+          <p class="result-note">GPT with the full parser output improves the question-weighted normalized score by 7.80 percentage points over GPT video only; grouped-bootstrap 95% CI: +2.05 to +10.70 pp.</p>
+        </section>
+      </div>
+      <div class="shell table-wrap" tabindex="0" aria-label="Reasoning results table scroll container">
+        <table class="results-table">
+          <thead><tr><th>Condition</th><th>Normalized</th><th>Categorical</th><th>Number score</th><th>Multi-select F1</th><th>Confidence</th></tr></thead>
+          <tbody id="reasoning-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="throughput">
+      <div class="shell two-column throughput-layout">
+        <div>
+          <p class="section-index">04 · Throughput</p>
+          <h2>Measured stage cost, not estimated latency.</h2>
+          <p>Fresh cache-disabled execution on four NVIDIA RTX A5000 workers. Analyzer and Tracker are invoked only for the 40 3D samples.</p>
+          <div class="throughput-summary"><strong>47.77 s</strong><span>mean exclusive parsing time per sample</span></div>
+          <div class="throughput-summary"><strong>275.13</strong><span>observed samples per hour across four workers</span></div>
+        </div>
+        <div class="stage-timing" id="stage-timing" aria-label="Parsing stage timing chart"></div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="shell section-heading">
+        <p class="section-index">05 · Qualitative gallery</p>
+        <h2>The same code contract across very different worlds.</h2>
+        <p>Each animation is a real accepted parsing overlay. Use the filters to compare 2D dynamics, frozen multiview 3D, and dynamic 3D.</p>
+      </div>
+      <div class="shell gallery-controls" role="group" aria-label="Filter examples">
+        <button class="active" data-filter="all">All scenes</button>
+        <button data-filter="2d">2D dynamics</button>
+        <button data-filter="frozen3d">Frozen 3D</button>
+        <button data-filter="dynamic3d">Dynamic 3D</button>
+      </div>
+      <div class="shell demo-grid">
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/bass-cannonball.gif" alt="Bass 2022 cannonball scene with parsed object masks and boxes" loading="lazy">
+          <div><span>2D · Counterfactual physics</span><h3>Cannonball and sphere</h3><p>Dynamic objects, hole context, trajectories, visibility, and landing relations.</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/beller-plinko.gif" alt="Beller 2025 plinko scene with parsed objects" loading="lazy">
+          <div><span>2D · Multimodal description</span><h3>Plinko world</h3><p>Shape-aware identities, barriers, containers, and object motion in a top-down scene.</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/gerstenberg-collision.gif" alt="Gerstenberg 2021 collision scene with parsed trajectories" loading="lazy">
+          <div><span>2D · Actual causation</span><h3>Counterfactual collision</h3><p>Stable ball identities, contact events, relative motion, and gate outcomes.</p></div>
+        </article>
+        <article class="demo-card featured-demo" data-mode="frozen3d">
+          <img src="assets/demos/hamrick-tower.gif" alt="Hamrick 2016 rotating tower with ten oriented 3D boxes" loading="lazy">
+          <div><span>Frozen 3D · Multiview reconstruction</span><h3>Ten-block tower</h3><p>Azimuth-diverse views, calibrated lifting, oriented bbox3D, support, and stability evidence.</p></div>
+        </article>
+        <article class="demo-card" data-mode="dynamic3d">
+          <img src="assets/demos/smith-discontinuity.gif" alt="Smith 2019 dynamic 3D scene with parsed occluders" loading="lazy">
+          <div><span>Dynamic 3D · Object permanence</span><h3>Visible discontinuity</h3><p>Condition-aware visibility, moving occluders, rotation, and event transitions.</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/ullman-rules.gif" alt="Ullman 2018 scene with parsed moving objects" loading="lazy">
+          <div><span>2D · Latent rules</span><h3>Learning physical properties</h3><p>Colored object identities, trajectories, interaction patterns, and rule-relevant evidence.</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/wu-gridworld.gif" alt="Wu 2022 grid world with parsed agent, doors, and paths" loading="lazy">
+          <div><span>2D · Path reasoning</span><h3>Grid-world causation</h3><p>Agent path, doors, blocked cells, goal state, and time-varying relations.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-analysis" id="analysis">
+      <div class="shell section-heading">
+        <p class="section-index">06 · Error propagation</p>
+        <h2>Does a parsing error actually change the answer?</h2>
+        <p>We remove one selected evidence group at a time, rerun the same answer condition, and connect downstream score changes to IoU-supported code quality.</p>
+      </div>
+      <div class="shell propagation-flow" aria-label="Error propagation analysis workflow">
+        <div><strong>Video + question + 4D evidence</strong><span>Full evidence score S<sub>full</sub></span></div>
+        <i aria-hidden="true">→</i>
+        <div><strong>Remove one field group g</strong><span>Ablated score S<sub>−g</sub></span></div>
+        <i aria-hidden="true">→</i>
+        <div><strong>Measure influence</strong><span>I<sub>g</sub> = S<sub>full</sub> − S<sub>−g</sub></span></div>
+        <i aria-hidden="true">→</i>
+        <div><strong>Trace the producer</strong><span>Identifier · Mask · Analyzer · Tracker</span></div>
+      </div>
+      <div class="shell analysis-grid">
+        <div class="distribution-panel">
+          <div class="result-title-row"><h3>Field influence</h3><span>1,346 evaluated effects</span></div>
+          <div id="influence-chart"></div>
+        </div>
+        <div class="distribution-panel">
+          <div class="result-title-row"><h3>Diagnostic classification</h3><span>Conservative labels</span></div>
+          <div id="classification-chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-callout" id="adaptive">
+      <div class="shell adaptive-layout">
+        <div>
+          <p class="section-index">07 · Adaptive evidence</p>
+          <h2>From a comprehensive representation to task-specific evidence.</h2>
+          <p>A validated toolbox retrieves compact, typed slices of the parsed scene representation. Selection can optimize confidence, length, importance, and question relevance while preserving exact object, time, unit, and provenance bindings.</p>
+        </div>
+        <div class="evidence-stack" aria-label="Adaptive evidence selection objectives">
+          <span><b>C</b> Confidence</span>
+          <span><b>L</b> Length</span>
+          <span><b>I</b> Importance</span>
+          <span><b>R</b> Relevance</span>
+          <strong>Compact evidence set → VLM answer</strong>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-layout">
+      <div><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><b>Unified &amp; Adaptive Visual Parser</b><small>for CogGym Reasoning</small></span></a><p>Explicit visual evidence for physical-world reasoning.</p></div>
+      <div><strong>Project</strong><a href="#method">Method</a><a href="#results">Results</a><a href="#gallery">Gallery</a></div>
+      <div><strong>Resources</strong><a href="https://github.com/ccvl-intern/ccvl-intern.github.io">Source code</a><a href="https://arxiv.org/abs/2603.05591">Prior work</a><a href="mailto:yzhu243@jh.edu">Contact</a></div>
+    </div>
+    <div class="shell footer-bottom"><span>CCVL · Johns Hopkins University</span><span>Results audited from structured experiment artifacts</span></div>
+  </footer>
+
+  <script src="assets/site.js" defer></script>
+</body>
+</html>

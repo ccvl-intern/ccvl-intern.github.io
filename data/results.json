@@ -1,0 +1,72 @@
+{
+  "schema_version": "ccvl_demo_results.1",
+  "generated_from": [
+    "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/input_audit.json",
+    "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/evaluation_store/iou_evidence.json",
+    "Physics_4DCode_20_Examples/analysis/gpt56_sol/full_4d_results.json",
+    "Physics_4DCode_20_Examples/analysis/timing/summary.json",
+    "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/INDEPENDENT_AUDIT.json"
+  ],
+  "corpus": {
+    "sample_count": 280,
+    "study_count": 14,
+    "question_count": 636,
+    "scored_question_count": 603,
+    "question_bearing_sample_count": 227,
+    "three_d_sample_count": 40
+  },
+  "geometry": {
+    "mean_sample_iou": 0.841421812642888,
+    "micro_iou": 0.8142214481802942,
+    "predicted_box_coverage": 0.9841879578345543,
+    "record_count": 11194,
+    "studies": [
+      {"id": "bass2022_partial", "label": "Bass 2022", "mean_iou": 0.8972326224807776, "micro_iou": 0.8962119964665143},
+      {"id": "bates2019_modeling", "label": "Bates 2019", "mean_iou": 0.8162124662233093, "micro_iou": 0.8183608674749672},
+      {"id": "beller2020_language", "label": "Beller 2020", "mean_iou": 0.8985107123885191, "micro_iou": 0.8982447602484872},
+      {"id": "beller2025_multimodal", "label": "Beller 2025", "mean_iou": 0.8170587967941566, "micro_iou": 0.7777296533526045},
+      {"id": "gerstenberg2021_counterfactual", "label": "Gerstenberg 2021", "mean_iou": 0.8593136731091583, "micro_iou": 0.8591891642431609},
+      {"id": "gerstenberg2022_what", "label": "Gerstenberg 2022", "mean_iou": 0.9491799428104575, "micro_iou": 0.9491799428104578},
+      {"id": "hamrick2016_inferring", "label": "Hamrick 2016", "mean_iou": 0.6123904811436244, "micro_iou": 0.6123904811436245},
+      {"id": "smith2019_modeling", "label": "Smith 2019", "mean_iou": 0.7804954338647486, "micro_iou": 0.7802206708042938},
+      {"id": "sosa2021_moral", "label": "Sosa 2021", "mean_iou": 0.9549368737802132, "micro_iou": 0.9535079418866405},
+      {"id": "sosa2025_blending", "label": "Sosa 2025", "mean_iou": 0.9061887309182166, "micro_iou": 0.8989328770396884},
+      {"id": "stephan2021_counterfactual", "label": "Stephan 2021", "mean_iou": 0.8206001374126476, "micro_iou": 0.815448101811146},
+      {"id": "ullman2018_learning", "label": "Ullman 2018", "mean_iou": 0.7687578243865325, "micro_iou": 0.768757824386533},
+      {"id": "wu2022_that", "label": "Wu 2022", "mean_iou": 0.7856372009089061, "micro_iou": 0.7848475443940761},
+      {"id": "zhou2023_mental", "label": "Zhou 2023", "mean_iou": 0.9133904807791626, "micro_iou": 0.8923607865567017}
+    ]
+  },
+  "reasoning": {
+    "conditions": [
+      {"id": "qwen_video", "label": "Qwen video only", "normalized": 0.4273098657984186, "categorical": 0.2947976878612717, "number_score": 0.6239645631672163, "multi_select_f1": 0.23304425837320575, "confidence": 0.24055331255358334},
+      {"id": "qwen_selected", "label": "Qwen + selected evidence", "normalized": 0.4323927491765619, "categorical": 0.26878612716763006, "number_score": 0.672560735964621, "multi_select_f1": 0.2462872868445624, "confidence": 0.2491485711424265},
+      {"id": "qwen_full", "label": "Qwen + full parser output", "normalized": 0.512624149590511, "categorical": 0.3786127167630058, "number_score": 0.7149905292383493, "multi_select_f1": 0.24497354497354495, "confidence": 0.1682366959198522},
+      {"id": "gpt_video", "label": "GPT-5.6 Sol video only", "normalized": 0.47154165091634787, "categorical": 0.33815028901734107, "number_score": 0.6676641254720531, "multi_select_f1": 0.3134920634920635, "confidence": null},
+      {"id": "gpt_selected", "label": "GPT + selected evidence", "normalized": 0.5278062700183765, "categorical": 0.4046242774566474, "number_score": 0.7089622540802146, "multi_select_f1": 0.38095238095238093, "confidence": null},
+      {"id": "gpt_full", "label": "GPT + full parser output", "normalized": 0.5495257423108811, "categorical": 0.430635838150289, "number_score": 0.726996010667189, "multi_select_f1": 0.3541666666666667, "confidence": null}
+    ],
+    "gpt_full_gain_over_video": 0.07798409139453324,
+    "gpt_full_gain_ci95": [0.02050023236728929, 0.10698927547403275],
+    "group_count": 206
+  },
+  "timing": {
+    "device": "NVIDIA RTX A5000",
+    "worker_count": 4,
+    "mean_exclusive_sec_per_sample": 47.76781060919332,
+    "median_exclusive_sec_per_sample": 27.406336332438514,
+    "p95_exclusive_sec_per_sample": 149.86445685879076,
+    "observed_samples_per_hour": 275.1261805477905,
+    "stages": [
+      {"id": "identifier", "label": "Identifier", "mean": 5.683575352113361, "p95": 18.485272148344666, "count": 280},
+      {"id": "segmenter", "label": "2D Mask", "mean": 18.294159682936566, "p95": 53.50938325556927, "count": 280},
+      {"id": "analyzer", "label": "Analyzer", "mean": 5.870241706084926, "p95": 7.33118110562209, "count": 40},
+      {"id": "tracker", "label": "Tracker", "mean": 11.632976528059226, "p95": 17.03104859213345, "count": 40}
+    ]
+  },
+  "error_propagation": {
+    "effect_count": 1346,
+    "influence": {"positive": 174, "neutral": 949, "harmful": 141, "unscored": 82},
+    "classification": {"verified_good": 345, "reasoning_limited": 173, "bad_propagating": 1, "low_quality_contained": 29, "mixed": 286, "unverified": 512}
+  }
+}

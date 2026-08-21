@@ -1,0 +1,66 @@
+{
+  "identity_relations_camera": {
+    "code_id": "code_3bf2a125e94ff8838387",
+    "sample_id": "Hamrick2016Inferring_exp2_tower_01833_1010010011_stimulus_59abd49dd5",
+    "parse_mode": "frozen_3d_observation",
+    "object": {
+      "object_id": "block_01",
+      "label": "tower block 1",
+      "role": "tower_block",
+      "identity_confidence": 0.992902
+    },
+    "relation": {
+      "subject_id": "block_01",
+      "object_id": "block_02",
+      "relation": "distance_stable",
+      "frame_range": [0, 31],
+      "confidence": 0.342
+    },
+    "camera": {
+      "frame_offset": 0,
+      "intrinsics": [[427.6785, 0.0, 159.7703], [0.0, 421.4160, 119.7679], [0.0, 0.0, 1.0]],
+      "camera_from_world": [[1.0, 0.0004, -0.0004, 0.0], [-0.0004, 1.0, 0.0, 0.0001], [0.0004, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]],
+      "roundtrip_error_px": 0.0
+    }
+  },
+  "direct_fields": {
+    "bbox_2d": {
+      "frame_offset": 0,
+      "xyxy": [165.0, 183.0, 186.0, 203.0],
+      "score": 0.956989,
+      "source": "segmenter"
+    },
+    "mask_sequence": {
+      "shape": [32, 240, 320],
+      "dtype": "bool",
+      "coordinate_space": "pixel_source"
+    },
+    "track_uv": {
+      "shape": [32, 24, 2],
+      "units": "pixels",
+      "coordinate_space": "pixel_source"
+    },
+    "track_xyz_world": {
+      "shape": [32, 24, 3],
+      "units": "world units",
+      "coordinate_space": "world"
+    }
+  },
+  "computed_fields": {
+    "center_3d": {
+      "frame_offset": 0,
+      "xyz": [0.035542, 0.150579, 0.875104],
+      "confidence": 0.944782
+    },
+    "bbox_3d": {
+      "frame_offset": 0,
+      "center": [0.035542, 0.150579, 0.875104],
+      "size": [0.021934, 0.065803, 0.021934],
+      "rotation": [[-0.937144, -0.348899, -0.005482], [-0.045492, 0.137738, -0.989423], [0.345964, -0.926983, -0.144952]],
+      "source": "segmenter_mask_pixels_plus_analyzer_point_maps",
+      "orientation_source": "static_turntable_multiview_cuboid_fit",
+      "confidence": 0.944782
+    },
+    "visibility": 0.956989
+  }
+}
