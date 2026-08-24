@@ -46,7 +46,6 @@
           <a class="button button-primary" href="#method">Parsing Method</a>
           <a class="button button-secondary" href="#gallery">Original Video v.s. Our Parsed Code Visualization</a>
         </div>
-        <p class="authors">Yuzhou Zhou · Mentor: Dr. Jieneng Chen, Prof. Alan Yuille · Lance, Kevin, Josh</p>
       </div>
       <div class="hero-caption"><span>2D dynamics</span><span>Frozen 3D</span><span>Dynamic 3D</span></div>
     </section>
@@ -55,7 +54,7 @@
       <div class="shell metric-grid">
         <div><strong data-stat="samples">280</strong><span>parsed videos</span></div>
         <div><strong data-stat="studies">14</strong><span>physics studies</span></div>
-        <div><strong data-stat="mean-iou">84.14%</strong><span>mean sample IoU</span></div>
+        <div><strong data-stat="mean-iou">84.14%</strong><span>mIoU</span></div>
         <div><strong data-stat="parsing-time">41.47 s</strong><span>mean parsing time</span></div>
       </div>
     </section>
@@ -110,33 +109,22 @@
       </div>
     </section>
 
-    <section class="section" id="results">
+    <section class="section" id="results" data-public-scope="parsing-only">
       <div class="shell section-heading">
         <p class="section-index">03 · Evaluation</p>
         <h2>Evaluation of Parsing Accuracy (mIoU)</h2>
-        <p>The accepted Physics-280 audit contains 20 samples from each of 14 studies. mIoU is used only for evaluation and never enters parsing or reasoning.</p>
+        <p>The accepted Physics-280 audit contains 20 samples from each of 14 studies. mIoU is used only for evaluation and never enters parsing.</p>
       </div>
-      <div class="shell results-layout">
+      <div class="shell">
         <section class="result-block" aria-labelledby="geometry-title">
           <div class="result-title-row"><h3 id="geometry-title">Original Video v.s. Our Parsed Code Visualization</h3><span>20 samples / study</span></div>
           <div class="geometry-summary">
-            <div><strong>84.14%</strong><span>Mean sample IoU</span></div>
-            <div><strong>81.42%</strong><span>Micro IoU</span></div>
+            <div><strong>84.14%</strong><span>mIoU</span></div>
+            <div><strong>280</strong><span>Evaluated samples</span></div>
             <div><strong>98.42%</strong><span>Predicted-box coverage</span></div>
           </div>
           <div class="study-bars" id="study-bars" aria-label="Per-study mean IoU chart"></div>
         </section>
-        <section class="result-block" aria-labelledby="reasoning-title">
-          <div class="result-title-row"><h3 id="reasoning-title">Result of Multi-turn answer, advanced model (no Refinement)</h3><span>603 scored questions</span></div>
-          <div class="reasoning-bars" id="reasoning-bars" aria-label="Normalized reasoning score chart"></div>
-          <p class="result-note">GPT with the full parser output improves the question-weighted normalized score by 7.80 percentage points over GPT video only; grouped-bootstrap 95% CI: +2.05 to +10.70 pp.</p>
-        </section>
-      </div>
-      <div class="shell table-wrap" tabindex="0" aria-label="Reasoning results table scroll container">
-        <table class="results-table">
-          <thead><tr><th>Condition</th><th>Normalized</th><th>Categorical</th><th>Number score</th><th>Multi-select F1</th><th>Confidence</th></tr></thead>
-          <tbody id="reasoning-table-body"></tbody>
-        </table>
       </div>
     </section>
 
@@ -228,41 +216,9 @@
       </div>
     </section>
 
-    <section class="section section-analysis" id="analysis">
-      <div class="shell section-heading">
-        <p class="section-index">07 · Error propagation</p>
-        <h2>Result of Error Propagation Analysis</h2>
-        <p>Analyze Code “g” by comparing the Full Code score with the score after removing “g”, using the same Video + Question and Qwen3-VL-8B-Thinking.</p>
-      </div>
-      <div class="shell propagation-flow" aria-label="Error propagation analysis workflow">
-        <div><strong>Full Code</strong><span>Score S<sub>full</sub></span></div>
-        <i aria-hidden="true">→</i>
-        <div><strong>Full Code − “g”</strong><span>Score S<sub>−g</sub></span></div>
-        <i aria-hidden="true">→</i>
-        <div><strong>Analysis Code “g”</strong><span>Influence = S<sub>full</sub> − S<sub>−g</sub></span></div>
-        <i aria-hidden="true">→</i>
-        <div><strong>Trace the result</strong><span>Benefit · Harm · Maximum harm</span></div>
-      </div>
-      <div class="shell propagation-formulas" aria-label="Error propagation formulas">
-        <span>Harm = (1 − IoU) × max(0, −Influence)</span>
-        <span>Benefit = IoU × max(0, Influence)</span>
-        <span>A = max<sub>g</sub> max(0, −Influence)</span>
-      </div>
-      <div class="shell analysis-grid">
-        <div class="distribution-panel">
-          <div class="result-title-row"><h3>Field influence</h3><span>1,346 evaluated effects</span></div>
-          <div id="influence-chart"></div>
-        </div>
-        <div class="distribution-panel">
-          <div class="result-title-row"><h3>Diagnostic classification</h3><span>Conservative labels</span></div>
-          <div id="classification-chart"></div>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="refinement">
       <div class="shell section-heading">
-        <p class="section-index">08 · Video consistency</p>
+        <p class="section-index">07 · Video consistency</p>
         <h2>Method for Agentic Refinement</h2>
         <p>The VLM Verifier compares the Render with the Original Video and returns a Refine instruction to the Agent.</p>
       </div>
@@ -275,7 +231,7 @@
     <section class="section section-callout" id="adaptive">
       <div class="shell adaptive-layout adaptive-intro">
         <div>
-          <p class="section-index">09 · Adaptive abstraction</p>
+          <p class="section-index">08 · Adaptive abstraction</p>
           <h2>Why we need task-specific abstraction</h2>
           <p>Long context, difficult to understand. Specific task needs specific information.</p>
         </div>
@@ -314,7 +270,7 @@
 
     <section class="section" id="datasets">
       <div class="shell section-heading">
-        <p class="section-index">10 · Datasets</p>
+        <p class="section-index">09 · Datasets</p>
         <h2>Physics_subsets (COCOSCI), PhysBench, and Physion</h2>
       </div>
       <div class="shell dataset-grid">

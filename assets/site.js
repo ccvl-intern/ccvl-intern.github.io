@@ -52,36 +52,11 @@ function renderHeadline(results) {
 function renderStudyBars(studies) {
   const root = document.querySelector("#study-bars");
   root.innerHTML = studies.map(study => `
-    <div class="mini-bar-row" title="${study.label}: ${percent(study.mean_iou)} mean sample IoU">
+    <div class="mini-bar-row" title="${study.label}: ${percent(study.mean_iou)} mIoU">
       <span>${study.label}</span>
       <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${study.mean_iou * 100}%"></div></div>
       <strong>${percent(study.mean_iou, 1)}</strong>
     </div>
-  `).join("");
-}
-
-function renderReasoning(conditions) {
-  const bars = document.querySelector("#reasoning-bars");
-  bars.innerHTML = conditions.map(condition => {
-    const classNames = [condition.id.startsWith("gpt") ? "gpt" : "", condition.id.endsWith("full") ? "full" : ""].filter(Boolean).join(" ");
-    return `
-      <div class="reasoning-row ${classNames}">
-        <span>${condition.label}</span>
-        <div class="reasoning-track"><div class="reasoning-fill" style="width:${condition.normalized * 100}%"></div></div>
-        <strong>${percent(condition.normalized, 1)}</strong>
-      </div>`;
-  }).join("");
-
-  const tableBody = document.querySelector("#reasoning-table-body");
-  tableBody.innerHTML = conditions.map(condition => `
-    <tr>
-      <td>${condition.label}</td>
-      <td>${percent(condition.normalized)}</td>
-      <td>${percent(condition.categorical)}</td>
-      <td>${percent(condition.number_score)}</td>
-      <td>${percent(condition.multi_select_f1)}</td>
-      <td>${percent(condition.confidence)}</td>
-    </tr>
   `).join("");
 }
 
@@ -101,7 +76,7 @@ function renderParsingBaselines(baselines) {
   document.querySelector("#parse-anything-summary").innerHTML = `
     <div><span>Parse Anything</span><strong>${percent(ours.mean_iou)}</strong><small>latest full-corpus rerun · mIoU mean ± SD ${percent(ours.sample_iou_std)}</small></div>
     <div><span>Corpus evaluated</span><strong>${ours.evaluated_samples}</strong><small>Physics-280</small></div>
-    <div><span>Micro IoU</span><strong>${percent(ours.micro_iou)}</strong><small>prediction coverage ${percent(ours.prediction_coverage)}</small></div>`;
+    <div><span>Prediction coverage</span><strong>${percent(ours.prediction_coverage)}</strong><small>valid predicted boxes</small></div>`;
 
   document.querySelector("#direct-vlm-table-body").innerHTML = baselines.direct_vlm.map(row => `
     <tr><td>${row.method}</td><td>280</td><td>${percent(row.mean_iou)}</td><td>${percent(row.coverage)}</td></tr>
@@ -123,25 +98,6 @@ function renderRefinement(refinement) {
     <div><span>mIoU</span><strong>${percent(refinement.before_mean_iou)} → ${percent(refinement.after_mean_iou)}</strong></div>
     <div><span>Center RMSE</span><strong>${refinement.before_center_rmse.toFixed(4)} → ${refinement.after_center_rmse.toFixed(4)}</strong></div>
     <div><span>Canonical codes changed</span><strong>${refinement.changed_codes} / ${refinement.samples}</strong></div>`;
-}
-
-function renderDistribution(rootSelector, entries, total) {
-  const root = document.querySelector(rootSelector);
-  const max = Math.max(...entries.map(([, value]) => value));
-  root.innerHTML = entries.map(([label, value]) => {
-    const slug = label.toLowerCase().replaceAll(" ", "-").replaceAll("_", "-");
-    return `
-      <div class="dist-row ${slug}">
-        <span>${label.replaceAll("_", " ")}</span>
-        <div class="dist-track"><div class="dist-fill" style="width:${(value / max) * 100}%"></div></div>
-        <strong>${value} · ${((value / total) * 100).toFixed(1)}%</strong>
-      </div>`;
-  }).join("");
-}
-
-function renderErrorPropagation(data) {
-  renderDistribution("#influence-chart", Object.entries(data.influence), data.effect_count);
-  renderDistribution("#classification-chart", Object.entries(data.classification), data.effect_count);
 }
 
 function renderUnifiedCode() {
@@ -176,11 +132,9 @@ async function loadData() {
   state.code = await codeResponse.json();
   renderHeadline(state.results);
   renderStudyBars(state.results.geometry.studies);
-  renderReasoning(state.results.reasoning.conditions);
   renderTiming(state.results.timing);
   renderParsingBaselines(state.results.parsing_baselines);
   renderRefinement(state.results.parsing_baselines.refinement_pilot);
-  renderErrorPropagation(state.results.error_propagation);
   renderUnifiedCode();
 }
 
