@@ -1,11 +1,13 @@
 {
-  "schema_version": "ccvl_demo_results.1",
+  "schema_version": "ccvl_demo_results.2",
   "generated_from": [
     "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/input_audit.json",
     "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/evaluation_store/iou_evidence.json",
     "Physics_4DCode_20_Examples/analysis/gpt56_sol/full_4d_results.json",
     "Physics_4DCode_20_Examples/analysis/timing/summary.json",
-    "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/INDEPENDENT_AUDIT.json"
+    "Physics_4DCode_20_Examples/analysis/qwen3_vl_8b_thinking_selected_error/INDEPENDENT_AUDIT.json",
+    "outputs/physics_280_parsing_baselines/consolidated/specialist_metrics.csv",
+    "outputs/physics_280_parsing_baselines/consolidated/summary.json"
   ],
   "corpus": {
     "sample_count": 280,
@@ -39,12 +41,12 @@
   },
   "reasoning": {
     "conditions": [
-      {"id": "qwen_video", "label": "Qwen video only", "normalized": 0.4273098657984186, "categorical": 0.2947976878612717, "number_score": 0.6239645631672163, "multi_select_f1": 0.23304425837320575, "confidence": 0.24055331255358334},
-      {"id": "qwen_selected", "label": "Qwen + selected evidence", "normalized": 0.4323927491765619, "categorical": 0.26878612716763006, "number_score": 0.672560735964621, "multi_select_f1": 0.2462872868445624, "confidence": 0.2491485711424265},
-      {"id": "qwen_full", "label": "Qwen + full parser output", "normalized": 0.512624149590511, "categorical": 0.3786127167630058, "number_score": 0.7149905292383493, "multi_select_f1": 0.24497354497354495, "confidence": 0.1682366959198522},
-      {"id": "gpt_video", "label": "GPT-5.6 Sol video only", "normalized": 0.47154165091634787, "categorical": 0.33815028901734107, "number_score": 0.6676641254720531, "multi_select_f1": 0.3134920634920635, "confidence": null},
-      {"id": "gpt_selected", "label": "GPT + selected evidence", "normalized": 0.5278062700183765, "categorical": 0.4046242774566474, "number_score": 0.7089622540802146, "multi_select_f1": 0.38095238095238093, "confidence": null},
-      {"id": "gpt_full", "label": "GPT + full parser output", "normalized": 0.5495257423108811, "categorical": 0.430635838150289, "number_score": 0.726996010667189, "multi_select_f1": 0.3541666666666667, "confidence": null}
+      {"id": "qwen_video", "label": "Video + Qwen3-VL-8B-Thinking", "normalized": 0.4273098657984186, "categorical": 0.2947976878612717, "number_score": 0.6239645631672163, "multi_select_f1": 0.23304425837320575, "confidence": 0.24055331255358334},
+      {"id": "qwen_selected", "label": "Video + Qwen + Multi-turn Selection", "normalized": 0.4323927491765619, "categorical": 0.26878612716763006, "number_score": 0.672560735964621, "multi_select_f1": 0.2462872868445624, "confidence": 0.2491485711424265},
+      {"id": "qwen_full", "label": "Qwen + full parsed Code (fixed cutoff)", "normalized": 0.512624149590511, "categorical": 0.3786127167630058, "number_score": 0.7149905292383493, "multi_select_f1": 0.24497354497354495, "confidence": 0.1682366959198522},
+      {"id": "gpt_video", "label": "Video + GPT5.6-sol", "normalized": 0.47154165091634787, "categorical": 0.33815028901734107, "number_score": 0.6676641254720531, "multi_select_f1": 0.3134920634920635, "confidence": null},
+      {"id": "gpt_selected", "label": "Video + GPT5.6-sol + Multi-turn Selection", "normalized": 0.5278062700183765, "categorical": 0.4046242774566474, "number_score": 0.7089622540802146, "multi_select_f1": 0.38095238095238093, "confidence": null},
+      {"id": "gpt_full", "label": "GPT full parsed Code, no cutoff", "normalized": 0.5495257423108811, "categorical": 0.430635838150289, "number_score": 0.726996010667189, "multi_select_f1": 0.3541666666666667, "confidence": null}
     ],
     "gpt_full_gain_over_video": 0.07798409139453324,
     "gpt_full_gain_ci95": [0.02050023236728929, 0.10698927547403275],
@@ -53,16 +55,57 @@
   "timing": {
     "device": "NVIDIA RTX A5000",
     "worker_count": 4,
-    "mean_exclusive_sec_per_sample": 47.76781060919332,
-    "median_exclusive_sec_per_sample": 27.406336332438514,
-    "p95_exclusive_sec_per_sample": 149.86445685879076,
-    "observed_samples_per_hour": 275.1261805477905,
+    "mean_exclusive_sec_per_sample": 41.47,
+    "median_exclusive_sec_per_sample": 40.27,
+    "p95_exclusive_sec_per_sample": 96.36,
     "stages": [
-      {"id": "identifier", "label": "Identifier", "mean": 5.683575352113361, "p95": 18.485272148344666, "count": 280},
-      {"id": "segmenter", "label": "2D Mask", "mean": 18.294159682936566, "p95": 53.50938325556927, "count": 280},
-      {"id": "analyzer", "label": "Analyzer", "mean": 5.870241706084926, "p95": 7.33118110562209, "count": 40},
-      {"id": "tracker", "label": "Tracker", "mean": 11.632976528059226, "p95": 17.03104859213345, "count": 40}
+      {"id": "identifier", "label": "Identifier", "mean": 5.68, "median": 4.50, "p95": 18.49, "count": 280},
+      {"id": "segmenter", "label": "2D Mask", "mean": 18.29, "median": 16.56, "p95": 53.51, "count": 280},
+      {"id": "analyzer", "label": "Analyzer", "mean": 5.87, "median": 5.97, "p95": 7.33, "count": 40},
+      {"id": "tracker", "label": "Points Tracker", "mean": 11.63, "median": 13.24, "p95": 17.03, "count": 40}
     ]
+  },
+  "parsing_baselines": {
+    "direct_vlm": [
+      {"method": "Qwen3-VL-2B-Instruct", "mean_iou": 0.0181, "coverage": 0.0278},
+      {"method": "Qwen3-VL-2B-Thinking", "mean_iou": 0.0063, "coverage": 0.0037},
+      {"method": "Qwen3-VL-4B-Instruct", "mean_iou": 0.0210, "coverage": 0.3559},
+      {"method": "Qwen3-VL-4B-Thinking", "mean_iou": 0.0782, "coverage": 0.5090},
+      {"method": "Qwen3-VL-8B-Instruct", "mean_iou": 0.0987, "coverage": 0.5444},
+      {"method": "Qwen3-VL-8B-Thinking", "mean_iou": 0.1290, "coverage": 0.7504},
+      {"method": "Qwen3.5-4B", "mean_iou": 0.0597, "coverage": 0.8220},
+      {"method": "Qwen3.5-9B", "mean_iou": 0.1037, "coverage": 0.8749},
+      {"method": "Molmo2-O-7B", "mean_iou": 0.0120, "coverage": 0.0695},
+      {"method": "GLM-4.1V-9B-Thinking", "mean_iou": 0.2289, "coverage": 0.6915},
+      {"method": "InternVideo2_5_Chat_8B", "mean_iou": 0.0001, "coverage": 0.0044},
+      {"method": "InternVL3_5-8B", "mean_iou": 0.0195, "coverage": 0.5983},
+      {"method": "InternVL3_5-4B", "mean_iou": 0.0086, "coverage": 0.5289},
+      {"method": "InternVL3_5-2B", "mean_iou": 0.0078, "coverage": 0.4882}
+    ],
+    "parse_anything": {
+      "evaluated_samples": 280,
+      "mean_iou": 0.8508,
+      "sample_iou_std": 0.1058,
+      "micro_iou": 0.8275,
+      "prediction_coverage": 0.9844
+    },
+    "specialists": [
+      {"method": "Any4D", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8377582113544921, "specialist_mean_iou": 0.6113628493075752},
+      {"method": "FoundationPose", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8569032420063036, "specialist_mean_iou": 0.7453780638702556},
+      {"method": "FoundationPose++", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8569032398110885, "specialist_mean_iou": 0.7453780485037498},
+      {"method": "MonoTracker", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.857516272621953, "specialist_mean_iou": 0.7496692781798011},
+      {"method": "BundleSDF", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8568958326118753, "specialist_mean_iou": 0.7453261981092564},
+      {"method": "CenterPoseTrack", "evaluated_samples": 0, "specialist_invoked_samples": 0, "unchanged_samples": null, "mean_iou": null, "specialist_mean_iou": null, "status": "not run"},
+      {"method": "OVOW", "evaluated_samples": 0, "specialist_invoked_samples": 0, "unchanged_samples": null, "mean_iou": null, "specialist_mean_iou": null, "status": "code not released"}
+    ],
+    "refinement_pilot": {
+      "samples": 10,
+      "before_mean_iou": 0.5986,
+      "after_mean_iou": 0.6187,
+      "before_center_rmse": 0.0591,
+      "after_center_rmse": 0.0463,
+      "changed_codes": 9
+    }
   },
   "error_propagation": {
     "effect_count": 1346,

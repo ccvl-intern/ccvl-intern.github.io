@@ -23,7 +23,7 @@ function renderHeadline(results) {
   document.querySelector('[data-stat="samples"]').textContent = results.corpus.sample_count;
   document.querySelector('[data-stat="studies"]').textContent = results.corpus.study_count;
   document.querySelector('[data-stat="mean-iou"]').textContent = percent(results.geometry.mean_sample_iou);
-  document.querySelector('[data-stat="gain"]').textContent = `+${(results.reasoning.gpt_full_gain_over_video * 100).toFixed(2)} pp`;
+  document.querySelector('[data-stat="parsing-time"]').textContent = `${results.timing.mean_exclusive_sec_per_sample.toFixed(2)} s`;
 }
 
 function renderStudyBars(studies) {
@@ -68,9 +68,38 @@ function renderTiming(timing) {
     <div class="timing-row">
       <span>${stage.label}</span>
       <div class="timing-track" title="p95 ${stage.p95.toFixed(2)} seconds"><div class="timing-fill" style="width:${(stage.p95 / max) * 100}%"></div></div>
-      <strong>${stage.mean.toFixed(2)} / ${stage.p95.toFixed(2)} s</strong>
+      <strong>${stage.mean.toFixed(2)} / ${stage.median.toFixed(2)} / ${stage.p95.toFixed(2)} s</strong>
     </div>
-  `).join("") + `<p class="timing-legend">Bars show p95 latency. Labels report mean / p95. Device: ${timing.device}; ${timing.worker_count} workers.</p>`;
+  `).join("") + `<p class="timing-legend">Bars show P95 latency. Labels report mean / median / P95. Device: ${timing.device}; ${timing.worker_count} workers.</p>`;
+}
+
+function renderParsingBaselines(baselines) {
+  const ours = baselines.parse_anything;
+  document.querySelector("#parse-anything-summary").innerHTML = `
+    <div><span>Parse Anything</span><strong>${percent(ours.mean_iou)}</strong><small>latest full-corpus rerun · mIoU mean ± SD ${percent(ours.sample_iou_std)}</small></div>
+    <div><span>Corpus evaluated</span><strong>${ours.evaluated_samples}</strong><small>Physics-280</small></div>
+    <div><span>Micro IoU</span><strong>${percent(ours.micro_iou)}</strong><small>prediction coverage ${percent(ours.prediction_coverage)}</small></div>`;
+
+  document.querySelector("#direct-vlm-table-body").innerHTML = baselines.direct_vlm.map(row => `
+    <tr><td>${row.method}</td><td>280</td><td>${percent(row.mean_iou)}</td><td>${percent(row.coverage)}</td></tr>
+  `).join("");
+
+  document.querySelector("#specialist-table-body").innerHTML = baselines.specialists.map(row => `
+    <tr>
+      <td>${row.method}${row.status ? `<small>${row.status}</small>` : ""}</td>
+      <td>${row.evaluated_samples || "N/A"}</td>
+      <td>${row.specialist_invoked_samples || "N/A"}</td>
+      <td>${percent(row.mean_iou)}</td>
+    </tr>
+  `).join("");
+}
+
+function renderRefinement(refinement) {
+  document.querySelector("#refinement-summary").innerHTML = `
+    <div><span>Target-blind Hamrick pilot</span><strong>${refinement.samples} samples</strong></div>
+    <div><span>mIoU</span><strong>${percent(refinement.before_mean_iou)} → ${percent(refinement.after_mean_iou)}</strong></div>
+    <div><span>Center RMSE</span><strong>${refinement.before_center_rmse.toFixed(4)} → ${refinement.after_center_rmse.toFixed(4)}</strong></div>
+    <div><span>Canonical codes changed</span><strong>${refinement.changed_codes} / ${refinement.samples}</strong></div>`;
 }
 
 function renderDistribution(rootSelector, entries, total) {
@@ -131,6 +160,8 @@ async function loadData() {
   renderStudyBars(state.results.geometry.studies);
   renderReasoning(state.results.reasoning.conditions);
   renderTiming(state.results.timing);
+  renderParsingBaselines(state.results.parsing_baselines);
+  renderRefinement(state.results.parsing_baselines.refinement_pilot);
   renderErrorPropagation(state.results.error_propagation);
   setCodeTab("identity_relations_camera");
 }
