@@ -377,9 +377,12 @@ h2 {
 .geometry-summary strong { display: block; color: var(--cobalt-dark); font-size: 22px; line-height: 1.1; }
 .geometry-summary span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }
 
-.result-slide-figure { margin: 0; }
-.result-slide-figure img { display: block; width: 100%; border: 1px solid var(--line); }
-.result-slide-figure figcaption { margin-top: 10px; color: var(--muted); font-size: 11px; }
+.study-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+.mini-bar-row { display: grid; grid-template-columns: 112px 1fr 45px; align-items: center; gap: 9px; min-width: 0; font-size: 11px; }
+.mini-bar-row > span:first-child { overflow: hidden; color: var(--ink-2); text-overflow: ellipsis; white-space: nowrap; }
+.mini-bar-track { height: 7px; overflow: hidden; background: #e7ebf2; border-radius: 2px; }
+.mini-bar-fill { height: 100%; background: var(--cobalt); }
+.mini-bar-row > strong { color: var(--ink-2); font-size: 11px; text-align: right; }
 
 .baseline-summary {
   display: grid;
@@ -621,6 +624,7 @@ h2 {
   .geometry-summary { grid-template-columns: 1fr; }
   .geometry-summary > div { padding: 14px 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .geometry-summary > div:last-child { border-bottom: 0; }
+  .study-bars { grid-template-columns: 1fr; }
   .baseline-summary { grid-template-columns: 1fr; }
   .baseline-summary > div { min-height: 92px; border-right: 0; border-bottom: 1px solid var(--line); }
   .baseline-summary > div:last-child { border-bottom: 0; }

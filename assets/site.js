@@ -52,6 +52,17 @@ function renderHeadline(results) {
   document.querySelector('[data-stat="parsing-time"]').textContent = `${results.timing.mean_exclusive_sec_per_sample.toFixed(2)} s`;
 }
 
+function renderStudyBars(studies) {
+  const root = document.querySelector("#study-bars");
+  root.innerHTML = studies.map(study => `
+    <div class="mini-bar-row" title="${study.label}: ${percent(study.mean_iou)} mIoU">
+      <span>${study.label}</span>
+      <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${study.mean_iou * 100}%"></div></div>
+      <strong>${percent(study.mean_iou, 1)}</strong>
+    </div>
+  `).join("");
+}
+
 function renderTiming(timing) {
   const max = Math.max(...timing.stages.map(stage => stage.p95));
   document.querySelector("#stage-timing").innerHTML = timing.stages.map(stage => `
@@ -122,6 +133,7 @@ async function loadData() {
   state.results = await resultsResponse.json();
   state.code = await codeResponse.json();
   renderHeadline(state.results);
+  renderStudyBars(state.results.geometry.studies);
   renderTiming(state.results.timing);
   renderParsingBaselines(state.results.parsing_baselines);
   renderRefinement(state.results.parsing_baselines.refinement_pilot);
