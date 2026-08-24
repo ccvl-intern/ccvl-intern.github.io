@@ -121,12 +121,15 @@ function renderErrorPropagation(data) {
   renderDistribution("#classification-chart", Object.entries(data.classification), data.effect_count);
 }
 
-function setCodeTab(tabName) {
-  document.querySelectorAll("[data-code-tab]").forEach(button => {
-    button.setAttribute("aria-selected", String(button.dataset.codeTab === tabName));
-  });
+function renderUnifiedCode() {
+  const { identity_relations_camera, direct_fields, computed_fields } = state.code;
+  const unifiedCode = {
+    ...identity_relations_camera,
+    direct_fields,
+    computed_fields,
+  };
   const output = document.querySelector("#code-output");
-  output.innerHTML = syntaxHighlight(state.code[tabName]);
+  output.innerHTML = syntaxHighlight(unifiedCode);
   output.parentElement.scrollTop = 0;
 }
 
@@ -141,8 +144,6 @@ function bindInteractions() {
     nav.classList.remove("open");
     toggle.setAttribute("aria-expanded", "false");
   }));
-
-  document.querySelectorAll("[data-code-tab]").forEach(button => button.addEventListener("click", () => setCodeTab(button.dataset.codeTab)));
 
   document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
     const filter = button.dataset.filter;
@@ -163,7 +164,7 @@ async function loadData() {
   renderParsingBaselines(state.results.parsing_baselines);
   renderRefinement(state.results.parsing_baselines.refinement_pilot);
   renderErrorPropagation(state.results.error_propagation);
-  setCodeTab("identity_relations_camera");
+  renderUnifiedCode();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
