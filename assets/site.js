@@ -19,30 +19,25 @@ function syntaxHighlightJson(value) {
   });
 }
 
-function compactObject(lines, key, value, indent, trailingComma) {
-  const pad = " ".repeat(indent);
-  const childPad = " ".repeat(indent + 2);
-  const entries = Object.entries(value);
-  lines.push(`${pad}${JSON.stringify(key)}: {`);
-  entries.forEach(([childKey, childValue], index) => {
-    const comma = index < entries.length - 1 ? "," : "";
-    lines.push(`${childPad}${JSON.stringify(childKey)}: ${JSON.stringify(childValue)}${comma}`);
-  });
-  lines.push(`${pad}}${trailingComma ? "," : ""}`);
-}
-
 function formatUnifiedCode(code) {
-  const identity = code.identity_relations_camera;
   const lines = ["{"];
-  lines.push(`  "code_id": ${JSON.stringify(identity.code_id)},`);
-  lines.push(`  "sample_id": ${JSON.stringify(identity.sample_id)},`);
-  lines.push(`  "parse_mode": ${JSON.stringify(identity.parse_mode)},`);
-  lines.push(`  "t": ${identity.camera.frame_offset},`);
-  lines.push(`  "object": ${JSON.stringify(identity.object)},`);
-  lines.push(`  "relation": ${JSON.stringify(identity.relation)},`);
-  compactObject(lines, "camera", identity.camera, 2, true);
-  compactObject(lines, "direct_fields", code.direct_fields, 2, true);
-  compactObject(lines, "computed_fields", code.computed_fields, 2, false);
+  const metadata = Object.entries(code).filter(([key]) => key !== "frames");
+  metadata.forEach(([key, value]) => lines.push(`  ${JSON.stringify(key)}: ${JSON.stringify(value)},`));
+  lines.push('  "frames": [');
+  code.frames.forEach((frame, frameIndex) => {
+    const comma = frameIndex < code.frames.length - 1 ? "," : "";
+    lines.push(`    {"t": ${frame.t}, "timestamp_sec": ${frame.timestamp_sec}, "source_frame": ${frame.source_frame},`);
+    lines.push(`      "bbox_2d": ${JSON.stringify(frame.bbox_2d)}, "center_2d": ${JSON.stringify(frame.center_2d)}, "mask_score": ${frame.mask_score},`);
+    lines.push(`      "camera_intrinsics": ${JSON.stringify(frame.camera_intrinsics)},`);
+    lines.push(`      "camera_pose": ${JSON.stringify(frame.camera_pose)},`);
+    lines.push(`      "camera_roundtrip_error_px": ${frame.camera_roundtrip_error_px},`);
+    lines.push(`      "center_3d": ${JSON.stringify(frame.center_3d)},`);
+    lines.push(`      "bbox_3d_center": ${JSON.stringify(frame.bbox_3d_center)}, "bbox_3d_size": ${JSON.stringify(frame.bbox_3d_size)},`);
+    lines.push(`      "bbox_3d_rotation": ${JSON.stringify(frame.bbox_3d_rotation)},`);
+    lines.push(`      "bbox_3d_source": ${JSON.stringify(frame.bbox_3d_source)}, "bbox_3d_confidence": ${frame.bbox_3d_confidence},`);
+    lines.push(`      "visibility": ${frame.visibility}}${comma}`);
+  });
+  lines.push("  ]");
   lines.push("}");
   return lines.join("\n");
 }
