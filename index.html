@@ -54,7 +54,7 @@
       <div class="shell metric-grid">
         <div><strong data-stat="samples">280</strong><span>parsed videos</span></div>
         <div><strong data-stat="studies">14</strong><span>physics studies</span></div>
-        <div><strong data-stat="mean-iou">84.14%</strong><span>mIoU</span></div>
+        <div><strong data-stat="mean-iou">84.14% ± 10.89%</strong><span>mIoU mean ± sample SD</span></div>
         <div><strong data-stat="parsing-time">41.47 s</strong><span>mean parsing time</span></div>
       </div>
     </section>
@@ -119,10 +119,13 @@
         <section class="result-block" aria-labelledby="geometry-title">
           <div class="result-title-row"><h3 id="geometry-title">Original Video v.s. Our Parsed Code Visualization</h3><span>20 samples / study</span></div>
           <div class="geometry-summary">
-            <div><strong>84.14%</strong><span>mIoU</span></div>
+            <div><strong data-stat="mean-iou-summary">84.14% ± 10.89%</strong><span>mIoU mean ± sample SD</span></div>
             <div><strong>280</strong><span>Evaluated samples</span></div>
           </div>
-          <div class="study-bars" id="study-bars" aria-label="Per-study mean IoU chart"></div>
+          <figure class="result-slide-figure">
+            <img src="assets/slides/parsing-accuracy-miou.png" alt="Slide table reporting mIoU for each of the 14 Physics-280 studies.">
+            <figcaption>Per-study parsing accuracy visualization from the project slides.</figcaption>
+          </figure>
         </section>
       </div>
     </section>

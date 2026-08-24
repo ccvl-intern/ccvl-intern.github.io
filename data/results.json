@@ -12,6 +12,7 @@
   },
   "geometry": {
     "mean_sample_iou": 0.841421812642888,
+    "sample_iou_std": 0.108948653894,
     "record_count": 11194,
     "studies": [
       {"id": "bass2022_partial", "label": "Bass 2022", "mean_iou": 0.8972326224807776},
@@ -62,8 +63,8 @@
     ],
     "parse_anything": {
       "evaluated_samples": 280,
-      "mean_iou": 0.8508,
-      "sample_iou_std": 0.1058
+      "mean_iou": 0.841421812642888,
+      "sample_iou_std": 0.108948653894
     },
     "specialists": [
       {"method": "Any4D", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8377582113544921, "specialist_mean_iou": 0.6113628493075752},

@@ -4,6 +4,7 @@ const state = {
 };
 
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
+const meanWithStd = (mean, std) => `${percent(mean)} ± ${percent(std)}`;
 
 function syntaxHighlightJson(value) {
   const json = value
@@ -45,19 +46,10 @@ function formatUnifiedCode(code) {
 function renderHeadline(results) {
   document.querySelector('[data-stat="samples"]').textContent = results.corpus.sample_count;
   document.querySelector('[data-stat="studies"]').textContent = results.corpus.study_count;
-  document.querySelector('[data-stat="mean-iou"]').textContent = percent(results.geometry.mean_sample_iou);
+  const iouSummary = meanWithStd(results.geometry.mean_sample_iou, results.geometry.sample_iou_std);
+  document.querySelector('[data-stat="mean-iou"]').textContent = iouSummary;
+  document.querySelector('[data-stat="mean-iou-summary"]').textContent = iouSummary;
   document.querySelector('[data-stat="parsing-time"]').textContent = `${results.timing.mean_exclusive_sec_per_sample.toFixed(2)} s`;
-}
-
-function renderStudyBars(studies) {
-  const root = document.querySelector("#study-bars");
-  root.innerHTML = studies.map(study => `
-    <div class="mini-bar-row" title="${study.label}: ${percent(study.mean_iou)} mIoU">
-      <span>${study.label}</span>
-      <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${study.mean_iou * 100}%"></div></div>
-      <strong>${percent(study.mean_iou, 1)}</strong>
-    </div>
-  `).join("");
 }
 
 function renderTiming(timing) {
@@ -74,7 +66,7 @@ function renderTiming(timing) {
 function renderParsingBaselines(baselines) {
   const ours = baselines.parse_anything;
   document.querySelector("#parse-anything-summary").innerHTML = `
-    <div><span>Parse Anything</span><strong>${percent(ours.mean_iou)}</strong><small>latest full-corpus rerun · mIoU mean ± SD ${percent(ours.sample_iou_std)}</small></div>
+    <div><span>Parse Anything</span><strong>${meanWithStd(ours.mean_iou, ours.sample_iou_std)}</strong><small>Physics-280 mIoU mean ± sample SD</small></div>
     <div><span>Corpus evaluated</span><strong>${ours.evaluated_samples}</strong><small>Physics-280</small></div>`;
 
   document.querySelector("#direct-vlm-table-body").innerHTML = baselines.direct_vlm.map(row => `
@@ -130,7 +122,6 @@ async function loadData() {
   state.results = await resultsResponse.json();
   state.code = await codeResponse.json();
   renderHeadline(state.results);
-  renderStudyBars(state.results.geometry.studies);
   renderTiming(state.results.timing);
   renderParsingBaselines(state.results.parsing_baselines);
   renderRefinement(state.results.parsing_baselines.refinement_pilot);
