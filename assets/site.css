@@ -354,13 +354,13 @@ h2 {
 
 .representation-layout { display: block; }
 
-.code-tool { min-height: 690px; overflow: hidden; background: #111c2c; border: 1px solid #33435a; border-radius: var(--radius); }
+.code-tool { overflow: hidden; background: #111c2c; border: 1px solid #33435a; border-radius: var(--radius); }
 .code-heading { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 15px 20px; border-bottom: 1px solid #33435a; }
 .code-heading > div { min-width: 0; }
 .code-heading strong { display: block; color: var(--white); font-size: 15px; }
 .code-heading span { display: block; margin-top: 4px; color: #8fa0b8; font-size: 12px; line-height: 1.45; }
 .code-heading .code-format { flex: 0 0 auto; margin: 0; padding: 5px 8px; color: #a9c8ff; border: 1px solid #49617e; border-radius: 3px; font: 700 10px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-.code-panel { height: 568px; margin: 0; padding: 24px 26px; overflow: auto; color: #d7e8ff; background: #0c1422; font: 13px/1.68 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-wrap: anywhere; white-space: pre-wrap; }
+.code-panel { height: auto; margin: 0; padding: 22px 26px; overflow: visible; color: #d7e8ff; background: #0c1422; font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-wrap: anywhere; white-space: pre-wrap; }
 .code-panel .json-key { color: #82b1ff; }
 .code-panel .json-string { color: #83d5c4; }
 .code-panel .json-number { color: #f3c36e; }
@@ -685,9 +685,8 @@ h2 {
   .stage-flow article:last-child { border-bottom: 0; }
   .pipeline-figure, .slide-figure { width: 100%; overflow: hidden; }
   .pipeline-figure img, .slide-figure img { width: 100%; min-width: 0; }
-  .code-tool { min-height: 570px; }
   .code-heading { align-items: flex-start; }
-  .code-panel { height: 440px; font-size: 11px; }
+  .code-panel { padding: 20px; font-size: 10.5px; }
   .geometry-summary { grid-template-columns: 1fr; }
   .geometry-summary > div { padding: 14px 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .geometry-summary > div:last-child { border-bottom: 0; }

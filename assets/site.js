@@ -5,8 +5,8 @@ const state = {
 
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
 
-function syntaxHighlight(value) {
-  const json = JSON.stringify(value, null, 2)
+function syntaxHighlightJson(value) {
+  const json = value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
@@ -17,6 +17,34 @@ function syntaxHighlight(value) {
     else if (/null/.test(match)) type = "json-boolean";
     return `<span class="${type}">${match}</span>`;
   });
+}
+
+function compactObject(lines, key, value, indent, trailingComma) {
+  const pad = " ".repeat(indent);
+  const childPad = " ".repeat(indent + 2);
+  const entries = Object.entries(value);
+  lines.push(`${pad}${JSON.stringify(key)}: {`);
+  entries.forEach(([childKey, childValue], index) => {
+    const comma = index < entries.length - 1 ? "," : "";
+    lines.push(`${childPad}${JSON.stringify(childKey)}: ${JSON.stringify(childValue)}${comma}`);
+  });
+  lines.push(`${pad}}${trailingComma ? "," : ""}`);
+}
+
+function formatUnifiedCode(code) {
+  const identity = code.identity_relations_camera;
+  const lines = ["{"];
+  lines.push(`  "code_id": ${JSON.stringify(identity.code_id)},`);
+  lines.push(`  "sample_id": ${JSON.stringify(identity.sample_id)},`);
+  lines.push(`  "parse_mode": ${JSON.stringify(identity.parse_mode)},`);
+  lines.push(`  "t": ${identity.camera.frame_offset},`);
+  lines.push(`  "object": ${JSON.stringify(identity.object)},`);
+  lines.push(`  "relation": ${JSON.stringify(identity.relation)},`);
+  compactObject(lines, "camera", identity.camera, 2, true);
+  compactObject(lines, "direct_fields", code.direct_fields, 2, true);
+  compactObject(lines, "computed_fields", code.computed_fields, 2, false);
+  lines.push("}");
+  return lines.join("\n");
 }
 
 function renderHeadline(results) {
@@ -122,14 +150,8 @@ function renderErrorPropagation(data) {
 }
 
 function renderUnifiedCode() {
-  const { identity_relations_camera, direct_fields, computed_fields } = state.code;
-  const unifiedCode = {
-    ...identity_relations_camera,
-    direct_fields,
-    computed_fields,
-  };
   const output = document.querySelector("#code-output");
-  output.innerHTML = syntaxHighlight(unifiedCode);
+  output.innerHTML = syntaxHighlightJson(formatUnifiedCode(state.code));
   output.parentElement.scrollTop = 0;
 }
 
