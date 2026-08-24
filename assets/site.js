@@ -75,11 +75,10 @@ function renderParsingBaselines(baselines) {
   const ours = baselines.parse_anything;
   document.querySelector("#parse-anything-summary").innerHTML = `
     <div><span>Parse Anything</span><strong>${percent(ours.mean_iou)}</strong><small>latest full-corpus rerun · mIoU mean ± SD ${percent(ours.sample_iou_std)}</small></div>
-    <div><span>Corpus evaluated</span><strong>${ours.evaluated_samples}</strong><small>Physics-280</small></div>
-    <div><span>Prediction coverage</span><strong>${percent(ours.prediction_coverage)}</strong><small>valid predicted boxes</small></div>`;
+    <div><span>Corpus evaluated</span><strong>${ours.evaluated_samples}</strong><small>Physics-280</small></div>`;
 
   document.querySelector("#direct-vlm-table-body").innerHTML = baselines.direct_vlm.map(row => `
-    <tr><td>${row.method}</td><td>280</td><td>${percent(row.mean_iou)}</td><td>${percent(row.coverage)}</td></tr>
+    <tr><td>${row.method}</td><td>280</td><td>${percent(row.mean_iou)}</td></tr>
   `).join("");
 
   document.querySelector("#specialist-table-body").innerHTML = baselines.specialists.map(row => `

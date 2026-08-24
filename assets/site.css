@@ -370,7 +370,7 @@ h2 {
 .result-title-row h3 { margin: 0; font-size: 19px; }
 .result-title-row span { color: var(--muted); font-size: 12px; }
 
-.geometry-summary { margin: 24px 0 30px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.geometry-summary { margin: 24px 0 30px; display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .geometry-summary > div { padding: 19px 13px; border-right: 1px solid var(--line); }
 .geometry-summary > div:first-child { padding-left: 0; }
 .geometry-summary > div:last-child { border-right: 0; }
@@ -386,7 +386,7 @@ h2 {
 
 .baseline-summary {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   margin-bottom: 28px;
   background: var(--white);
   border: 1px solid var(--line-strong);
