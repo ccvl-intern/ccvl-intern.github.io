@@ -224,7 +224,7 @@
       <div class="shell section-heading">
         <p class="section-index">06 · Video consistency</p>
         <h2>Method for Agentic Refinement</h2>
-        <p>The VLM Verifier compares the Render with the Original Video and returns a Refine instruction to the Agent.</p>
+        <p>Qwen3-VL-8B-Thinking writes a typed Blender observation program, compares the render with the original video, and edits only prediction-derived geometry until fit, stability, and temporal consistency pass. Released ground truth is loaded only after the complete code history is frozen.</p>
       </div>
       <figure class="slide-figure shell">
         <img src="assets/slides/agentic-refinement.png" alt="Agentic refinement loop from parsed code to agent, Blender program, render, VLM verifier, and refinement against the original video.">

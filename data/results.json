@@ -84,10 +84,19 @@
       {"group": "Ours", "method": "ParseAnything", "mean_iou": 0.841421812642888, "sample_iou_std": 0.1088, "rpe_1_frame": 0.0726, "rpe_1_frame_std": 0.1143, "rpe_0_5_sec": 0.0724, "rpe_0_5_sec_std": 0.1125, "rpe_1_sec": 0.0732, "rpe_1_sec_std": 0.1105}
     ],
     "refinement_pilot": {
-      "status": "running",
-      "label": "Evaluation in progress",
+      "status": "accepted",
+      "label": "Post-freeze audit passed",
       "samples": 10,
-      "evaluation_policy": "Publish only after target-blind refinement and held-out GT audit complete"
+      "changed_codes": 9,
+      "before_mean_iou": 0.5986289252911472,
+      "before_sample_iou_std": 0.12475306458742413,
+      "after_mean_iou": 0.6186905040470605,
+      "after_sample_iou_std": 0.07010510022002836,
+      "before_center_rmse": 0.059147072881428966,
+      "after_center_rmse": 0.04631221146696726,
+      "target_blind": true,
+      "ground_truth_loaded_after_freeze": true,
+      "evaluation_policy": "Original-video comparison only during refinement; released GT loaded after every code and iteration snapshot was frozen"
     }
   }
 }

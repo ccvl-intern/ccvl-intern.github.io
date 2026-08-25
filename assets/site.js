@@ -110,7 +110,7 @@ function renderRefinement(refinement) {
   }
   document.querySelector("#refinement-summary").innerHTML = `
     <div><span>Target-blind Hamrick pilot</span><strong>${refinement.samples} samples</strong></div>
-    <div><span>mIoU</span><strong>${percent(refinement.before_mean_iou)} → ${percent(refinement.after_mean_iou)}</strong></div>
+    <div><span>mIoU mean</span><strong>${percent(refinement.before_mean_iou)} → ${percent(refinement.after_mean_iou)}</strong><small>sample SD ${percent(refinement.before_sample_iou_std)} → ${percent(refinement.after_sample_iou_std)}</small></div>
     <div><span>Center RMSE</span><strong>${refinement.before_center_rmse.toFixed(4)} → ${refinement.after_center_rmse.toFixed(4)}</strong></div>
     <div><span>Canonical codes changed</span><strong>${refinement.changed_codes} / ${refinement.samples}</strong></div>`;
 }
