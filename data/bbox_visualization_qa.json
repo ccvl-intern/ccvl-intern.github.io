@@ -1,0 +1,15 @@
+{
+  "blank_required_frame_count": 0,
+  "broken_gallery_asset_count": 0,
+  "broken_gallery_assets": [],
+  "failure_count": 0,
+  "failures": [],
+  "gallery_image_count": 280,
+  "nonblank_required_frame_count": 4439,
+  "sample_count": 280,
+  "schema_version": "2.0.0",
+  "spatial_evidence_frame_count": 4439,
+  "status": "passed",
+  "temporal_change_expected_count": 226,
+  "temporal_change_pass_count": 226
+}

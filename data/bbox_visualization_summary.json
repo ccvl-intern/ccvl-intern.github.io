@@ -1,0 +1,41 @@
+{
+  "array_artifact_access_failures": 0,
+  "bbox2d_record_count": 22302,
+  "bbox2d_render_failures": 0,
+  "bbox3d_projection_failures": 0,
+  "bbox3d_record_count": 7297,
+  "canonical_frame_count": 4439,
+  "future_physics_rollout": false,
+  "interpretation": "observed_state_reconstruction",
+  "non_bbox_input_failures": 0,
+  "object_count": 1988,
+  "parse_mode_counts": {
+    "dynamic_2d": 206,
+    "dynamic_3d_full": 20,
+    "frozen_3d_observation": 20,
+    "static_2d_observation": 34
+  },
+  "rendered_object_count": 1988,
+  "sample_count": 280,
+  "schema_version": "2.0.0",
+  "source_pixel_leakage_failures": 0,
+  "status": "passed",
+  "study_count": 14,
+  "study_counts": {
+    "bass2022_partial": 20,
+    "bates2019_modeling": 20,
+    "beller2020_language": 20,
+    "beller2025_multimodal": 20,
+    "gerstenberg2021_counterfactual": 20,
+    "gerstenberg2022_what": 20,
+    "hamrick2016_inferring": 20,
+    "smith2019_modeling": 20,
+    "sosa2021_moral": 20,
+    "sosa2025_blending": 20,
+    "stephan2021_counterfactual": 20,
+    "ullman2018_learning": 20,
+    "wu2022_that": 20,
+    "zhou2023_mental": 20
+  },
+  "total_gif_bytes": 105021433
+}

@@ -1,9 +1,12 @@
 {
-  "schema_version": "ccvl_demo_results.2",
+  "schema_version": "ccvl_demo_results.3",
   "generated_from": [
     "Physics_4DCode_20_Examples/analysis/timing/summary.json",
-    "outputs/physics_280_parsing_baselines/consolidated/specialist_metrics.csv",
-    "outputs/physics_280_parsing_baselines/consolidated/summary.json"
+    "docs/physics_280_final_parsing_evaluation_20260824.md",
+    "docs/physics_280_parsing_table.tex",
+    "physics_280_reconstructions_bbox_only_20260812_r2/summary.json",
+    "physics_280_reconstructions_bbox_only_20260812_r2/qa_summary.json",
+    "ccvl-0819.pptx slides 13-15"
   ],
   "corpus": {
     "sample_count": 280,
@@ -12,7 +15,7 @@
   },
   "geometry": {
     "mean_sample_iou": 0.841421812642888,
-    "sample_iou_std": 0.108948653894,
+    "sample_iou_std": 0.1088,
     "record_count": 11194,
     "studies": [
       {"id": "bass2022_partial", "label": "Bass 2022", "mean_iou": 0.8972326224807776},
@@ -44,44 +47,47 @@
       {"id": "tracker", "label": "Points Tracker", "mean": 11.63, "median": 13.24, "p95": 17.03, "count": 40}
     ]
   },
+  "bbox_visualization": {
+    "status": "passed",
+    "sample_count": 280,
+    "canonical_frame_count": 4439,
+    "bbox_2d_record_count": 22302,
+    "bbox_3d_record_count": 7297,
+    "source_pixel_leakage_failures": 0,
+    "bbox_render_or_projection_failures": 0,
+    "blank_required_frame_count": 0,
+    "broken_gallery_asset_count": 0,
+    "displayed_slide_gif_count": 12,
+    "displayed_slide_numbers": [13, 14, 15],
+    "temporal_change_pass_count": 226,
+    "temporal_change_expected_count": 226
+  },
   "parsing_baselines": {
-    "direct_vlm": [
-      {"method": "Qwen3-VL-2B-Instruct", "mean_iou": 0.0181},
-      {"method": "Qwen3-VL-2B-Thinking", "mean_iou": 0.0063},
-      {"method": "Qwen3-VL-4B-Instruct", "mean_iou": 0.0210},
-      {"method": "Qwen3-VL-4B-Thinking", "mean_iou": 0.0782},
-      {"method": "Qwen3-VL-8B-Instruct", "mean_iou": 0.0987},
-      {"method": "Qwen3-VL-8B-Thinking", "mean_iou": 0.1290},
-      {"method": "Qwen3.5-4B", "mean_iou": 0.0597},
-      {"method": "Qwen3.5-9B", "mean_iou": 0.1037},
-      {"method": "Molmo2-O-7B", "mean_iou": 0.0120},
-      {"method": "GLM-4.1V-9B-Thinking", "mean_iou": 0.2289},
-      {"method": "InternVideo2_5_Chat_8B", "mean_iou": 0.0001},
-      {"method": "InternVL3_5-8B", "mean_iou": 0.0195},
-      {"method": "InternVL3_5-4B", "mean_iou": 0.0086},
-      {"method": "InternVL3_5-2B", "mean_iou": 0.0078}
-    ],
-    "parse_anything": {
-      "evaluated_samples": 280,
-      "mean_iou": 0.841421812642888,
-      "sample_iou_std": 0.108948653894
-    },
-    "specialists": [
-      {"method": "Any4D", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8377582113544921, "specialist_mean_iou": 0.6113628493075752},
-      {"method": "FoundationPose", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8569032420063036, "specialist_mean_iou": 0.7453780638702556},
-      {"method": "FoundationPose++", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8569032398110885, "specialist_mean_iou": 0.7453780485037498},
-      {"method": "MonoTracker", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.857516272621953, "specialist_mean_iou": 0.7496692781798011},
-      {"method": "BundleSDF", "evaluated_samples": 280, "specialist_invoked_samples": 40, "unchanged_samples": 240, "mean_iou": 0.8568958326118753, "specialist_mean_iou": 0.7453261981092564},
-      {"method": "CenterPoseTrack", "evaluated_samples": 0, "specialist_invoked_samples": 0, "unchanged_samples": null, "mean_iou": null, "specialist_mean_iou": null, "status": "not run"},
-      {"method": "OVOW", "evaluated_samples": 0, "specialist_invoked_samples": 0, "unchanged_samples": null, "mean_iou": null, "specialist_mean_iou": null, "status": "code not released"}
+    "methods": [
+      {"group": "VLM", "method": "Qwen3-VL-2B-Instruct", "mean_iou": 0.0181, "sample_iou_std": 0.1135, "rpe_1_frame": 0.9930, "rpe_1_frame_std": 0.0327, "rpe_0_5_sec": 0.9939, "rpe_0_5_sec_std": 0.0265, "rpe_1_sec": 0.9953, "rpe_1_sec_std": 0.0228},
+      {"group": "VLM", "method": "Qwen3-VL-2B-Thinking", "mean_iou": 0.0063, "sample_iou_std": 0.0378, "rpe_1_frame": 0.9975, "rpe_1_frame_std": 0.0280, "rpe_0_5_sec": 0.9978, "rpe_0_5_sec_std": 0.0255, "rpe_1_sec": 0.9985, "rpe_1_sec_std": 0.0169},
+      {"group": "VLM", "method": "Qwen3-VL-4B-Instruct", "mean_iou": 0.0210, "sample_iou_std": 0.0512, "rpe_1_frame": 0.7576, "rpe_1_frame_std": 0.2812, "rpe_0_5_sec": 0.7676, "rpe_0_5_sec_std": 0.2783, "rpe_1_sec": 0.7888, "rpe_1_sec_std": 0.2733},
+      {"group": "VLM", "method": "Qwen3-VL-4B-Thinking", "mean_iou": 0.0782, "sample_iou_std": 0.1219, "rpe_1_frame": 0.5375, "rpe_1_frame_std": 0.3256, "rpe_0_5_sec": 0.5549, "rpe_0_5_sec_std": 0.3165, "rpe_1_sec": 0.5785, "rpe_1_sec_std": 0.3113},
+      {"group": "VLM", "method": "Qwen3-VL-8B-Instruct", "mean_iou": 0.0987, "sample_iou_std": 0.1632, "rpe_1_frame": 0.5407, "rpe_1_frame_std": 0.3646, "rpe_0_5_sec": 0.5513, "rpe_0_5_sec_std": 0.3560, "rpe_1_sec": 0.5709, "rpe_1_sec_std": 0.3537},
+      {"group": "VLM", "method": "Qwen3-VL-8B-Thinking", "mean_iou": 0.1290, "sample_iou_std": 0.1521, "rpe_1_frame": 0.3664, "rpe_1_frame_std": 0.2997, "rpe_0_5_sec": 0.3773, "rpe_0_5_sec_std": 0.2919, "rpe_1_sec": 0.3923, "rpe_1_sec_std": 0.2885},
+      {"group": "VLM", "method": "Qwen3.5-4B", "mean_iou": 0.0597, "sample_iou_std": 0.0821, "rpe_1_frame": 0.3285, "rpe_1_frame_std": 0.2949, "rpe_0_5_sec": 0.3381, "rpe_0_5_sec_std": 0.2896, "rpe_1_sec": 0.3519, "rpe_1_sec_std": 0.2818},
+      {"group": "VLM", "method": "Qwen3.5-9B", "mean_iou": 0.1037, "sample_iou_std": 0.1061, "rpe_1_frame": 0.2450, "rpe_1_frame_std": 0.2631, "rpe_0_5_sec": 0.2560, "rpe_0_5_sec_std": 0.2575, "rpe_1_sec": 0.2703, "rpe_1_sec_std": 0.2493},
+      {"group": "VLM", "method": "Molmo2-O-7B", "mean_iou": 0.0120, "sample_iou_std": 0.0333, "rpe_1_frame": 0.9471, "rpe_1_frame_std": 0.1531, "rpe_0_5_sec": 0.9554, "rpe_0_5_sec_std": 0.1473, "rpe_1_sec": 0.9634, "rpe_1_sec_std": 0.1427},
+      {"group": "VLM", "method": "GLM-4.1V-9B-Thinking", "mean_iou": 0.2289, "sample_iou_std": 0.2043, "rpe_1_frame": 0.3855, "rpe_1_frame_std": 0.3228, "rpe_0_5_sec": 0.3949, "rpe_0_5_sec_std": 0.3196, "rpe_1_sec": 0.4171, "rpe_1_sec_std": 0.3251},
+      {"group": "VLM", "method": "InternVideo2.5-Chat-8B", "mean_iou": 0.0001, "sample_iou_std": 0.0010, "rpe_1_frame": 0.9987, "rpe_1_frame_std": 0.0046, "rpe_0_5_sec": 0.9991, "rpe_0_5_sec_std": 0.0037, "rpe_1_sec": 0.9999, "rpe_1_sec_std": 0.0007},
+      {"group": "VLM", "method": "InternVL3.5-8B", "mean_iou": 0.0195, "sample_iou_std": 0.0340, "rpe_1_frame": 0.5965, "rpe_1_frame_std": 0.2770, "rpe_0_5_sec": 0.6068, "rpe_0_5_sec_std": 0.2747, "rpe_1_sec": 0.6248, "rpe_1_sec_std": 0.2746},
+      {"group": "VLM", "method": "InternVL3.5-4B", "mean_iou": 0.0086, "sample_iou_std": 0.0228, "rpe_1_frame": 0.6994, "rpe_1_frame_std": 0.2731, "rpe_0_5_sec": 0.7042, "rpe_0_5_sec_std": 0.2738, "rpe_1_sec": 0.7241, "rpe_1_sec_std": 0.2646},
+      {"group": "VLM", "method": "InternVL3.5-2B", "mean_iou": 0.0078, "sample_iou_std": 0.0179, "rpe_1_frame": 0.6611, "rpe_1_frame_std": 0.3067, "rpe_0_5_sec": 0.6707, "rpe_0_5_sec_std": 0.3032, "rpe_1_sec": 0.6886, "rpe_1_sec_std": 0.2956},
+      {"group": "Parsing Models", "method": "Any4D", "mean_iou": 0.8378, "sample_iou_std": 0.1395, "rpe_1_frame": 0.0726, "rpe_1_frame_std": 0.1143, "rpe_0_5_sec": 0.0724, "rpe_0_5_sec_std": 0.1125, "rpe_1_sec": 0.0732, "rpe_1_sec_std": 0.1105},
+      {"group": "Parsing Models", "method": "Trace Anything", "mean_iou": 0.8027, "sample_iou_std": 0.2227, "rpe_1_frame": 0.0751, "rpe_1_frame_std": 0.1145, "rpe_0_5_sec": 0.0748, "rpe_0_5_sec_std": 0.1128, "rpe_1_sec": 0.0758, "rpe_1_sec_std": 0.1110},
+      {"group": "Parsing Models", "method": "MotionCrafter", "mean_iou": 0.7909, "sample_iou_std": 0.2344, "rpe_1_frame": 0.0751, "rpe_1_frame_std": 0.1145, "rpe_0_5_sec": 0.0748, "rpe_0_5_sec_std": 0.1128, "rpe_1_sec": 0.0758, "rpe_1_sec_std": 0.1110},
+      {"group": "Ours", "method": "ParseAnything", "mean_iou": 0.841421812642888, "sample_iou_std": 0.1088, "rpe_1_frame": 0.0726, "rpe_1_frame_std": 0.1143, "rpe_0_5_sec": 0.0724, "rpe_0_5_sec_std": 0.1125, "rpe_1_sec": 0.0732, "rpe_1_sec_std": 0.1105}
     ],
     "refinement_pilot": {
+      "status": "running",
+      "label": "Evaluation in progress",
       "samples": 10,
-      "before_mean_iou": 0.5986,
-      "after_mean_iou": 0.6187,
-      "before_center_rmse": 0.0591,
-      "after_center_rmse": 0.0463,
-      "changed_codes": 9
+      "evaluation_policy": "Publish only after target-blind refinement and held-out GT audit complete"
     }
   }
 }

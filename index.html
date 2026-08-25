@@ -124,43 +124,28 @@
           </div>
           <div class="study-bars" id="study-bars" aria-label="Per-study mean IoU chart"></div>
         </section>
-      </div>
-    </section>
-
-    <section class="section section-soft" id="baselines">
-      <div class="shell section-heading">
-        <p class="section-index">04 · Parsing baselines</p>
-        <h2>Parsing Evaluation Baseline</h2>
-        <p>Direct VLMs predict 2D boxes and centers from RGB frames. Parse Anything uses Qwen3-VL-8B-Thinking, SAM3.1, VGGT-omega, and SpatialTrackerV2. Specialist methods are evaluated as complete 280-sample pipeline conditions.</p>
-      </div>
-      <div class="shell baseline-summary" id="parse-anything-summary" aria-label="Parse Anything full-corpus result"></div>
-      <div class="shell baseline-columns">
-        <section class="baseline-panel" aria-labelledby="vlm-baseline-title">
-          <div class="result-title-row"><h3 id="vlm-baseline-title">VLMs</h3><span>direct RGB-video prediction</span></div>
+        <div class="baseline-context">
+          <h3>Parsing Evaluation Baseline</h3>
+          <p>Direct VLMs predict boxes and centers from RGB frames. Any4D, Trace Anything, and MotionCrafter are component substitutions inside the same prediction-only pipeline. ParseAnything uses Qwen3-VL-8B-Thinking, SAM3.1, VGGT-omega, and SpatialTrackerV2.</p>
+        </div>
+        <div class="baseline-summary" id="parse-anything-summary" aria-label="ParseAnything full-corpus result"></div>
+        <div class="baseline-panel" aria-labelledby="parsing-baseline-title">
+          <div class="result-title-row"><h3 id="parsing-baseline-title">Unified Physics-280 comparison</h3><span>mean ± population SD across samples</span></div>
           <div class="compact-table-wrap" tabindex="0">
-            <table class="compact-results-table">
-              <thead><tr><th>Method</th><th>Evaluated</th><th>mIoU</th></tr></thead>
-              <tbody id="direct-vlm-table-body"></tbody>
+            <table class="compact-results-table parsing-comparison-table">
+              <thead><tr><th>Method</th><th>mIoU ↑</th><th>Center RPE@1 frame (%) ↓</th><th>Center RPE@0.5s (%) ↓</th><th>Center RPE@1s (%) ↓</th></tr></thead>
+              <tbody id="parsing-method-table-body"></tbody>
             </table>
           </div>
-        </section>
-        <section class="baseline-panel" aria-labelledby="specialist-baseline-title">
-          <div class="result-title-row"><h3 id="specialist-baseline-title">Parsing Models</h3><span>full 280-sample conditions</span></div>
-          <div class="compact-table-wrap" tabindex="0">
-            <table class="compact-results-table">
-              <thead><tr><th>Method</th><th>Evaluated</th><th>Specialist invoked</th><th>Full mIoU</th></tr></thead>
-              <tbody id="specialist-table-body"></tbody>
-            </table>
-          </div>
-          <p class="baseline-note">Each 3D specialist is invoked on 40 routed geometry samples. The other 240 strict-2D codes are unchanged because Analyzer and 3D Tracker roles are not invoked on that path.</p>
-        </section>
+          <p class="baseline-note">Normalized Center RPE is the relative object-center displacement residual divided by the source-frame diagonal. It is evaluated on the 130 samples with released temporal 2D-center ground truth; mIoU is evaluated on all 280 samples. MotionCrafter applies to 246 video samples and excludes 34 static images. The reported variation is population SD across samples, not random-seed variation.</p>
+        </div>
       </div>
     </section>
 
     <section class="section" id="throughput">
       <div class="shell two-column throughput-layout">
         <div>
-          <p class="section-index">05 · Throughput</p>
+          <p class="section-index">04 · Throughput</p>
           <h2>Evaluation of Parsing Efficiency (Throughput)</h2>
           <p>Identifier, 2D Mask, Analyzer, and Points Tracker timing follows the table reported in the slides.</p>
           <div class="throughput-summary"><strong>41.47 s</strong><span>mean total parsing time per sample</span></div>
@@ -173,9 +158,9 @@
 
     <section class="section" id="gallery">
       <div class="shell section-heading">
-        <p class="section-index">06 · Qualitative results</p>
+        <p class="section-index">05 · Qualitative results</p>
         <h2>Original Video v.s. Our Parsed Code Visualization</h2>
-        <p>Each animation is an accepted parsed-code visualization from the studies shown in the slides.</p>
+        <p>Each animation places the original media at left and a bbox-only reconstruction at right. The reconstruction reads only bbox2D, bbox3D, camera, object ID, and time; it does not access source pixels, masks, depth, point maps, or tracklets.</p>
       </div>
       <div class="shell gallery-controls" role="group" aria-label="Filter examples">
         <button class="active" data-filter="all">All scenes</button>
@@ -185,31 +170,51 @@
       </div>
       <div class="shell demo-grid">
         <article class="demo-card" data-mode="2d">
-          <img src="assets/demos/bass-cannonball.gif" alt="Bass 2022 cannonball scene with parsed object masks and boxes" loading="lazy">
+          <img src="assets/demos/bass-cannonball.gif" alt="Bass 2022 original scene beside a bbox-only code reconstruction" width="1292" height="382" loading="lazy">
           <div><span>2D bbox</span><h3>Bass et al., 2022</h3><p>mIoU = 89.72%</p></div>
         </article>
         <article class="demo-card" data-mode="2d">
-          <img src="assets/demos/beller-plinko.gif" alt="Beller 2025 plinko scene with parsed objects" loading="lazy">
+          <img src="assets/demos/beller2020-language.gif" alt="Beller 2020 original scene beside a bbox-only code reconstruction" width="1292" height="536" loading="lazy">
+          <div><span>2D bbox</span><h3>Beller et al., 2020</h3><p>mIoU = 89.85%</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/beller-plinko.gif" alt="Beller 2025 original scene beside a bbox-only code reconstruction" width="1260" height="576" loading="lazy">
           <div><span>2D bbox</span><h3>Beller et al., 2025</h3><p>mIoU = 81.71%</p></div>
         </article>
         <article class="demo-card" data-mode="2d">
-          <img src="assets/demos/gerstenberg-collision.gif" alt="Gerstenberg 2021 collision scene with parsed trajectories" loading="lazy">
+          <img src="assets/demos/gerstenberg-collision.gif" alt="Gerstenberg 2021 original scene beside a bbox-only code reconstruction" width="1292" height="536" loading="lazy">
           <div><span>2D bbox</span><h3>Gerstenberg et al., 2021</h3><p>mIoU = 85.93%</p></div>
         </article>
-        <article class="demo-card featured-demo" data-mode="frozen3d">
-          <img src="assets/demos/hamrick-tower.gif" alt="Hamrick 2016 rotating tower with ten oriented 3D boxes" loading="lazy">
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/gerstenberg2022-what.gif" alt="Gerstenberg 2022 original scene beside a bbox-only code reconstruction" width="1292" height="536" loading="lazy">
+          <div><span>2D bbox</span><h3>Gerstenberg et al., 2022</h3><p>mIoU = 94.92%</p></div>
+        </article>
+        <article class="demo-card" data-mode="frozen3d">
+          <img src="assets/demos/hamrick-tower.gif" alt="Hamrick 2016 original rotating tower beside ten reconstructed oriented 3D boxes" width="1292" height="536" loading="lazy">
           <div><span>3D bbox</span><h3>Hamrick et al., 2016</h3><p>mIoU = 61.24%</p></div>
         </article>
         <article class="demo-card" data-mode="dynamic3d">
-          <img src="assets/demos/smith-discontinuity.gif" alt="Smith 2019 dynamic 3D scene with parsed occluders" loading="lazy">
+          <img src="assets/demos/smith-discontinuity.gif" alt="Smith 2019 original scene beside a dynamic bbox-only code reconstruction" width="1292" height="483" loading="lazy">
           <div><span>3D bbox</span><h3>Smith et al., 2019</h3><p>mIoU = 78.05%</p></div>
         </article>
         <article class="demo-card" data-mode="2d">
-          <img src="assets/demos/ullman-rules.gif" alt="Ullman 2018 scene with parsed moving objects" loading="lazy">
+          <img src="assets/demos/sosa2021-moral.gif" alt="Sosa 2021 original scene beside a bbox-only code reconstruction" width="1292" height="416" loading="lazy">
+          <div><span>2D bbox</span><h3>Sosa et al., 2021</h3><p>mIoU = 95.49%</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/sosa2025-blending.gif" alt="Sosa 2025 original scene beside a bbox-only code reconstruction" width="844" height="576" loading="lazy">
+          <div><span>2D bbox</span><h3>Sosa et al., 2025</h3><p>mIoU = 90.62%</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/stephan-counterfactual.gif" alt="Stephan 2021 original scene beside a bbox-only code reconstruction" width="1292" height="535" loading="lazy">
+          <div><span>2D bbox</span><h3>Stephan et al., 2021</h3><p>mIoU = 82.06%</p></div>
+        </article>
+        <article class="demo-card" data-mode="2d">
+          <img src="assets/demos/ullman-rules.gif" alt="Ullman 2018 original scene beside a bbox-only code reconstruction" width="1292" height="536" loading="lazy">
           <div><span>2D bbox</span><h3>Ullman et al., 2018</h3><p>mIoU = 76.88%</p></div>
         </article>
         <article class="demo-card" data-mode="2d">
-          <img src="assets/demos/wu-gridworld.gif" alt="Wu 2022 grid world with parsed agent, doors, and paths" loading="lazy">
+          <img src="assets/demos/wu-gridworld.gif" alt="Wu 2022 original grid world beside a bbox-only code reconstruction" width="1292" height="252" loading="lazy">
           <div><span>2D bbox</span><h3>Wu et al., 2022</h3><p>mIoU = 78.56%</p></div>
         </article>
       </div>
@@ -217,7 +222,7 @@
 
     <section class="section" id="refinement">
       <div class="shell section-heading">
-        <p class="section-index">07 · Video consistency</p>
+        <p class="section-index">06 · Video consistency</p>
         <h2>Method for Agentic Refinement</h2>
         <p>The VLM Verifier compares the Render with the Original Video and returns a Refine instruction to the Agent.</p>
       </div>
@@ -230,7 +235,7 @@
     <section class="section section-callout" id="adaptive">
       <div class="shell adaptive-layout adaptive-intro">
         <div>
-          <p class="section-index">08 · Adaptive abstraction</p>
+          <p class="section-index">07 · Adaptive abstraction</p>
           <h2>Why we need task-specific abstraction</h2>
           <p>Long context, difficult to understand. Specific task needs specific information.</p>
         </div>
@@ -269,7 +274,7 @@
 
     <section class="section" id="datasets">
       <div class="shell section-heading">
-        <p class="section-index">09 · Datasets</p>
+        <p class="section-index">08 · Datasets</p>
         <h2>Physics_subsets (COCOSCI), PhysBench, and Physion</h2>
       </div>
       <div class="shell dataset-grid">

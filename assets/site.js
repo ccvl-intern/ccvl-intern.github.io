@@ -75,26 +75,39 @@ function renderTiming(timing) {
 }
 
 function renderParsingBaselines(baselines) {
-  const ours = baselines.parse_anything;
+  const ours = baselines.methods.find(row => row.group === "Ours");
   document.querySelector("#parse-anything-summary").innerHTML = `
     <div><span>Parse Anything</span><strong>${meanWithStd(ours.mean_iou, ours.sample_iou_std)}</strong><small>Physics-280 mIoU mean ± sample SD</small></div>
-    <div><span>Corpus evaluated</span><strong>${ours.evaluated_samples}</strong><small>Physics-280</small></div>`;
+    <div><span>Center RPE@1 frame</span><strong>${meanWithStd(ours.rpe_1_frame, ours.rpe_1_frame_std)}</strong><small>frame-diagonal normalized; lower is better</small></div>`;
 
-  document.querySelector("#direct-vlm-table-body").innerHTML = baselines.direct_vlm.map(row => `
-    <tr><td>${row.method}</td><td>280</td><td>${percent(row.mean_iou)}</td></tr>
-  `).join("");
-
-  document.querySelector("#specialist-table-body").innerHTML = baselines.specialists.map(row => `
-    <tr>
-      <td>${row.method}${row.status ? `<small>${row.status}</small>` : ""}</td>
-      <td>${row.evaluated_samples || "N/A"}</td>
-      <td>${row.specialist_invoked_samples || "N/A"}</td>
-      <td>${percent(row.mean_iou)}</td>
-    </tr>
-  `).join("");
+  let priorGroup = null;
+  const rows = [];
+  baselines.methods.forEach(row => {
+    if (row.group !== priorGroup) {
+      rows.push(`<tr class="method-group"><th colspan="5">${row.group}</th></tr>`);
+      priorGroup = row.group;
+    }
+    const emphasis = row.group === "Ours" ? " class=\"ours-row\"" : "";
+    rows.push(`<tr${emphasis}>
+      <td>${row.method}</td>
+      <td>${meanWithStd(row.mean_iou, row.sample_iou_std)}</td>
+      <td>${meanWithStd(row.rpe_1_frame, row.rpe_1_frame_std)}</td>
+      <td>${meanWithStd(row.rpe_0_5_sec, row.rpe_0_5_sec_std)}</td>
+      <td>${meanWithStd(row.rpe_1_sec, row.rpe_1_sec_std)}</td>
+    </tr>`);
+  });
+  document.querySelector("#parsing-method-table-body").innerHTML = rows.join("");
 }
 
 function renderRefinement(refinement) {
+  if (refinement.status !== "accepted") {
+    document.querySelector("#refinement-summary").innerHTML = `
+      <div><span>Protocol</span><strong>Target-blind</strong></div>
+      <div><span>Scope</span><strong>${refinement.samples} Hamrick samples</strong></div>
+      <div><span>Current state</span><strong>${refinement.label}</strong></div>
+      <div><span>Metrics</span><strong>Published after audit</strong></div>`;
+    return;
+  }
   document.querySelector("#refinement-summary").innerHTML = `
     <div><span>Target-blind Hamrick pilot</span><strong>${refinement.samples} samples</strong></div>
     <div><span>mIoU</span><strong>${percent(refinement.before_mean_iou)} → ${percent(refinement.after_mean_iou)}</strong></div>
