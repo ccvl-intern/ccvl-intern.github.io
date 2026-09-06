@@ -6,7 +6,8 @@
     "docs/physics_280_parsing_table.tex",
     "physics_280_reconstructions_bbox_only_20260812_r2/summary.json",
     "physics_280_reconstructions_bbox_only_20260812_r2/qa_summary.json",
-    "ccvl-0819.pptx slides 13-15"
+    "ccvl-0819.pptx slides 13-15",
+    "outputs/physics_280_uncertainty_split_20260906/report/results.json"
   ],
   "corpus": {
     "sample_count": 280,

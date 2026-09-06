@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0b1324">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning | CCVL</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="assets/site.css?v=6">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -21,12 +21,12 @@
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
       <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
-        <a href="#method">Method</a>
+        <a href="#demo">Demo</a>
+        <a href="#method">Pipeline</a>
         <a href="#representation">Code</a>
         <a href="#results">Results</a>
         <a href="#refinement">Refinement</a>
-        <a href="#adaptive">Adaptive abstraction</a>
-        <a href="#datasets">Datasets</a>
+        <a href="#adaptive">Abstraction</a>
       </nav>
     </div>
   </header>
@@ -41,10 +41,10 @@
       <div class="hero-shade"></div>
       <div class="hero-content shell">
         <h1 id="hero-title">Unified and Adaptive Visual Parser for CogGym Reasoning</h1>
-        <p class="hero-summary">Can we design a unified parser to get all the information? How can we adapt code abstraction to each task?</p>
+        <p class="hero-summary">A task-adaptive parser turns heterogeneous physics video into explicit object-centric evidence, then gives each reasoner only the code its question needs.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#method">Parsing Method</a>
-          <a class="button button-secondary" href="#gallery">Original Video v.s. Our Parsed Code Visualization</a>
+          <a class="button button-primary" href="#demo">See one complete example</a>
+          <a class="button button-secondary" href="#results">View CogGym results</a>
         </div>
       </div>
       <div class="hero-caption"><span>2D dynamics</span><span>Frozen 3D</span><span>Dynamic 3D</span></div>
@@ -54,15 +54,50 @@
       <div class="shell metric-grid">
         <div><strong data-stat="samples">280</strong><span>parsed videos</span></div>
         <div><strong data-stat="studies">14</strong><span>physics studies</span></div>
-        <div><strong data-stat="mean-iou">84.14% ± 10.89%</strong><span>mIoU mean ± sample SD</span></div>
-        <div><strong data-stat="parsing-time">41.47 s</strong><span>mean parsing time</span></div>
+        <div><strong data-stat="mean-iou">84.14% ± 10.88%</strong><span>mIoU mean ± sample SD</span></div>
+        <div><strong data-stat="questions">636</strong><span>classified questions</span></div>
+      </div>
+    </section>
+
+    <section class="section section-demo" id="demo">
+      <div class="shell section-heading">
+        <p class="section-index">01 · End-to-end example</p>
+        <h2>One video and question become a traceable answer.</h2>
+        <p>This is one exact Hamrick sample. The right animation is reconstructed from predicted bboxes and camera geometry; it never copies source pixels.</p>
+      </div>
+      <div class="shell worked-example">
+        <div class="worked-question">
+          <span>Input question · non-uncertainty</span>
+          <strong id="demo-question">Which block color is heavier: Color 1 or Color 2?</strong>
+        </div>
+        <div class="demo-media-pair">
+          <figure>
+            <div class="demo-crop demo-crop-left"><img src="assets/demos/hamrick-tower.gif" alt="Original Hamrick rotating tower video"></div>
+            <figcaption><b>Input video</b><span>Hamrick et al., 2016</span></figcaption>
+          </figure>
+          <figure>
+            <div class="demo-crop demo-crop-right"><img src="assets/demos/hamrick-tower.gif" alt="BBox-only reconstruction of the parsed Hamrick tower"></div>
+            <figcaption><b>Parsed code visualization</b><span>Bbox-only reconstruction</span></figcaption>
+          </figure>
+        </div>
+        <div class="answer-trace" aria-label="End-to-end model input and output trace">
+          <div><span>Input</span><strong>Video + question</strong><small>RGB frames and task</small></div>
+          <i aria-hidden="true">→</i>
+          <div><span>Parse</span><strong>Unified Parser</strong><small>Identity, masks, geometry, tracks</small></div>
+          <i aria-hidden="true">→</i>
+          <div><span>Evidence</span><strong>Task-specific code</strong><small id="demo-code-id">code_a7e49b129d726046e570</small></div>
+          <i aria-hidden="true">→</i>
+          <div><span>Reason</span><strong id="demo-reasoner">Qwen3-VL-8B-Thinking · r=0.9</strong><small>Video + question + selected code</small></div>
+          <i aria-hidden="true">→</i>
+          <div class="answer-output"><span>Output</span><strong id="demo-answer">Color 1</strong><small id="demo-reference">Objective reference: Color 1</small></div>
+        </div>
       </div>
     </section>
 
     <section class="section section-intro" id="method">
       <div class="shell two-column intro-layout">
         <div>
-          <p class="section-index">01 · Physical cognitive reasoning</p>
+          <p class="section-index">02 · Physical cognitive reasoning</p>
           <h2>What’s the challenge? Representations are heterogeneous.</h2>
         </div>
         <div class="lead-copy">
@@ -73,7 +108,7 @@
         <img src="assets/slides/physical-reasoning-tasks.png" alt="Physical Reasoning Tasks Overview from the project slides.">
       </figure>
       <div class="shell section-heading method-heading">
-        <p class="section-index">Parse Anything</p>
+        <p class="section-index">Unified Parser</p>
         <h2>Can we design a unified parser to get all the information?</h2>
       </div>
       <div class="shell stage-flow" aria-label="ParseAnything stages">
@@ -84,15 +119,29 @@
       </div>
       <figure class="pipeline-figure shell">
         <img src="assets/slides/parseanything.png" alt="Parse Anything pipeline from input video through Qwen3-VL-Thinking, SAM3.1, VGGT-omega, SpatialTrackerV2, sampling, lifting, tracking, and code.">
-        <figcaption>Parsing Method: Qwen3-VL-Thinking + SAM3.1 + VGGT-omega + SpatialTrackerV2.</figcaption>
+        <figcaption>Unified Parser: Qwen3-VL-8B-Thinking + SAM3.1 + VGGT-omega + SpatialTrackerV2.</figcaption>
       </figure>
+      <div class="shell model-io-block">
+        <div class="model-io-heading">
+          <h3>What each model receives and returns</h3>
+          <p>The complete path is visible: input video and question, predicted code, task-specific evidence, and typed answer.</p>
+        </div>
+        <ol class="model-io-flow">
+          <li><span>01 · Identify</span><strong>Qwen3-VL-8B-Thinking</strong><p><b>In:</b> video frames<br><b>Out:</b> object IDs, rough boxes, roles</p></li>
+          <li><span>02 · Segment</span><strong>SAM3.1</strong><p><b>In:</b> frames + box prompts<br><b>Out:</b> masks, bbox2D, confidence</p></li>
+          <li><span>03 · Reconstruct</span><strong>VGGT-omega</strong><p><b>In:</b> sampled video frames<br><b>Out:</b> depth, camera poses, point maps</p></li>
+          <li><span>04 · Track</span><strong>SpatialTrackerV2</strong><p><b>In:</b> video + masks + geometry<br><b>Out:</b> trajectories, visibility, motion</p></li>
+          <li><span>05 · Abstract</span><strong>Task-conditioned VLM</strong><p><b>In:</b> question + full code<br><b>Out:</b> selected or generated evidence</p></li>
+          <li><span>06 · Answer</span><strong>Reasoning VLM</strong><p><b>In:</b> video + question + abstracted code<br><b>Out:</b> typed CogGym answer</p></li>
+        </ol>
+      </div>
     </section>
 
     <section class="section section-dark" id="representation">
       <div class="shell section-heading inverse">
-        <p class="section-index">02 · Parse Anything to Code</p>
+        <p class="section-index">03 · Parse Anything to Code</p>
         <h2>Example Code at t = 0, 1, 2</h2>
-        <p>One flat temporal record from the accepted Hamrick example shown in the slides.</p>
+        <p>One flat temporal record from the same Hamrick example above, with exact values at t = 0, 1, 2.</p>
       </div>
       <div class="shell representation-layout">
         <div class="code-tool code-tool-unified">
@@ -109,28 +158,60 @@
       </div>
     </section>
 
-    <section class="section" id="results" data-public-scope="parsing-only">
+    <section class="section section-soft" id="results" data-public-scope="audited-results">
       <div class="shell section-heading">
-        <p class="section-index">03 · Evaluation</p>
-        <h2>Evaluation of Parsing Accuracy (mIoU)</h2>
-        <p>The accepted Physics-280 audit contains 20 samples from each of 14 studies. mIoU is used only for evaluation and never enters parsing.</p>
+        <p class="section-index">04 · CogGym evaluation</p>
+        <h2>Parsing quality and downstream reasoning</h2>
+        <p>We evaluate predicted geometry with mIoU and normalized Center RPE, then evaluate answers against human item means with experiment-level R².</p>
       </div>
       <div class="shell">
+        <div class="question-split" aria-label="Question-type split">
+          <div><strong data-question-group="non">500</strong><span>without uncertainty</span><p>Deterministic category, property, causal, responsibility, moral, effort, blame, or difficulty judgments.</p></div>
+          <div><strong data-question-group="unc">136</strong><span>with uncertainty</span><p>Likelihood, chance, counterfactual belief, predictive distribution, or surprise judgments.</p></div>
+          <aside><b>Leakage-free classification</b><p>The split uses only study, query tag, question text, and answer schema. It never uses model answers or human targets.</p></aside>
+        </div>
+
+        <section class="split-analysis" id="split-results" aria-labelledby="split-title">
+          <div class="result-title-row"><h3 id="split-title">Does abstraction help each question regime?</h3><span>paired full-code vs. abstracted-code R²</span></div>
+          <p class="analysis-intro">Each comparison uses the same valid experiments on both sides. Abstraction helps both groups for Qwen3-VL-8B-Thinking, but the effect is model-dependent rather than uniformly positive.</p>
+          <div class="paired-grid">
+            <div class="paired-panel"><h4>Without uncertainty</h4><div id="paired-non"></div></div>
+            <div class="paired-panel"><h4>With uncertainty</h4><div id="paired-unc"></div></div>
+          </div>
+          <div class="bar-key"><span><i class="full-key"></i>Full parsed code</span><span><i class="abstract-key"></i>Task-specific abstraction</span><small>Bar scale: 0–50% R²</small></div>
+        </section>
+
+        <section class="reasoning-table-panel" aria-labelledby="reasoning-table-title">
+          <div class="result-title-row"><h3 id="reasoning-table-title">Complete parsing + reasoning results</h3><span>validated artifact · no inference rerun</span></div>
+          <div class="compact-table-wrap reasoning-table-wrap" tabindex="0">
+            <table class="compact-results-table reasoning-results-table">
+              <thead><tr><th>Parsing</th><th>Reasoning</th><th>mIoU ↑</th><th>Center RPE@1 (%) ↓</th><th>Without uncertainty R² ↑</th><th>With uncertainty R² ↑</th><th>Overall R² ↑</th></tr></thead>
+              <tbody id="reasoning-table-body"></tbody>
+            </table>
+          </div>
+          <p class="baseline-note">R² is mean squared Pearson correlation across valid experiments; each cell reports its valid-experiment count. Parsing metrics are measured before task-specific evidence selection, so full-code and abstraction rows correctly share the same mIoU and Center RPE. The report passed 7 validation tests and exactly reproduced every original unsplit R².</p>
+        </section>
+
+        <div class="subsection-heading">
+          <p class="section-index">Parsing-only detail</p>
+          <h3>Evaluation of Parsing Accuracy (mIoU)</h3>
+          <p>The Physics-280 audit contains 20 samples from each of 14 studies. Ground truth is used only after predictions are frozen.</p>
+        </div>
         <section class="result-block" aria-labelledby="geometry-title">
-          <div class="result-title-row"><h3 id="geometry-title">Original Video v.s. Our Parsed Code Visualization</h3><span>20 samples / study</span></div>
+          <div class="result-title-row"><h3 id="geometry-title">Per-study parsing accuracy</h3><span>20 samples / study</span></div>
           <div class="geometry-summary">
-            <div><strong data-stat="mean-iou-summary">84.14% ± 10.89%</strong><span>mIoU mean ± sample SD</span></div>
+            <div><strong data-stat="mean-iou-summary">84.14% ± 10.88%</strong><span>mIoU mean ± sample SD</span></div>
             <div><strong>280</strong><span>Evaluated samples</span></div>
           </div>
           <div class="study-bars" id="study-bars" aria-label="Per-study mean IoU chart"></div>
         </section>
         <div class="baseline-context">
-          <h3>Parsing Evaluation Baseline</h3>
-          <p>Direct VLMs predict boxes and centers from RGB frames. Any4D, Trace Anything, and MotionCrafter are component substitutions inside the same prediction-only pipeline. ParseAnything uses Qwen3-VL-8B-Thinking, SAM3.1, VGGT-omega, and SpatialTrackerV2.</p>
+          <h3>Parsing evaluation baseline</h3>
+          <p>Direct VLMs predict boxes and centers from RGB frames. Any4D, Trace Anything, and MotionCrafter are explicit component substitutions inside the same prediction-only pipeline. The default Unified Parser uses Qwen3-VL-8B-Thinking, SAM3.1, VGGT-omega, and SpatialTrackerV2.</p>
         </div>
         <div class="baseline-summary" id="parse-anything-summary" aria-label="ParseAnything full-corpus result"></div>
         <div class="baseline-panel" aria-labelledby="parsing-baseline-title">
-          <div class="result-title-row"><h3 id="parsing-baseline-title">Unified Physics-280 comparison</h3><span>mean ± population SD across samples</span></div>
+          <div class="result-title-row"><h3 id="parsing-baseline-title">Physics-280 parsing comparison</h3><span>mean ± population SD across samples</span></div>
           <div class="compact-table-wrap" tabindex="0">
             <table class="compact-results-table parsing-comparison-table">
               <thead><tr><th>Method</th><th>mIoU ↑</th><th>Center RPE@1 frame (%) ↓</th><th>Center RPE@0.5s (%) ↓</th><th>Center RPE@1s (%) ↓</th></tr></thead>
@@ -145,7 +226,7 @@
     <section class="section" id="throughput">
       <div class="shell two-column throughput-layout">
         <div>
-          <p class="section-index">04 · Throughput</p>
+          <p class="section-index">05 · Throughput</p>
           <h2>Evaluation of Parsing Efficiency (Throughput)</h2>
           <p>Identifier, 2D Mask, Analyzer, and Points Tracker timing follows the table reported in the slides.</p>
           <div class="throughput-summary"><strong>41.47 s</strong><span>mean total parsing time per sample</span></div>
@@ -158,8 +239,8 @@
 
     <section class="section" id="gallery">
       <div class="shell section-heading">
-        <p class="section-index">05 · Qualitative results</p>
-        <h2>Original Video v.s. Our Parsed Code Visualization</h2>
+        <p class="section-index">06 · Qualitative results</p>
+        <h2>Original Video vs. Our Parsed Code Visualization</h2>
         <p>Each animation places the original media at left and a bbox-only reconstruction at right. The reconstruction reads only bbox2D, bbox3D, camera, object ID, and time; it does not access source pixels, masks, depth, point maps, or tracklets.</p>
       </div>
       <div class="shell gallery-controls" role="group" aria-label="Filter examples">
@@ -222,7 +303,7 @@
 
     <section class="section" id="refinement">
       <div class="shell section-heading">
-        <p class="section-index">06 · Video consistency</p>
+        <p class="section-index">07 · Video consistency</p>
         <h2>Method for Agentic Refinement</h2>
         <p>Qwen3-VL-8B-Thinking writes a typed Blender observation program, compares the render with the original video, and edits only prediction-derived geometry until fit, stability, and temporal consistency pass. Released ground truth is loaded only after the complete code history is frozen.</p>
       </div>
@@ -235,7 +316,7 @@
     <section class="section section-callout" id="adaptive">
       <div class="shell adaptive-layout adaptive-intro">
         <div>
-          <p class="section-index">07 · Adaptive abstraction</p>
+        <p class="section-index">08 · Adaptive abstraction</p>
           <h2>Why we need task-specific abstraction</h2>
           <p>Long context, difficult to understand. Specific task needs specific information.</p>
         </div>
@@ -274,7 +355,7 @@
 
     <section class="section" id="datasets">
       <div class="shell section-heading">
-        <p class="section-index">08 · Datasets</p>
+        <p class="section-index">09 · Datasets</p>
         <h2>Physics_subsets (COCOSCI), PhysBench, and Physion</h2>
       </div>
       <div class="shell dataset-grid">
@@ -294,6 +375,6 @@
     <div class="shell footer-bottom"><span>CCVL · Johns Hopkins University</span><span>Results audited from structured experiment artifacts</span></div>
   </footer>
 
-  <script src="assets/site.js" defer></script>
+  <script src="assets/site.js?v=5" defer></script>
 </body>
 </html>

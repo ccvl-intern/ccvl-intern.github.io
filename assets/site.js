@@ -1,6 +1,7 @@
 const state = {
   results: null,
   code: null,
+  reasoning: null,
 };
 
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
@@ -49,7 +50,7 @@ function renderHeadline(results) {
   const iouSummary = meanWithStd(results.geometry.mean_sample_iou, results.geometry.sample_iou_std);
   document.querySelector('[data-stat="mean-iou"]').textContent = iouSummary;
   document.querySelector('[data-stat="mean-iou-summary"]').textContent = iouSummary;
-  document.querySelector('[data-stat="parsing-time"]').textContent = `${results.timing.mean_exclusive_sec_per_sample.toFixed(2)} s`;
+  document.querySelector('[data-stat="questions"]').textContent = state.reasoning.question_split.total;
 }
 
 function renderStudyBars(studies) {
@@ -77,19 +78,26 @@ function renderTiming(timing) {
 function renderParsingBaselines(baselines) {
   const ours = baselines.methods.find(row => row.group === "Ours");
   document.querySelector("#parse-anything-summary").innerHTML = `
-    <div><span>Parse Anything</span><strong>${meanWithStd(ours.mean_iou, ours.sample_iou_std)}</strong><small>Physics-280 mIoU mean ± sample SD</small></div>
+    <div><span>Unified Parser</span><strong>${meanWithStd(ours.mean_iou, ours.sample_iou_std)}</strong><small>Physics-280 mIoU mean ± sample SD</small></div>
     <div><span>Center RPE@1 frame</span><strong>${meanWithStd(ours.rpe_1_frame, ours.rpe_1_frame_std)}</strong><small>frame-diagonal normalized; lower is better</small></div>`;
 
+  const componentNames = {
+    Any4D: "SAM3.1 + Any4D + SpatialTrackerV2",
+    "Trace Anything": "SAM3.1 + VGGT-Ω + Trace Anything",
+    MotionCrafter: "SAM3.1 + VGGT-Ω + MotionCrafter",
+    ParseAnything: "SAM3.1 + VGGT-Ω + SpatialTrackerV2",
+  };
+  const groupNames = {"Parsing Models": "Unified Parser · component variants", Ours: "Unified Parser · default"};
   let priorGroup = null;
   const rows = [];
   baselines.methods.forEach(row => {
     if (row.group !== priorGroup) {
-      rows.push(`<tr class="method-group"><th colspan="5">${row.group}</th></tr>`);
+      rows.push(`<tr class="method-group"><th colspan="5">${groupNames[row.group] || row.group}</th></tr>`);
       priorGroup = row.group;
     }
     const emphasis = row.group === "Ours" ? " class=\"ours-row\"" : "";
     rows.push(`<tr${emphasis}>
-      <td>${row.method}</td>
+      <td>${componentNames[row.method] || row.method}</td>
       <td>${meanWithStd(row.mean_iou, row.sample_iou_std)}</td>
       <td>${meanWithStd(row.rpe_1_frame, row.rpe_1_frame_std)}</td>
       <td>${meanWithStd(row.rpe_0_5_sec, row.rpe_0_5_sec_std)}</td>
@@ -97,6 +105,88 @@ function renderParsingBaselines(baselines) {
     </tr>`);
   });
   document.querySelector("#parsing-method-table-body").innerHTML = rows.join("");
+}
+
+function renderDemo(reasoning) {
+  const demo = reasoning.demo;
+  document.querySelector("#demo-question").textContent = demo.question;
+  document.querySelector("#demo-code-id").textContent = demo.code_id;
+  document.querySelector("#demo-reasoner").textContent = `${demo.reasoner} · r=${demo.abstraction_ratio}`;
+  document.querySelector("#demo-answer").textContent = demo.model_answer;
+  document.querySelector("#demo-reference").textContent = `Objective reference: ${demo.objective_reference}`;
+}
+
+function renderSplitComparisons(reasoning) {
+  const maxScale = 0.5;
+  const groupLabels = {non: "Without uncertainty", unc: "With uncertainty"};
+  ["non", "unc"].forEach(group => {
+    const comparisons = reasoning.paired_comparisons.filter(item => item.group === group);
+    document.querySelector(`#paired-${group}`).innerHTML = comparisons.map(item => {
+      const deltaClass = item.delta >= 0 ? "positive" : "negative";
+      const delta = `${item.delta >= 0 ? "+" : ""}${(item.delta * 100).toFixed(2)} pp`;
+      return `<article class="paired-row">
+        <div class="paired-label"><strong>${item.reasoner}</strong><span>same ${item.n} valid experiments</span></div>
+        <div class="paired-bars" aria-label="${groupLabels[group]} R squared comparison for ${item.reasoner}">
+          <div><span>Full</span><i><b style="width:${Math.min(100, item.full / maxScale * 100)}%"></b></i><strong>${percent(item.full)}</strong></div>
+          <div class="abstracted"><span>Abstract</span><i><b style="width:${Math.min(100, item.abstracted / maxScale * 100)}%"></b></i><strong>${percent(item.abstracted)}</strong></div>
+        </div>
+        <em class="${deltaClass}">${delta}</em>
+      </article>`;
+    }).join("");
+  });
+}
+
+function parsingMetricsFor(condition) {
+  if (condition.section === "gt_abstraction") {
+    return {mean_iou: 1, sample_iou_std: 0, rpe_1_frame: 0, rpe_1_frame_std: 0};
+  }
+  if (condition.section === "predicted_parsing") {
+    return state.results.parsing_baselines.methods.find(row => row.group === "Ours");
+  }
+  return state.results.parsing_baselines.methods.find(row => row.method === condition.reasoner);
+}
+
+function splitMetricCell(metric) {
+  if (metric.r2 == null) return "N/A<small>n=0</small>";
+  return `${percent(metric.r2)}<small>n=${metric.n} experiments</small>`;
+}
+
+function renderReasoningTable(reasoning) {
+  const sectionLabels = {
+    direct_vlm: "Direct VLM parsing + reasoning",
+    gt_abstraction: "Ground-truth parsing + task-specific abstraction",
+    predicted_parsing: "Predicted parsing",
+  };
+  let section = null;
+  const rows = [];
+  reasoning.conditions.forEach(condition => {
+    if (condition.section !== section) {
+      rows.push(`<tr class="method-group"><th colspan="7">${sectionLabels[condition.section]}</th></tr>`);
+      section = condition.section;
+    }
+    const metrics = parsingMetricsFor(condition);
+    const isAbstracted = condition.parsing.includes("abstraction");
+    const rowClass = isAbstracted ? " class=\"abstracted-row\"" : "";
+    const ratio = condition.ratio == null ? "" : `<small>context ratio r=${condition.ratio}</small>`;
+    rows.push(`<tr${rowClass}>
+      <td>${condition.parsing}${ratio}</td>
+      <td>${condition.reasoner}</td>
+      <td>${meanWithStd(metrics.mean_iou, metrics.sample_iou_std)}</td>
+      <td>${meanWithStd(metrics.rpe_1_frame, metrics.rpe_1_frame_std)}</td>
+      <td>${splitMetricCell(condition.non)}</td>
+      <td>${splitMetricCell(condition.unc)}</td>
+      <td>${percent(condition.overall)}</td>
+    </tr>`);
+  });
+  document.querySelector("#reasoning-table-body").innerHTML = rows.join("");
+}
+
+function renderReasoning(reasoning) {
+  document.querySelector('[data-question-group="non"]').textContent = reasoning.question_split.non_uncertainty;
+  document.querySelector('[data-question-group="unc"]').textContent = reasoning.question_split.uncertainty;
+  renderDemo(reasoning);
+  renderSplitComparisons(reasoning);
+  renderReasoningTable(reasoning);
 }
 
 function renderRefinement(refinement) {
@@ -141,11 +231,17 @@ function bindInteractions() {
 }
 
 async function loadData() {
-  const [resultsResponse, codeResponse] = await Promise.all([fetch("data/results.json"), fetch("data/hamrick_code.json")]);
-  if (!resultsResponse.ok || !codeResponse.ok) throw new Error("Unable to load structured project data.");
+  const [resultsResponse, codeResponse, reasoningResponse] = await Promise.all([
+    fetch("data/results.json?v=5"),
+    fetch("data/hamrick_code.json?v=5"),
+    fetch("data/reasoning_results.json?v=5"),
+  ]);
+  if (!resultsResponse.ok || !codeResponse.ok || !reasoningResponse.ok) throw new Error("Unable to load structured project data.");
   state.results = await resultsResponse.json();
   state.code = await codeResponse.json();
+  state.reasoning = await reasoningResponse.json();
   renderHeadline(state.results);
+  renderReasoning(state.reasoning);
   renderStudyBars(state.results.geometry.studies);
   renderTiming(state.results.timing);
   renderParsingBaselines(state.results.parsing_baselines);
