@@ -1,22 +1,31 @@
-const state = {
-  results: null,
-  code: null,
-  reasoning: null,
-};
+"use strict";
 
+const state = { results: null, code: null, reasoning: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
+const $ = selector => document.querySelector(selector);
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
-const meanWithStd = (mean, std) => `${percent(mean)} ± ${percent(std)}`;
+const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+const metricPair = (mean, sd) => `${percent(mean)} <span class="deviation">± ${percent(sd)}</span>`;
+
+const scenes = [
+  ["bass2022_partial", "bass-cannonball", "Bass et al., 2022", "2d", 1292, 382],
+  ["beller2020_language", "beller2020-language", "Beller et al., 2020", "2d", 1292, 536],
+  ["beller2025_multimodal", "beller-plinko", "Beller et al., 2025", "2d", 1260, 576],
+  ["gerstenberg2021_counterfactual", "gerstenberg-collision", "Gerstenberg et al., 2021", "2d", 1292, 536],
+  ["gerstenberg2022_what", "gerstenberg2022-what", "Gerstenberg et al., 2022", "2d", 1292, 536],
+  ["hamrick2016_inferring", "hamrick-tower", "Hamrick et al., 2016", "frozen3d", 1292, 536],
+  ["smith2019_modeling", "smith-discontinuity", "Smith et al., 2019", "dynamic3d", 1292, 483],
+  ["sosa2021_moral", "sosa2021-moral", "Sosa et al., 2021", "2d", 1292, 416],
+  ["sosa2025_blending", "sosa2025-blending", "Sosa et al., 2025", "2d", 844, 576],
+  ["stephan2021_counterfactual", "stephan-counterfactual", "Stephan et al., 2021", "2d", 1292, 535],
+  ["ullman2018_learning", "ullman-rules", "Ullman et al., 2018", "2d", 1292, 536],
+  ["wu2022_that", "wu-gridworld", "Wu et al., 2022", "2d", 1292, 252],
+];
 
 function syntaxHighlightJson(value) {
-  const json = value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-  return json.replace(/("(?:\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"\s*:|"(?:\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?|\btrue\b|\bfalse\b|\bnull\b)/g, match => {
+  return escapeHtml(value).replace(/(&quot;(?:[^&]|&(?!quot;))*?&quot;\s*:|&quot;(?:[^&]|&(?!quot;))*?&quot;|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?|\btrue\b|\bfalse\b|\bnull\b)/g, match => {
     let type = "json-number";
-    if (/^"/.test(match)) type = /:$/.test(match) ? "json-key" : "json-string";
-    else if (/true|false/.test(match)) type = "json-boolean";
-    else if (/null/.test(match)) type = "json-boolean";
+    if (match.startsWith("&quot;")) type = /:$/.test(match) ? "json-key" : "json-string";
+    else if (/^(true|false|null)$/.test(match)) type = "json-boolean";
     return `<span class="${type}">${match}</span>`;
   });
 }
@@ -26,235 +35,299 @@ function formatUnifiedCode(code) {
   const metadata = Object.entries(code).filter(([key]) => key !== "frames");
   metadata.forEach(([key, value]) => lines.push(`  ${JSON.stringify(key)}: ${JSON.stringify(value)},`));
   lines.push('  "frames": [');
-  code.frames.forEach((frame, frameIndex) => {
-    const comma = frameIndex < code.frames.length - 1 ? "," : "";
-    lines.push(`    {"t": ${frame.t}, "timestamp_sec": ${frame.timestamp_sec}, "source_frame": ${frame.source_frame},`);
-    lines.push(`      "bbox_2d": ${JSON.stringify(frame.bbox_2d)}, "center_2d": ${JSON.stringify(frame.center_2d)}, "mask_score": ${frame.mask_score},`);
-    lines.push(`      "camera_intrinsics": ${JSON.stringify(frame.camera_intrinsics)},`);
-    lines.push(`      "camera_pose": ${JSON.stringify(frame.camera_pose)},`);
-    lines.push(`      "camera_roundtrip_error_px": ${frame.camera_roundtrip_error_px},`);
-    lines.push(`      "center_3d": ${JSON.stringify(frame.center_3d)},`);
-    lines.push(`      "bbox_3d_center": ${JSON.stringify(frame.bbox_3d_center)}, "bbox_3d_size": ${JSON.stringify(frame.bbox_3d_size)},`);
-    lines.push(`      "bbox_3d_rotation": ${JSON.stringify(frame.bbox_3d_rotation)},`);
-    lines.push(`      "bbox_3d_source": ${JSON.stringify(frame.bbox_3d_source)}, "bbox_3d_confidence": ${frame.bbox_3d_confidence},`);
-    lines.push(`      "visibility": ${frame.visibility}}${comma}`);
+  code.frames.forEach((frame, index) => {
+    lines.push("    {");
+    Object.entries(frame).forEach(([key, value], fieldIndex, fields) => {
+      lines.push(`      ${JSON.stringify(key)}: ${JSON.stringify(value)}${fieldIndex < fields.length - 1 ? "," : ""}`);
+    });
+    lines.push(`    }${index < code.frames.length - 1 ? "," : ""}`);
   });
-  lines.push("  ]");
-  lines.push("}");
+  lines.push("  ]", "}");
   return lines.join("\n");
 }
 
-function renderHeadline(results) {
-  document.querySelector('[data-stat="samples"]').textContent = results.corpus.sample_count;
-  document.querySelector('[data-stat="studies"]').textContent = results.corpus.study_count;
-  const iouSummary = meanWithStd(results.geometry.mean_sample_iou, results.geometry.sample_iou_std);
-  document.querySelector('[data-stat="mean-iou"]').textContent = iouSummary;
-  document.querySelector('[data-stat="mean-iou-summary"]').textContent = iouSummary;
-  document.querySelector('[data-stat="questions"]').textContent = state.reasoning.question_split.total;
+function renderHeadline() {
+  const { results, reasoning } = state;
+  $('[data-stat="samples"]').textContent = results.corpus.sample_count;
+  $('[data-stat="studies"]').textContent = results.corpus.study_count;
+  $('[data-stat="mean-iou"]').textContent = percent(results.geometry.mean_sample_iou);
+  $('[data-stat="iou-sd"]').textContent = `± ${percent(results.geometry.sample_iou_std)} SD`;
+  $('[data-stat="questions"]').textContent = reasoning.question_split.total;
+  $('[data-question-group="non"]').textContent = reasoning.question_split.non_uncertainty;
+  $('[data-question-group="unc"]').textContent = reasoning.question_split.uncertainty;
 }
 
-function renderStudyBars(studies) {
-  const root = document.querySelector("#study-bars");
-  root.innerHTML = studies.map(study => `
-    <div class="mini-bar-row" title="${study.label}: ${percent(study.mean_iou)} mIoU">
-      <span>${study.label}</span>
-      <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${study.mean_iou * 100}%"></div></div>
-      <strong>${percent(study.mean_iou, 1)}</strong>
-    </div>
-  `).join("");
+function renderDemo() {
+  const { demo } = state.reasoning;
+  $("#demo-question").textContent = demo.question;
+  $("#demo-answer").textContent = demo.model_answer;
+  $("#demo-reference").textContent = `Objective reference: ${demo.objective_reference}`;
+  $("#demo-reasoner").textContent = `${demo.reasoner} · original video + question + abstracted code · context ratio ${demo.abstraction_ratio}`;
+  $("#code-output").innerHTML = syntaxHighlightJson(formatUnifiedCode(state.code));
 }
 
-function renderTiming(timing) {
-  const max = Math.max(...timing.stages.map(stage => stage.p95));
-  document.querySelector("#stage-timing").innerHTML = timing.stages.map(stage => `
-    <div class="timing-row">
-      <span>${stage.label}</span>
-      <div class="timing-track" title="p95 ${stage.p95.toFixed(2)} seconds"><div class="timing-fill" style="width:${(stage.p95 / max) * 100}%"></div></div>
-      <strong>${stage.mean.toFixed(2)} / ${stage.median.toFixed(2)} / ${stage.p95.toFixed(2)} s</strong>
-    </div>
-  `).join("") + `<p class="timing-legend">Bars show P95 latency. Labels report mean / median / P95. Device: ${timing.device}; ${timing.worker_count} workers.</p>`;
+function renderSplitComparisons() {
+  for (const group of ["non", "unc"]) {
+    $(`#paired-${group}`).innerHTML = state.reasoning.paired_comparisons.filter(row => row.group === group).map(row => `
+      <article class="paired-row">
+        <div class="paired-label"><strong>${escapeHtml(row.reasoner)}</strong><span>${row.n} paired experiments</span></div>
+        <div class="paired-bars">
+          <div><span>Full</span><i aria-hidden="true"><b style="width:${Math.min(100, row.full * 200)}%"></b></i><strong>${percent(row.full)}</strong></div>
+          <div class="abstracted"><span>Abstract</span><i aria-hidden="true"><b style="width:${Math.min(100, row.abstracted * 200)}%"></b></i><strong>${percent(row.abstracted)}</strong></div>
+        </div>
+        <em class="${row.delta >= 0 ? "positive" : "negative"}">${row.delta >= 0 ? "+" : ""}${(row.delta * 100).toFixed(2)} percentage points</em>
+      </article>`).join("");
+  }
 }
 
-function renderParsingBaselines(baselines) {
-  const ours = baselines.methods.find(row => row.group === "Ours");
-  document.querySelector("#parse-anything-summary").innerHTML = `
-    <div><span>Unified Parser</span><strong>${meanWithStd(ours.mean_iou, ours.sample_iou_std)}</strong><small>Physics-280 mIoU mean ± sample SD</small></div>
-    <div><span>Center RPE@1 frame</span><strong>${meanWithStd(ours.rpe_1_frame, ours.rpe_1_frame_std)}</strong><small>frame-diagonal normalized; lower is better</small></div>`;
+function splitMetricCell(metric) {
+  return metric.r2 == null ? 'N/A<small>no valid experiments</small>' : `${percent(metric.r2)}<small>n = ${metric.n}</small>`;
+}
 
-  const componentNames = {
+function renderReasoningTable() {
+  if (!state.reasoning) return;
+  const filter = $("#reasoning-filter").value;
+  const sectionLabels = {
+    direct_vlm: "Direct VLM parsing + corresponding VLM reasoning",
+    gt_abstraction: "Ground-truth parsing + task-specific abstraction",
+    predicted_parsing: "Unified Parser + corresponding VLM reasoning",
+  };
+  let priorSection = null;
+  const output = [];
+  state.reasoning.conditions.filter(row => filter === "all" || row.section === filter).forEach(row => {
+    if (row.section !== priorSection) {
+      output.push(`<tr class="method-group"><th colspan="5" scope="colgroup">${sectionLabels[row.section]}</th></tr>`);
+      priorSection = row.section;
+    }
+    const abstracted = row.parsing.includes("abstraction");
+    const evidence = row.section === "direct_vlm" ? "Direct parsed code" : row.section === "gt_abstraction" ? "GT + abstraction" : abstracted ? "Task-specific abstraction" : "Full parsed code";
+    const ratio = row.ratio == null ? "" : `<small>context ratio ${row.ratio}</small>`;
+    output.push(`<tr${abstracted ? ' class="emphasis"' : ""}>
+      <th scope="row">${escapeHtml(row.reasoner)}</th>
+      <td>${evidence}${ratio}</td>
+      <td>${abstracted ? "<b>" : ""}${percent(row.overall)}${abstracted ? "</b>" : ""}</td>
+      <td>${splitMetricCell(row.non)}</td>
+      <td>${splitMetricCell(row.unc)}</td>
+    </tr>`);
+  });
+  $("#reasoning-table-body").innerHTML = output.join("");
+}
+
+function renderParsingTable() {
+  if (!state.results) return;
+  const interval = $("#rpe-interval").value;
+  const label = { "1_frame": "1 frame", "0_5_sec": "0.5s", "1_sec": "1s" }[interval];
+  $("#rpe-column").textContent = `Center RPE@${label} (%) ↓`;
+  const names = {
     Any4D: "SAM3.1 + Any4D + SpatialTrackerV2",
     "Trace Anything": "SAM3.1 + VGGT-Ω + Trace Anything",
     MotionCrafter: "SAM3.1 + VGGT-Ω + MotionCrafter",
     ParseAnything: "SAM3.1 + VGGT-Ω + SpatialTrackerV2",
   };
-  const groupNames = {"Parsing Models": "Unified Parser · component variants", Ours: "Unified Parser · default"};
+  const groups = { VLM: "Direct VLM parsing", "Parsing Models": "Unified Parser · component variants", Ours: "Unified Parser · default" };
   let priorGroup = null;
-  const rows = [];
-  baselines.methods.forEach(row => {
+  const output = [];
+  state.results.parsing_baselines.methods.forEach(row => {
     if (row.group !== priorGroup) {
-      rows.push(`<tr class="method-group"><th colspan="5">${groupNames[row.group] || row.group}</th></tr>`);
+      output.push(`<tr class="method-group"><th colspan="3" scope="colgroup">${groups[row.group]}</th></tr>`);
       priorGroup = row.group;
     }
-    const emphasis = row.group === "Ours" ? " class=\"ours-row\"" : "";
-    rows.push(`<tr${emphasis}>
-      <td>${componentNames[row.method] || row.method}</td>
-      <td>${meanWithStd(row.mean_iou, row.sample_iou_std)}</td>
-      <td>${meanWithStd(row.rpe_1_frame, row.rpe_1_frame_std)}</td>
-      <td>${meanWithStd(row.rpe_0_5_sec, row.rpe_0_5_sec_std)}</td>
-      <td>${meanWithStd(row.rpe_1_sec, row.rpe_1_sec_std)}</td>
-    </tr>`);
+    output.push(`<tr${row.group === "Ours" ? ' class="emphasis"' : ""}><th scope="row">${escapeHtml(names[row.method] || row.method)}</th><td>${metricPair(row.mean_iou, row.sample_iou_std)}</td><td>${metricPair(row[`rpe_${interval}`], row[`rpe_${interval}_std`])}</td></tr>`);
   });
-  document.querySelector("#parsing-method-table-body").innerHTML = rows.join("");
+  $("#parsing-method-table-body").innerHTML = output.join("");
+  const ours = state.results.parsing_baselines.methods.find(row => row.group === "Ours");
+  $("#parsing-summary").innerHTML = `<div><span>Unified Parser · mIoU</span><strong>${metricPair(ours.mean_iou, ours.sample_iou_std)}</strong></div><div><span>Normalized Center RPE@${label}</span><strong>${metricPair(ours[`rpe_${interval}`], ours[`rpe_${interval}_std`])}</strong></div>`;
 }
 
-function renderDemo(reasoning) {
-  const demo = reasoning.demo;
-  document.querySelector("#demo-question").textContent = demo.question;
-  document.querySelector("#demo-code-id").textContent = demo.code_id;
-  document.querySelector("#demo-reasoner").textContent = `${demo.reasoner} · r=${demo.abstraction_ratio}`;
-  document.querySelector("#demo-answer").textContent = demo.model_answer;
-  document.querySelector("#demo-reference").textContent = `Objective reference: ${demo.objective_reference}`;
+function renderStudies() {
+  $("#study-bars").innerHTML = state.results.geometry.studies.map(study => {
+    const dimension = /hamrick|smith/.test(study.id) ? "3D" : "2D";
+    return `<div class="mini-bar-row" data-dimension="${dimension}" title="${escapeHtml(study.id)} · ${dimension} bbox">
+      <span>${escapeHtml(study.label)}</span><div class="mini-bar-track" aria-hidden="true"><div class="mini-bar-fill" style="width:${study.mean_iou * 100}%"></div></div><strong>${percent(study.mean_iou)}</strong>
+    </div>`;
+  }).join("");
 }
 
-function renderSplitComparisons(reasoning) {
-  const maxScale = 0.5;
-  const groupLabels = {non: "Without uncertainty", unc: "With uncertainty"};
-  ["non", "unc"].forEach(group => {
-    const comparisons = reasoning.paired_comparisons.filter(item => item.group === group);
-    document.querySelector(`#paired-${group}`).innerHTML = comparisons.map(item => {
-      const deltaClass = item.delta >= 0 ? "positive" : "negative";
-      const delta = `${item.delta >= 0 ? "+" : ""}${(item.delta * 100).toFixed(2)} pp`;
-      return `<article class="paired-row">
-        <div class="paired-label"><strong>${item.reasoner}</strong><span>same ${item.n} valid experiments</span></div>
-        <div class="paired-bars" aria-label="${groupLabels[group]} R squared comparison for ${item.reasoner}">
-          <div><span>Full</span><i><b style="width:${Math.min(100, item.full / maxScale * 100)}%"></b></i><strong>${percent(item.full)}</strong></div>
-          <div class="abstracted"><span>Abstract</span><i><b style="width:${Math.min(100, item.abstracted / maxScale * 100)}%"></b></i><strong>${percent(item.abstracted)}</strong></div>
-        </div>
-        <em class="${deltaClass}">${delta}</em>
-      </article>`;
-    }).join("");
-  });
+function renderTiming() {
+  const timing = state.results.timing;
+  $("#efficiency-summary").innerHTML = [
+    [timing.mean_exclusive_sec_per_sample, "Mean / sample"],
+    [timing.median_exclusive_sec_per_sample, "Median / sample"],
+    [timing.p95_exclusive_sec_per_sample, "P95 / sample"],
+  ].map(([value, label]) => `<div><strong>${value.toFixed(2)} s</strong><span>${label}</span></div>`).join("");
+  $("#stage-timing").innerHTML = timing.stages.map(stage => `<tr><th scope="row">${escapeHtml(stage.label)}</th><td>${stage.mean.toFixed(2)}</td><td>${stage.median.toFixed(2)}</td><td>${stage.p95.toFixed(2)}</td></tr>`).join("");
 }
 
-function parsingMetricsFor(condition) {
-  if (condition.section === "gt_abstraction") {
-    return {mean_iou: 1, sample_iou_std: 0, rpe_1_frame: 0, rpe_1_frame_std: 0};
-  }
-  if (condition.section === "predicted_parsing") {
-    return state.results.parsing_baselines.methods.find(row => row.group === "Ours");
-  }
-  return state.results.parsing_baselines.methods.find(row => row.method === condition.reasoner);
-}
-
-function splitMetricCell(metric) {
-  if (metric.r2 == null) return "N/A<small>n=0</small>";
-  return `${percent(metric.r2)}<small>n=${metric.n} experiments</small>`;
-}
-
-function renderReasoningTable(reasoning) {
-  const sectionLabels = {
-    direct_vlm: "Direct VLM parsing + reasoning",
-    gt_abstraction: "Ground-truth parsing + task-specific abstraction",
-    predicted_parsing: "Predicted parsing",
-  };
-  let section = null;
-  const rows = [];
-  reasoning.conditions.forEach(condition => {
-    if (condition.section !== section) {
-      rows.push(`<tr class="method-group"><th colspan="7">${sectionLabels[condition.section]}</th></tr>`);
-      section = condition.section;
-    }
-    const metrics = parsingMetricsFor(condition);
-    const isAbstracted = condition.parsing.includes("abstraction");
-    const rowClass = isAbstracted ? " class=\"abstracted-row\"" : "";
-    const ratio = condition.ratio == null ? "" : `<small>context ratio r=${condition.ratio}</small>`;
-    rows.push(`<tr${rowClass}>
-      <td>${condition.parsing}${ratio}</td>
-      <td>${condition.reasoner}</td>
-      <td>${meanWithStd(metrics.mean_iou, metrics.sample_iou_std)}</td>
-      <td>${meanWithStd(metrics.rpe_1_frame, metrics.rpe_1_frame_std)}</td>
-      <td>${splitMetricCell(condition.non)}</td>
-      <td>${splitMetricCell(condition.unc)}</td>
-      <td>${percent(condition.overall)}</td>
-    </tr>`);
-  });
-  document.querySelector("#reasoning-table-body").innerHTML = rows.join("");
-}
-
-function renderReasoning(reasoning) {
-  document.querySelector('[data-question-group="non"]').textContent = reasoning.question_split.non_uncertainty;
-  document.querySelector('[data-question-group="unc"]').textContent = reasoning.question_split.uncertainty;
-  renderDemo(reasoning);
-  renderSplitComparisons(reasoning);
-  renderReasoningTable(reasoning);
-}
-
-function renderRefinement(refinement) {
-  if (refinement.status !== "accepted") {
-    document.querySelector("#refinement-summary").innerHTML = `
-      <div><span>Protocol</span><strong>Target-blind</strong></div>
-      <div><span>Scope</span><strong>${refinement.samples} Hamrick samples</strong></div>
-      <div><span>Current state</span><strong>${refinement.label}</strong></div>
-      <div><span>Metrics</span><strong>Published after audit</strong></div>`;
+function renderRefinement() {
+  const pilot = state.results.parsing_baselines.refinement_pilot;
+  if (pilot.status !== "accepted") {
+    $("#refinement-summary").textContent = `${pilot.samples}-sample pilot · ${pilot.label}`;
     return;
   }
-  document.querySelector("#refinement-summary").innerHTML = `
-    <div><span>Target-blind Hamrick pilot</span><strong>${refinement.samples} samples</strong></div>
-    <div><span>mIoU mean</span><strong>${percent(refinement.before_mean_iou)} → ${percent(refinement.after_mean_iou)}</strong><small>sample SD ${percent(refinement.before_sample_iou_std)} → ${percent(refinement.after_sample_iou_std)}</small></div>
-    <div><span>Center RMSE</span><strong>${refinement.before_center_rmse.toFixed(4)} → ${refinement.after_center_rmse.toFixed(4)}</strong></div>
-    <div><span>Canonical codes changed</span><strong>${refinement.changed_codes} / ${refinement.samples}</strong></div>`;
+  $("#refinement-summary").innerHTML = `<span>${pilot.samples}-sample Hamrick pilot · mIoU</span><strong>${percent(pilot.before_mean_iou)} → ${percent(pilot.after_mean_iou)}</strong><small>SD ${percent(pilot.before_sample_iou_std)} → ${percent(pilot.after_sample_iou_std)} · ${pilot.changed_codes}/${pilot.samples} codes changed</small>`;
 }
 
-function renderUnifiedCode() {
-  const output = document.querySelector("#code-output");
-  output.innerHTML = syntaxHighlightJson(formatUnifiedCode(state.code));
-  output.parentElement.scrollTop = 0;
+function renderGallery() {
+  $("#demo-grid").innerHTML = scenes.map(([studyId, file, label, mode, width, height]) => {
+    const study = state.results.geometry.studies.find(row => row.id === studyId);
+    return `<article class="demo-card" data-mode="${mode}">
+      <div class="animation-frame"><img id="gif-${file}" class="animated-media" src="assets/demos/${file}.gif" alt="${escapeHtml(label)}: original video at left, bbox-only reconstruction at right" width="${width}" height="${height}" loading="lazy"></div>
+      <div class="demo-caption"><div><h3>${label}</h3><p>${mode === "2d" ? "2D" : "3D"} boxes · Study mIoU <span>${percent(study.mean_iou)}</span></p></div><button class="icon-button" data-expand="gif-${file}" aria-label="Enlarge ${label} comparison" title="Enlarge comparison"><img src="assets/icons/maximize-2.svg" alt=""></button></div>
+    </article>`;
+  }).join("");
+  $("#gallery-status").textContent = `${scenes.length} examples`;
+  document.querySelectorAll("#demo-grid .animated-media").forEach(bindMotionImage);
+}
+
+// Freeze only the displayed GIF; source assets and reconstruction data are untouched.
+function freezeImage(img) {
+  if (!img.complete || !img.naturalWidth || img.nextElementSibling?.matches("canvas")) return;
+  const canvas = document.createElement("canvas");
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  canvas.setAttribute("aria-hidden", "true");
+  canvas.getContext("2d").drawImage(img, 0, 0);
+  img.after(canvas);
+  img.classList.add("motion-paused");
+}
+
+function unfreezeImage(img) {
+  if (img.nextElementSibling?.matches("canvas")) img.nextElementSibling.remove();
+  img.classList.remove("motion-paused");
+}
+
+function bindMotionImage(img) {
+  img.addEventListener("load", () => { if (state.paused) freezeImage(img); });
+  if (state.paused) freezeImage(img);
+}
+
+function syncMotionButtons() {
+  document.querySelectorAll("[data-toggle-motion]").forEach(button => {
+    const label = state.paused ? "Play animations" : "Pause animations";
+    button.setAttribute("aria-label", label);
+    button.title = label;
+    button.querySelector("img").src = `assets/icons/${state.paused ? "play" : "pause"}.svg`;
+  });
+}
+
+function setPaused(paused) {
+  state.paused = paused;
+  document.querySelectorAll(".animated-media").forEach(img => paused ? freezeImage(img) : unfreezeImage(img));
+  syncMotionButtons();
+}
+
+function openFigure(id) {
+  const source = document.getElementById(id);
+  if (!source) return;
+  const target = $("#dialog-image");
+  unfreezeImage(target);
+  target.classList.toggle("animated-media", source.src.endsWith(".gif"));
+  $("#figure-dialog [data-toggle-motion]").hidden = !source.src.endsWith(".gif");
+  target.src = source.src;
+  target.alt = source.alt;
+  $("#dialog-title").textContent = source.alt;
+  $("#dialog-download").href = source.src;
+  $("#dialog-download").download = source.src.split("/").pop();
+  $("#figure-dialog").showModal();
+  if (state.paused && target.classList.contains("animated-media")) freezeImage(target);
+}
+
+function activateTab(tab) {
+  document.querySelectorAll('[role="tab"]').forEach(button => {
+    const selected = button === tab;
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    document.getElementById(button.getAttribute("aria-controls")).hidden = !selected;
+  });
 }
 
 function bindInteractions() {
-  const toggle = document.querySelector(".nav-toggle");
-  const nav = document.querySelector("#site-nav");
+  const toggle = $(".nav-toggle");
+  const nav = $("#site-nav");
+  const closeNav = () => {
+    nav.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open navigation");
+    toggle.title = "Open navigation";
+  };
   toggle.addEventListener("click", () => {
     const open = nav.classList.toggle("open");
     toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+    toggle.title = open ? "Close navigation" : "Open navigation";
   });
-  nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-    nav.classList.remove("open");
-    toggle.setAttribute("aria-expanded", "false");
-  }));
-
+  nav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeNav));
+  document.addEventListener("keydown", event => { if (event.key === "Escape") closeNav(); });
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activateTab(tab));
+    tab.addEventListener("keydown", event => {
+      const target = event.key === "ArrowRight" ? (index + 1) % tabs.length : event.key === "ArrowLeft" ? (index - 1 + tabs.length) % tabs.length : event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : null;
+      if (target == null) return;
+      event.preventDefault();
+      activateTab(tabs[target]);
+      tabs[target].focus();
+    });
+  });
+  $("#reasoning-filter").addEventListener("change", renderReasoningTable);
+  $("#rpe-interval").addEventListener("change", renderParsingTable);
   document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
-    const filter = button.dataset.filter;
-    document.querySelectorAll("[data-filter]").forEach(item => item.classList.toggle("active", item === button));
-    document.querySelectorAll(".demo-card").forEach(card => { card.hidden = filter !== "all" && card.dataset.mode !== filter; });
+    document.querySelectorAll("[data-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+    let count = 0;
+    document.querySelectorAll(".demo-card").forEach(card => {
+      card.hidden = button.dataset.filter !== "all" && card.dataset.mode !== button.dataset.filter;
+      if (!card.hidden) count++;
+    });
+    $("#gallery-status").textContent = `${count} ${count === 1 ? "example" : "examples"}`;
   }));
+  document.addEventListener("click", event => {
+    const expand = event.target.closest("[data-expand]");
+    if (expand) openFigure(expand.dataset.expand);
+    if (event.target.closest("[data-toggle-motion]")) setPaused(!state.paused);
+  });
+  $("#dialog-close").addEventListener("click", () => $("#figure-dialog").close());
+  $("#figure-dialog").addEventListener("click", event => {
+    if (event.target !== event.currentTarget) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) event.currentTarget.close();
+  });
+  $("#dialog-image").addEventListener("load", event => {
+    if (state.paused && event.target.classList.contains("animated-media")) freezeImage(event.target);
+  });
+  $("#retry-data").addEventListener("click", loadData);
+  document.querySelectorAll(".animated-media").forEach(bindMotionImage);
+  syncMotionButtons();
+  matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", event => setPaused(event.matches));
 }
 
 async function loadData() {
-  const [resultsResponse, codeResponse, reasoningResponse] = await Promise.all([
-    fetch("data/results.json?v=5"),
-    fetch("data/hamrick_code.json?v=5"),
-    fetch("data/reasoning_results.json?v=5"),
-  ]);
-  if (!resultsResponse.ok || !codeResponse.ok || !reasoningResponse.ok) throw new Error("Unable to load structured project data.");
-  state.results = await resultsResponse.json();
-  state.code = await codeResponse.json();
-  state.reasoning = await reasoningResponse.json();
-  renderHeadline(state.results);
-  renderReasoning(state.reasoning);
-  renderStudyBars(state.results.geometry.studies);
-  renderTiming(state.results.timing);
-  renderParsingBaselines(state.results.parsing_baselines);
-  renderRefinement(state.results.parsing_baselines.refinement_pilot);
-  renderUnifiedCode();
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  bindInteractions();
+  $("#data-error").hidden = true;
   try {
-    await loadData();
+    const names = ["results", "hamrick_code", "reasoning_results"];
+    const data = await Promise.all(names.map(async name => {
+      const response = await fetch(`data/${name}.json?v=20260908`);
+      if (!response.ok) throw new Error(`Could not load ${name} (${response.status})`);
+      return response.json();
+    }));
+    [state.results, state.code, state.reasoning] = data;
+    renderHeadline();
+    renderDemo();
+    renderSplitComparisons();
+    renderReasoningTable();
+    renderParsingTable();
+    renderStudies();
+    renderTiming();
+    renderRefinement();
+    renderGallery();
+    document.body.dataset.ready = "true";
   } catch (error) {
-    document.querySelector("#code-output").textContent = error.message;
+    $("#data-error").hidden = false;
+    $("#code-output").textContent = "Example unavailable. See the data loading error in Results.";
     console.error(error);
   }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  bindInteractions();
+  loadData();
 });
