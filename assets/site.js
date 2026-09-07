@@ -68,14 +68,14 @@ function renderDemo() {
 
 function renderSplitComparisons() {
   for (const group of ["non", "unc"]) {
-    $(`#paired-${group}`).innerHTML = state.reasoning.paired_comparisons.filter(row => row.group === group).map(row => `
+    $(`#paired-${group}`).innerHTML = state.reasoning.matched_comparisons.filter(row => row.group === group).map(row => `
       <article class="paired-row">
-        <div class="paired-label"><strong>${escapeHtml(row.reasoner)}</strong><span>${row.n} paired experiments</span></div>
+        <div class="paired-label"><strong>${escapeHtml(row.reasoner)}</strong><span>${row.n} matched experiments</span></div>
         <div class="paired-bars">
-          <div><span>Full</span><i aria-hidden="true"><b style="width:${Math.min(100, row.full * 200)}%"></b></i><strong>${percent(row.full)}</strong></div>
-          <div class="abstracted"><span>Abstract</span><i aria-hidden="true"><b style="width:${Math.min(100, row.abstracted * 200)}%"></b></i><strong>${percent(row.abstracted)}</strong></div>
+          <div class="direct"><span>VLM full</span><i aria-hidden="true"><b style="width:${row.direct * 200}%"></b></i><strong>${percent(row.direct)}</strong></div>
+          <div><span>Parser full</span><i aria-hidden="true"><b style="width:${row.full * 200}%"></b></i><strong>${percent(row.full)}</strong></div>
+          <div class="abstracted"><span>Abstracted</span><i aria-hidden="true"><b style="width:${row.abstracted * 200}%"></b></i><strong>${percent(row.abstracted)}</strong></div>
         </div>
-        <em class="${row.delta >= 0 ? "positive" : "negative"}">${row.delta >= 0 ? "+" : ""}${(row.delta * 100).toFixed(2)} percentage points</em>
       </article>`).join("");
   }
 }
@@ -305,7 +305,7 @@ async function loadData() {
   try {
     const names = ["results", "hamrick_code", "reasoning_results"];
     const data = await Promise.all(names.map(async name => {
-      const response = await fetch(`data/${name}.json?v=20260908`);
+      const response = await fetch(`data/${name}.json?v=20260908-threeway`);
       if (!response.ok) throw new Error(`Could not load ${name} (${response.status})`);
       return response.json();
     }));

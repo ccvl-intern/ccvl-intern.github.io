@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260908-colors">
-  <script src="assets/site.js?v=20260908" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20260908-threeway">
+  <script src="assets/site.js?v=20260908-threeway" defer></script>
   <script src="assets/examples.js?v=20260908-colors" defer></script>
 </head>
 <body>
@@ -127,15 +127,15 @@
         </div>
 
         <div role="tabpanel" id="panel-reasoning" aria-labelledby="tab-reasoning">
-          <div class="result-title-row"><div><h3>Full code vs. task-specific abstraction</h3><p>Squared Pearson correlation with human item means.</p></div><a class="text-link download-link" href="data/reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="result-title-row"><div><h3>Direct VLM code vs. Unified Parser code</h3><p>Reasoning R² with the original visual input, question, and each code condition.</p></div><a class="text-link download-link" href="data/reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
           <div class="question-regimes">
             <div><strong data-question-group="non">500</strong><span>without uncertainty</span></div>
             <div><strong data-question-group="unc">136</strong><span>with uncertainty</span></div>
             <p>Question labels use the question and response schema, never model answers or human targets.</p>
           </div>
-          <div class="bar-key"><span><i class="key-full"></i>Full parsed code</span><span><i class="key-abstract"></i>Task-specific abstraction</span><small>Paired experiments · 0–50% R² scale</small></div>
+          <div class="bar-key"><span><i class="key-direct" aria-hidden="true"></i>VLM-direct full code</span><span><i class="key-full" aria-hidden="true"></i>Unified Parser full code</span><span><i class="key-abstract" aria-hidden="true"></i>Unified Parser abstracted code</span><small>Matched experiments · 0–50% R² scale</small></div>
           <div class="paired-grid"><section><h4>Without uncertainty</h4><div id="paired-non"></div></section><section><h4>With uncertainty</h4><div id="paired-unc"></div></section></div>
-          <p class="metric-note">Each bar pair uses the same valid experiments. Abstraction improves both groups for Qwen3-VL-8B-Thinking; effects for other models differ by question type.</p>
+          <p class="metric-note">All three bars use the same valid experiments within each model and question group. R² is squared Pearson correlation with human item means; experiments with undefined correlation are excluded from all three bars. Full-code inputs use the saved context cutoff. Abstraction ratios: 0.7 for Instruct and GLM; 0.9 for Thinking.</p>
           <div class="table-toolbar"><h3>Reasoning results</h3><label>Condition <select id="reasoning-filter" aria-label="Condition"><option value="predicted_parsing">Unified Parser</option><option value="direct_vlm">Direct VLMs</option><option value="gt_abstraction">Ground truth + abstraction</option><option value="all">All conditions</option></select></label></div>
           <div class="table-scroll" tabindex="0" role="region" aria-label="Reasoning results table">
             <table class="results-table reasoning-table"><thead><tr><th scope="col">Reasoning model</th><th scope="col">Evidence</th><th scope="col">Overall R² ↑</th><th scope="col">Without uncertainty<br>R² ↑</th><th scope="col">With uncertainty<br>R² ↑</th></tr></thead><tbody id="reasoning-table-body"></tbody></table>

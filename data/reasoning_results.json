@@ -1,5 +1,5 @@
 {
-  "schema_version": "ccvl_reasoning_results.1",
+  "schema_version": "ccvl_reasoning_results.2",
   "status": "passed",
   "provenance": {
     "report": "physics_280_uncertainty_split_20260906",
@@ -7,7 +7,9 @@
     "inference_rerun": false,
     "classification_used_model_answers": false,
     "classification_used_human_targets": false,
-    "overall_r2_reproduced": true
+    "overall_r2_reproduced": true,
+    "comparison_report_sha256": "7323b529db33b6a54b59ced681580a3c840953f50a0f8f389e4c5ca90aac7094",
+    "comparison_cohort": "Common valid experiments across direct VLM full code, Unified Parser full code, and Unified Parser abstracted code."
   },
   "question_split": {
     "total": 636,
@@ -28,38 +30,479 @@
     "objective_reference": "Color 1"
   },
   "conditions": [
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3-VL-2B-Instruct","overall":0.1909337575,"non":{"r2":0.2249378365,"n":12},"unc":{"r2":0.1783762899,"n":7}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3-VL-2B-Thinking","overall":0.1716233413,"non":{"r2":0.2085786489,"n":13},"unc":{"r2":0.1338268611,"n":6}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3-VL-4B-Instruct","overall":0.1392474234,"non":{"r2":0.1001339793,"n":12},"unc":{"r2":0.0954172298,"n":3}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3-VL-4B-Thinking","overall":0.2281765927,"non":{"r2":0.2059544206,"n":12},"unc":{"r2":0.2775817148,"n":4}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3-VL-8B-Instruct","overall":0.2686525753,"non":{"r2":0.3525061898,"n":12},"unc":{"r2":0.2028492126,"n":6}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3-VL-8B-Thinking","overall":0.2016276612,"non":{"r2":0.2050048912,"n":14},"unc":{"r2":0.2784441304,"n":7}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3.5-4B","overall":0.1430795627,"non":{"r2":0.0780372518,"n":11},"unc":{"r2":0.2260094450,"n":3}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Qwen3.5-9B","overall":0.1487922973,"non":{"r2":0.1213873782,"n":13},"unc":{"r2":0.3383627860,"n":4}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"Molmo2-O-7B","overall":0.1824601595,"non":{"r2":0.1334013127,"n":13},"unc":{"r2":0.1285565900,"n":5}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"GLM-4.1V-9B-Thinking","overall":0.2945457504,"non":{"r2":0.3661902237,"n":14},"unc":{"r2":0.2158650448,"n":4}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"InternVideo2.5-Chat-8B","overall":0.2779472327,"non":{"r2":0.1600819968,"n":7},"unc":{"r2":null,"n":0}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"InternVL3.5-8B","overall":0.1478147877,"non":{"r2":0.1398430104,"n":10},"unc":{"r2":0.0272523782,"n":4}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"InternVL3.5-4B","overall":0.1911070166,"non":{"r2":0.2595530846,"n":14},"unc":{"r2":0.1433597897,"n":3}},
-    {"section":"direct_vlm","parsing":"Direct RGB-video prediction","reasoner":"InternVL3.5-2B","overall":0.1518262213,"non":{"r2":0.1090859087,"n":12},"unc":{"r2":0.0778845687,"n":1}},
-
-    {"section":"gt_abstraction","parsing":"Ground truth + abstraction","reasoner":"Qwen3-VL-8B-Instruct","ratio":0.5,"overall":0.2221148325,"non":{"r2":0.3203239705,"n":13},"unc":{"r2":0.2204237696,"n":3}},
-    {"section":"gt_abstraction","parsing":"Ground truth + abstraction","reasoner":"Qwen3-VL-8B-Thinking","ratio":0.7,"overall":0.2519461945,"non":{"r2":0.2638383768,"n":14},"unc":{"r2":0.1769126685,"n":9}},
-    {"section":"gt_abstraction","parsing":"Ground truth + abstraction","reasoner":"GLM-4.1V-9B-Thinking","ratio":0.2,"overall":0.2908604569,"non":{"r2":0.4650813870,"n":15},"unc":{"r2":0.2641718261,"n":3}},
-
-    {"section":"predicted_parsing","parsing":"Unified Parser · full code","reasoner":"Qwen3-VL-8B-Instruct","overall":0.2009924341,"non":{"r2":0.1763674977,"n":12},"unc":{"r2":0.1852050094,"n":5}},
-    {"section":"predicted_parsing","parsing":"Unified Parser · abstraction","reasoner":"Qwen3-VL-8B-Instruct","ratio":0.7,"overall":0.2278758200,"non":{"r2":0.2177575712,"n":11},"unc":{"r2":0.0931007521,"n":2}},
-    {"section":"predicted_parsing","parsing":"Unified Parser · full code","reasoner":"Qwen3-VL-8B-Thinking","overall":0.1326831779,"non":{"r2":0.1556910981,"n":15},"unc":{"r2":0.2157862705,"n":9}},
-    {"section":"predicted_parsing","parsing":"Unified Parser · abstraction","reasoner":"Qwen3-VL-8B-Thinking","ratio":0.9,"overall":0.2431814388,"non":{"r2":0.2757083750,"n":16},"unc":{"r2":0.2632936288,"n":9}},
-    {"section":"predicted_parsing","parsing":"Unified Parser · full code","reasoner":"GLM-4.1V-9B-Thinking","overall":0.2348970725,"non":{"r2":0.3791376141,"n":13},"unc":{"r2":0.0940146117,"n":5}},
-    {"section":"predicted_parsing","parsing":"Unified Parser · abstraction","reasoner":"GLM-4.1V-9B-Thinking","ratio":0.7,"overall":0.2206442141,"non":{"r2":0.2542653096,"n":16},"unc":{"r2":0.2770431646,"n":8}}
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3-VL-2B-Instruct",
+      "overall": 0.1909337575,
+      "non": {
+        "r2": 0.2249378365,
+        "n": 12
+      },
+      "unc": {
+        "r2": 0.1783762899,
+        "n": 7
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3-VL-2B-Thinking",
+      "overall": 0.1716233413,
+      "non": {
+        "r2": 0.2085786489,
+        "n": 13
+      },
+      "unc": {
+        "r2": 0.1338268611,
+        "n": 6
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3-VL-4B-Instruct",
+      "overall": 0.1392474234,
+      "non": {
+        "r2": 0.1001339793,
+        "n": 12
+      },
+      "unc": {
+        "r2": 0.0954172298,
+        "n": 3
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3-VL-4B-Thinking",
+      "overall": 0.2281765927,
+      "non": {
+        "r2": 0.2059544206,
+        "n": 12
+      },
+      "unc": {
+        "r2": 0.2775817148,
+        "n": 4
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3-VL-8B-Instruct",
+      "overall": 0.2686525753,
+      "non": {
+        "r2": 0.3525061898,
+        "n": 12
+      },
+      "unc": {
+        "r2": 0.2028492126,
+        "n": 6
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3-VL-8B-Thinking",
+      "overall": 0.2016276612,
+      "non": {
+        "r2": 0.2050048912,
+        "n": 14
+      },
+      "unc": {
+        "r2": 0.2784441304,
+        "n": 7
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3.5-4B",
+      "overall": 0.1430795627,
+      "non": {
+        "r2": 0.0780372518,
+        "n": 11
+      },
+      "unc": {
+        "r2": 0.226009445,
+        "n": 3
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Qwen3.5-9B",
+      "overall": 0.1487922973,
+      "non": {
+        "r2": 0.1213873782,
+        "n": 13
+      },
+      "unc": {
+        "r2": 0.338362786,
+        "n": 4
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "Molmo2-O-7B",
+      "overall": 0.1824601595,
+      "non": {
+        "r2": 0.1334013127,
+        "n": 13
+      },
+      "unc": {
+        "r2": 0.12855659,
+        "n": 5
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "GLM-4.1V-9B-Thinking",
+      "overall": 0.2945457504,
+      "non": {
+        "r2": 0.3661902237,
+        "n": 14
+      },
+      "unc": {
+        "r2": 0.2158650448,
+        "n": 4
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "InternVideo2.5-Chat-8B",
+      "overall": 0.2779472327,
+      "non": {
+        "r2": 0.1600819968,
+        "n": 7
+      },
+      "unc": {
+        "r2": null,
+        "n": 0
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "InternVL3.5-8B",
+      "overall": 0.1478147877,
+      "non": {
+        "r2": 0.1398430104,
+        "n": 10
+      },
+      "unc": {
+        "r2": 0.0272523782,
+        "n": 4
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "InternVL3.5-4B",
+      "overall": 0.1911070166,
+      "non": {
+        "r2": 0.2595530846,
+        "n": 14
+      },
+      "unc": {
+        "r2": 0.1433597897,
+        "n": 3
+      }
+    },
+    {
+      "section": "direct_vlm",
+      "parsing": "Direct RGB-video prediction",
+      "reasoner": "InternVL3.5-2B",
+      "overall": 0.1518262213,
+      "non": {
+        "r2": 0.1090859087,
+        "n": 12
+      },
+      "unc": {
+        "r2": 0.0778845687,
+        "n": 1
+      }
+    },
+    {
+      "section": "gt_abstraction",
+      "parsing": "Ground truth + abstraction",
+      "reasoner": "Qwen3-VL-8B-Instruct",
+      "ratio": 0.5,
+      "overall": 0.2221148325,
+      "non": {
+        "r2": 0.3203239705,
+        "n": 13
+      },
+      "unc": {
+        "r2": 0.2204237696,
+        "n": 3
+      }
+    },
+    {
+      "section": "gt_abstraction",
+      "parsing": "Ground truth + abstraction",
+      "reasoner": "Qwen3-VL-8B-Thinking",
+      "ratio": 0.7,
+      "overall": 0.2519461945,
+      "non": {
+        "r2": 0.2638383768,
+        "n": 14
+      },
+      "unc": {
+        "r2": 0.1769126685,
+        "n": 9
+      }
+    },
+    {
+      "section": "gt_abstraction",
+      "parsing": "Ground truth + abstraction",
+      "reasoner": "GLM-4.1V-9B-Thinking",
+      "ratio": 0.2,
+      "overall": 0.2908604569,
+      "non": {
+        "r2": 0.465081387,
+        "n": 15
+      },
+      "unc": {
+        "r2": 0.2641718261,
+        "n": 3
+      }
+    },
+    {
+      "section": "predicted_parsing",
+      "parsing": "Unified Parser · full code",
+      "reasoner": "Qwen3-VL-8B-Instruct",
+      "overall": 0.2009924341,
+      "non": {
+        "r2": 0.1763674977,
+        "n": 12
+      },
+      "unc": {
+        "r2": 0.1852050094,
+        "n": 5
+      }
+    },
+    {
+      "section": "predicted_parsing",
+      "parsing": "Unified Parser · abstraction",
+      "reasoner": "Qwen3-VL-8B-Instruct",
+      "ratio": 0.7,
+      "overall": 0.22787582,
+      "non": {
+        "r2": 0.2177575712,
+        "n": 11
+      },
+      "unc": {
+        "r2": 0.0931007521,
+        "n": 2
+      }
+    },
+    {
+      "section": "predicted_parsing",
+      "parsing": "Unified Parser · full code",
+      "reasoner": "Qwen3-VL-8B-Thinking",
+      "overall": 0.1326831779,
+      "non": {
+        "r2": 0.1556910981,
+        "n": 15
+      },
+      "unc": {
+        "r2": 0.2157862705,
+        "n": 9
+      }
+    },
+    {
+      "section": "predicted_parsing",
+      "parsing": "Unified Parser · abstraction",
+      "reasoner": "Qwen3-VL-8B-Thinking",
+      "ratio": 0.9,
+      "overall": 0.2431814388,
+      "non": {
+        "r2": 0.275708375,
+        "n": 16
+      },
+      "unc": {
+        "r2": 0.2632936288,
+        "n": 9
+      }
+    },
+    {
+      "section": "predicted_parsing",
+      "parsing": "Unified Parser · full code",
+      "reasoner": "GLM-4.1V-9B-Thinking",
+      "overall": 0.2348970725,
+      "non": {
+        "r2": 0.3791376141,
+        "n": 13
+      },
+      "unc": {
+        "r2": 0.0940146117,
+        "n": 5
+      }
+    },
+    {
+      "section": "predicted_parsing",
+      "parsing": "Unified Parser · abstraction",
+      "reasoner": "GLM-4.1V-9B-Thinking",
+      "ratio": 0.7,
+      "overall": 0.2206442141,
+      "non": {
+        "r2": 0.2542653096,
+        "n": 16
+      },
+      "unc": {
+        "r2": 0.2770431646,
+        "n": 8
+      }
+    }
   ],
-  "paired_comparisons": [
-    {"reasoner":"Qwen3-VL-8B-Instruct","group":"non","n":11,"full":0.1672813525,"abstracted":0.2177575712,"delta":0.0504762186},
-    {"reasoner":"Qwen3-VL-8B-Instruct","group":"unc","n":2,"full":0.0934647569,"abstracted":0.0931007521,"delta":-0.0003640048},
-    {"reasoner":"Qwen3-VL-8B-Thinking","group":"non","n":15,"full":0.1556910981,"abstracted":0.2704308517,"delta":0.1147397536},
-    {"reasoner":"Qwen3-VL-8B-Thinking","group":"unc","n":9,"full":0.2157862705,"abstracted":0.2632936288,"delta":0.0475073583},
-    {"reasoner":"GLM-4.1V-9B-Thinking","group":"non","n":13,"full":0.3791376141,"abstracted":0.2606679322,"delta":-0.1184696819},
-    {"reasoner":"GLM-4.1V-9B-Thinking","group":"unc","n":5,"full":0.0940146117,"abstracted":0.2496717785,"delta":0.1556571668}
+  "matched_comparisons": [
+    {
+      "reasoner": "Qwen3-VL-8B-Instruct",
+      "group": "non",
+      "n": 10,
+      "direct": 0.3650625105560784,
+      "full": 0.17488419486758552,
+      "abstracted": 0.22770253342566435,
+      "abstraction_ratio": 0.7,
+      "source_conditions": {
+        "direct": "Qwen3-VL-8B-Instruct",
+        "full": "Unified Parser / Qwen3-VL-8B-Instruct",
+        "abstracted": "Task-specific Abstraction / Qwen3-VL-8B-Instruct (r=0.7)"
+      },
+      "experiments": [
+        "Beller2020Language/exp1",
+        "Gerstenberg2021A_Counterfactual/exp3",
+        "Sosa2025Blending/exp1",
+        "Sosa2025Blending/exp2",
+        "Ullman2018Learning/exp1",
+        "Zhou2023Mental/exp1",
+        "Zhou2023Mental/exp2",
+        "hamrick2016inferring/exp1",
+        "sosa2021Moral/exp3",
+        "stephan2021counterfactual/exp3"
+      ]
+    },
+    {
+      "reasoner": "Qwen3-VL-8B-Instruct",
+      "group": "unc",
+      "n": 2,
+      "direct": 0.09883531121770191,
+      "full": 0.09346475688309819,
+      "abstracted": 0.09310075207313884,
+      "abstraction_ratio": 0.7,
+      "source_conditions": {
+        "direct": "Qwen3-VL-8B-Instruct",
+        "full": "Unified Parser / Qwen3-VL-8B-Instruct",
+        "abstracted": "Task-specific Abstraction / Qwen3-VL-8B-Instruct (r=0.7)"
+      },
+      "experiments": [
+        "Smith2019Modeling/exp1",
+        "Wu2022That/exp2"
+      ]
+    },
+    {
+      "reasoner": "Qwen3-VL-8B-Thinking",
+      "group": "non",
+      "n": 13,
+      "direct": 0.19347671173243178,
+      "full": 0.15832002462051362,
+      "abstracted": 0.24284412817474876,
+      "abstraction_ratio": 0.9,
+      "source_conditions": {
+        "direct": "Qwen3-VL-8B-Thinking",
+        "full": "Unified Parser / Qwen3-VL-8B-Thinking",
+        "abstracted": "Task-specific Abstraction / Qwen3-VL-8B-Thinking (r=0.9)"
+      },
+      "experiments": [
+        "Beller2020Language/exp1",
+        "Gerstenberg2021A_Counterfactual/exp1",
+        "Gerstenberg2021A_Counterfactual/exp3",
+        "Sosa2025Blending/exp1",
+        "Sosa2025Blending/exp2",
+        "Ullman2018Learning/exp1",
+        "Wu2022That/exp2",
+        "Zhou2023Mental/exp1",
+        "Zhou2023Mental/exp2",
+        "hamrick2016inferring/exp1",
+        "sosa2021Moral/exp2",
+        "sosa2021Moral/exp3",
+        "stephan2021counterfactual/exp3"
+      ]
+    },
+    {
+      "reasoner": "Qwen3-VL-8B-Thinking",
+      "group": "unc",
+      "n": 7,
+      "direct": 0.2784441304133307,
+      "full": 0.20154413703921406,
+      "abstracted": 0.30613162474525574,
+      "abstraction_ratio": 0.9,
+      "source_conditions": {
+        "direct": "Qwen3-VL-8B-Thinking",
+        "full": "Unified Parser / Qwen3-VL-8B-Thinking",
+        "abstracted": "Task-specific Abstraction / Qwen3-VL-8B-Thinking (r=0.9)"
+      },
+      "experiments": [
+        "Bass2022Partial/exp1",
+        "Gerstenberg2021A_Counterfactual/exp3",
+        "Smith2019Modeling/exp1",
+        "Wu2022That/exp2",
+        "Zhou2023Mental/exp3",
+        "sosa2021Moral/exp3",
+        "stephan2021counterfactual/exp1"
+      ]
+    },
+    {
+      "reasoner": "GLM-4.1V-9B-Thinking",
+      "group": "non",
+      "n": 13,
+      "direct": 0.3324660942353124,
+      "full": 0.37913761410882546,
+      "abstracted": 0.2606679322202693,
+      "abstraction_ratio": 0.7,
+      "source_conditions": {
+        "direct": "GLM-4.1V-9B-Thinking",
+        "full": "Unified Parser / GLM-4.1V-9B-Thinking",
+        "abstracted": "Task-specific Abstraction / GLM-4.1V-9B-Thinking (r=0.7)"
+      },
+      "experiments": [
+        "Beller2020Language/exp1",
+        "Sosa2025Blending/exp1",
+        "Sosa2025Blending/exp2",
+        "Ullman2018Learning/exp1",
+        "Wu2022That/exp2",
+        "Zhou2023Mental/exp1",
+        "Zhou2023Mental/exp2",
+        "Zhou2023Mental/exp3",
+        "hamrick2016inferring/exp1",
+        "sosa2021Moral/exp1",
+        "sosa2021Moral/exp2",
+        "sosa2021Moral/exp3",
+        "stephan2021counterfactual/exp3"
+      ]
+    },
+    {
+      "reasoner": "GLM-4.1V-9B-Thinking",
+      "group": "unc",
+      "n": 3,
+      "direct": 0.18109210099363027,
+      "full": 0.07412507354618464,
+      "abstracted": 0.4089920111769854,
+      "abstraction_ratio": 0.7,
+      "source_conditions": {
+        "direct": "GLM-4.1V-9B-Thinking",
+        "full": "Unified Parser / GLM-4.1V-9B-Thinking",
+        "abstracted": "Task-specific Abstraction / GLM-4.1V-9B-Thinking (r=0.7)"
+      },
+      "experiments": [
+        "Smith2019Modeling/exp1",
+        "Wu2022That/exp2",
+        "Zhou2023Mental/exp3"
+      ]
+    }
   ]
 }
