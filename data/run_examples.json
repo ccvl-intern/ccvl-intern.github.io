@@ -1,0 +1,205 @@
+{
+  "schema_version": "saved_run_examples.1",
+  "default_example": "physics_package_3783e9a67ca6fade0f27",
+  "default_model": "thinking",
+  "models": [
+    {
+      "id": "thinking",
+      "label": "Qwen3-VL-8B-Thinking"
+    },
+    {
+      "id": "instruct",
+      "label": "Qwen3-VL-8B-Instruct"
+    },
+    {
+      "id": "glm",
+      "label": "GLM-4.1V-9B-Thinking"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "instruct_oracle",
+      "model": "instruct",
+      "kind": "oracle",
+      "r2": 0.2221148325,
+      "ratio": 0.5,
+      "run": "qwen3_vl_8b_instruct_oracle_r5",
+      "run_path": "oracle_identifier_experiment_20260902_r1/oracle_reasoning/models/qwen3_vl_8b_instruct_oracle_r5",
+      "code_source": "Released GT geometry, encoded and abstracted; no human answer targets"
+    },
+    {
+      "id": "thinking_oracle",
+      "model": "thinking",
+      "kind": "oracle",
+      "r2": 0.2519461945,
+      "ratio": 0.7,
+      "run": "qwen3_vl_8b_thinking_oracle_r7",
+      "run_path": "oracle_identifier_experiment_20260902_r1/oracle_reasoning/models/qwen3_vl_8b_thinking_oracle_r7",
+      "code_source": "Released GT geometry, encoded and abstracted; no human answer targets"
+    },
+    {
+      "id": "glm_oracle",
+      "model": "glm",
+      "kind": "oracle",
+      "r2": 0.2908604569,
+      "ratio": 0.2,
+      "run": "glm_4_1v_9b_thinking_oracle_r2",
+      "run_path": "oracle_identifier_experiment_20260902_r1/oracle_reasoning/models/glm_4_1v_9b_thinking_oracle_r2",
+      "code_source": "Released GT geometry, encoded and abstracted; no human answer targets"
+    },
+    {
+      "id": "instruct_full",
+      "model": "instruct",
+      "kind": "full",
+      "r2": 0.2009924341,
+      "ratio": null,
+      "run": "qwen3_vl_8b_instruct_corresponding_parse_anything_full",
+      "run_path": "oracle_identifier_experiment_20260902_r1/identifier_reasoning/models/qwen3_vl_8b_instruct_corresponding_parse_anything_full",
+      "code_source": "Qwen3-VL-8B-Instruct identifier + SAM3.1 + VGGT-Omega + SpatialTrackerV2"
+    },
+    {
+      "id": "thinking_full",
+      "model": "thinking",
+      "kind": "full",
+      "r2": 0.1326831779,
+      "ratio": null,
+      "run": "parse_anything_vggt_spatialtracker_cutoff_code",
+      "run_path": "physics_280_code_vlm_matrix_20260828_r6/models/parse_anything_vggt_spatialtracker_cutoff_code",
+      "code_source": "Qwen3-VL-8B-Thinking + SAM3.1 + VGGT-Omega + SpatialTrackerV2"
+    },
+    {
+      "id": "glm_full",
+      "model": "glm",
+      "kind": "full",
+      "r2": 0.2348970725,
+      "ratio": null,
+      "run": "glm_4_1v_9b_thinking_corresponding_parse_anything_full",
+      "run_path": "oracle_identifier_experiment_20260902_r1/identifier_reasoning/models/glm_4_1v_9b_thinking_corresponding_parse_anything_full",
+      "code_source": "GLM-4.1V-9B-Thinking identifier + SAM3.1 + VGGT-Omega + SpatialTrackerV2"
+    },
+    {
+      "id": "instruct_abstracted",
+      "model": "instruct",
+      "kind": "abstracted",
+      "r2": 0.22787582,
+      "ratio": 0.7,
+      "run": "qwen3_vl_8b_instruct_r7",
+      "run_path": "identifier_adaptive_reasoning_20260905/models/qwen3_vl_8b_instruct_r7",
+      "code_source": "Qwen3-VL-8B-Instruct identifier + SAM3.1 + VGGT-Omega + SpatialTrackerV2"
+    },
+    {
+      "id": "thinking_abstracted",
+      "model": "thinking",
+      "kind": "abstracted",
+      "r2": 0.2431814388,
+      "ratio": 0.9,
+      "run": "parse_anything_r9",
+      "run_path": "adaptive_reasoning_90_conditions_20260831/models/parse_anything_r9",
+      "code_source": "Qwen3-VL-8B-Thinking + SAM3.1 + VGGT-Omega + SpatialTrackerV2"
+    },
+    {
+      "id": "glm_abstracted",
+      "model": "glm",
+      "kind": "abstracted",
+      "r2": 0.2206442141,
+      "ratio": 0.7,
+      "run": "glm_4_1v_9b_thinking_r7",
+      "run_path": "identifier_adaptive_reasoning_20260905/models/glm_4_1v_9b_thinking_r7",
+      "code_source": "GLM-4.1V-9B-Thinking identifier + SAM3.1 + VGGT-Omega + SpatialTrackerV2"
+    }
+  ],
+  "examples": [
+    {
+      "id": "physics_package_3783e9a67ca6fade0f27",
+      "label": "Hamrick · block mass",
+      "sample_id": "Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_463d61839e",
+      "study": "Hamrick2016Inferring",
+      "question": "Which block color is heavier? Color 1: ████ , Color 2: ████",
+      "answer_format": "Options: Color 1 / Color 2",
+      "answer_schema": {
+        "options": [
+          "Color 1",
+          "Color 2"
+        ],
+        "type": "categorical"
+      },
+      "group": "non_uncertainty",
+      "media": {
+        "src": "assets/examples/hamrick-mass.mp4",
+        "sha256": "d81b3570dbdf3d8257e177fc7376a61c0920b11a7c35f799e69671db0e453ef9",
+        "note": "Original stimulus clip. The saved inference used 8 sampled frames."
+      },
+      "runs": {
+        "instruct_oracle": "data/examples/hamrick-mass-instruct_oracle.json",
+        "thinking_oracle": "data/examples/hamrick-mass-thinking_oracle.json",
+        "glm_oracle": "data/examples/hamrick-mass-glm_oracle.json",
+        "instruct_full": "data/examples/hamrick-mass-instruct_full.json",
+        "thinking_full": "data/examples/hamrick-mass-thinking_full.json",
+        "glm_full": "data/examples/hamrick-mass-glm_full.json",
+        "instruct_abstracted": "data/examples/hamrick-mass-instruct_abstracted.json",
+        "thinking_abstracted": "data/examples/hamrick-mass-thinking_abstracted.json",
+        "glm_abstracted": "data/examples/hamrick-mass-glm_abstracted.json"
+      }
+    },
+    {
+      "id": "physics_package_9d90e863adb211cab8d5",
+      "label": "Hamrick · fall likelihood",
+      "sample_id": "Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_b99682e68a",
+      "study": "Hamrick2016Inferring",
+      "question": "On a 1-7 scale, how likely is the tower to fall when unfrozen?",
+      "answer_format": "Answer scale: 1-7.",
+      "answer_schema": {
+        "maximum": 7.0,
+        "minimum": 1.0,
+        "type": "slider"
+      },
+      "group": "uncertainty",
+      "media": {
+        "src": "assets/examples/hamrick-fall.mp4",
+        "sha256": "0b89bec90ba904fa82f7b445f9d49611c1f492123b28fe4c3a2b26d34faf5646",
+        "note": "Original stimulus clip. The saved inference used 8 sampled frames."
+      },
+      "runs": {
+        "instruct_oracle": "data/examples/hamrick-fall-instruct_oracle.json",
+        "thinking_oracle": "data/examples/hamrick-fall-thinking_oracle.json",
+        "glm_oracle": "data/examples/hamrick-fall-glm_oracle.json",
+        "instruct_full": "data/examples/hamrick-fall-instruct_full.json",
+        "thinking_full": "data/examples/hamrick-fall-thinking_full.json",
+        "glm_full": "data/examples/hamrick-fall-glm_full.json",
+        "instruct_abstracted": "data/examples/hamrick-fall-instruct_abstracted.json",
+        "thinking_abstracted": "data/examples/hamrick-fall-thinking_abstracted.json",
+        "glm_abstracted": "data/examples/hamrick-fall-glm_abstracted.json"
+      }
+    },
+    {
+      "id": "physics_package_214e12975f6672c9e82f",
+      "label": "Bass · outcome likelihood",
+      "sample_id": "Bass2022Partial_exp1_clip_0_0_MIRROR_57808a052f",
+      "study": "Bass2022Partial",
+      "question": "How likely is it that the pink sphere will end up on the grass?",
+      "answer_format": "Answer scale: 0-100.",
+      "answer_schema": {
+        "maximum": 100.0,
+        "minimum": 0.0,
+        "type": "slider"
+      },
+      "group": "uncertainty",
+      "media": {
+        "src": "assets/examples/bass-likelihood.mp4",
+        "sha256": "9c8a51279137759aa4ac5d8b23fcd6fb334826470945493b7e14cb439de031ea",
+        "note": "Original stimulus clip. The saved inference used 8 sampled frames."
+      },
+      "runs": {
+        "instruct_oracle": "data/examples/bass-likelihood-instruct_oracle.json",
+        "thinking_oracle": "data/examples/bass-likelihood-thinking_oracle.json",
+        "glm_oracle": "data/examples/bass-likelihood-glm_oracle.json",
+        "instruct_full": "data/examples/bass-likelihood-instruct_full.json",
+        "thinking_full": "data/examples/bass-likelihood-thinking_full.json",
+        "glm_full": "data/examples/bass-likelihood-glm_full.json",
+        "instruct_abstracted": "data/examples/bass-likelihood-instruct_abstracted.json",
+        "thinking_abstracted": "data/examples/bass-likelihood-thinking_abstracted.json",
+        "glm_abstracted": "data/examples/bass-likelihood-glm_abstracted.json"
+      }
+    }
+  ]
+}

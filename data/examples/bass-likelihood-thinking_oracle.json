@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "thinking_oracle",
+  "qa_id": "physics_package_214e12975f6672c9e82f",
+  "prediction": {
+    "display": "50 / 100",
+    "answer": 50,
+    "note": "Saved likelihood rating, not model confidence."
+  },
+  "human_reference": "Human mean: 53.3833 on the 0-100 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 28020,
+    "source_bytes": 86340,
+    "sha256": "9db6ff2c9c4201ab3fddca0b96f56f226352eb1124dede7887ad4aa7c1fbea53",
+    "public_sha256": "9db6ff2c9c4201ab3fddca0b96f56f226352eb1124dede7887ad4aa7c1fbea53",
+    "local_path_redactions": 0,
+    "download": "data/examples/bass-likelihood-thinking_oracle.txt.gz",
+    "excerpt": "[\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/direct/bbox_2d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"gray_cannonball\"], \"path\": \"/objects/0/direct/bbox_2d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [], \"group\": \"geometry_2d\", \"objects\": [], \"path\": \"/geometry/coordinate_conventions/bbox_2d\", \"precision\": \"atomic\", \"value\": \"xyxy half-open source pixels\"},\n  {\"frames\": [], \"group\": \"geometry_3d\", \"objects\": [], \"path\": \"/geometry/coordinate_conventions/bbox_3d\", \"precision\": \"atomic\", \"value\": \"oriented world cuboid\"},\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/computed/center_2d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/direct/bbox_2d/0/source\", \"precision\": \"atomic\", \"value\": \"released_reference_geometry\"},\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/direct/bbox_2d/0/source_frame_index\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/direct/bbox_2d/0/confidence\", \"precision\": \"atomic\", \"value\": 1.0}\n]",
+    "excerpt_note": "8-record excerpt from 370 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 28020,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": 50,\n  \"evidence_summary\": \"The pink sphere's position remains stable in the upper portion of the frame throughout the sequence, with no visible movement toward the grass. The grass is at the bottom of the frame, and the pink sphere maintains a consistent vertical position above it.\",\n  \"confidence\": null,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Bass2022Partial_exp1_clip_0_0_MIRROR_57808a052f\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "f41208533458db7944405a9a72d6e2f86ac47803af9fad44946542cc1b62f1ac",
+    "trace_fingerprint": "9b14b5d29592bfc83ae5fade38e89531fe554099304a21b7296da29411463841",
+    "inference_rerun": false,
+    "source_record_id": "pg_0_0_mir",
+    "csv_prediction_verified": true
+  }
+}

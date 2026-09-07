@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "thinking_abstracted",
+  "qa_id": "physics_package_214e12975f6672c9e82f",
+  "prediction": {
+    "display": "0 / 100",
+    "answer": 0,
+    "note": "Saved likelihood rating, not model confidence."
+  },
+  "human_reference": "Human mean: 53.3833 on the 0-100 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 32774,
+    "source_bytes": 105322,
+    "sha256": "d90c6bd85dacc9906df4f7ab7af420a2a2eb5c0b06fba5502ed31533ca7491bc",
+    "public_sha256": "d90c6bd85dacc9906df4f7ab7af420a2a2eb5c0b06fba5502ed31533ca7491bc",
+    "local_path_redactions": 0,
+    "download": "data/examples/bass-likelihood-thinking_abstracted.txt.gz",
+    "excerpt": "[\n  {\"frames\": [8], \"group\": \"motion\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/computed/velocity_2d/7/frame_offset\", \"precision\": \"atomic\", \"value\": 8},\n  {\"frames\": [6], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/direct/bbox_2d/6/source\", \"precision\": \"atomic\", \"value\": \"segmenter\"},\n  {\"frames\": [6], \"group\": \"motion\", \"objects\": [\"gray_cannonball\"], \"path\": \"/objects/0/computed/velocity_2d/5/frame_offset\", \"precision\": \"atomic\", \"value\": 6},\n  {\"frames\": [8], \"group\": \"geometry_2d\", \"objects\": [\"gray_cannonball\"], \"path\": \"/objects/0/computed/center_2d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8},\n  {\"frames\": [0], \"group\": \"relations\", \"objects\": [\"pink_sphere\", \"gray_cannonball\"], \"path\": \"/relations/0/object_id\", \"precision\": \"atomic\", \"value\": \"pink_sphere\"},\n  {\"frames\": [8], \"group\": \"relations\", \"objects\": [\"sky\", \"pink_sphere\"], \"path\": \"/relations/8/object_id\", \"precision\": \"atomic\", \"value\": \"sky\"},\n  {\"frames\": [1], \"group\": \"geometry_2d\", \"objects\": [\"dirt_ground\"], \"path\": \"/objects/4/computed/center_2d/1/frame_offset\", \"precision\": \"atomic\", \"value\": 1},\n  {\"frames\": [1], \"group\": \"geometry_2d\", \"objects\": [\"grass_surface\"], \"path\": \"/objects/3/computed/center_2d/1/frame_offset\", \"precision\": \"atomic\", \"value\": 1}\n]",
+    "excerpt_note": "8-record excerpt from 477 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 32774,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": 0,\n  \"evidence_summary\": \"The pink sphere is consistently visible in the sky (visibility score 1.0) and shows no motion toward the ground or grass surface. The grass surface is visible but the pink sphere remains in the sky throughout the frames.\",\n  \"confidence\": null,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Bass2022Partial_exp1_clip_0_0_MIRROR_57808a052f\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "3e3b7cf72fc5b7b3edfea4be0e4dc2e6512a2b1213f52e235f98ffdf9e8bc7a6",
+    "trace_fingerprint": "26b9b1d6772c774a9bd31706fbb0add6edbe640c4d7264ec919f2b1f20d09057",
+    "inference_rerun": false,
+    "source_record_id": "pg_0_0_mir",
+    "csv_prediction_verified": true
+  }
+}

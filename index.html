@@ -9,8 +9,9 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260908">
+  <link rel="stylesheet" href="assets/site.css?v=20260908-examples">
   <script src="assets/site.js?v=20260908" defer></script>
+  <script src="assets/examples.js?v=20260908" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -19,7 +20,7 @@
       <a class="brand" href="#top"><img src="assets/favicon.svg" alt="" width="24" height="24">Unified Parser</a>
       <button class="icon-button nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation"><img src="assets/icons/menu.svg" alt=""></button>
       <nav id="site-nav" aria-label="Primary navigation">
-        <a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#gallery">Gallery</a>
+        <a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#examples">Examples</a><a href="#gallery">Gallery</a>
       </nav>
     </div>
   </header>
@@ -140,7 +141,7 @@
             <table class="results-table reasoning-table"><thead><tr><th scope="col">Reasoning model</th><th scope="col">Evidence</th><th scope="col">Overall R² ↑</th><th scope="col">Without uncertainty<br>R² ↑</th><th scope="col">With uncertainty<br>R² ↑</th></tr></thead><tbody id="reasoning-table-body"></tbody></table>
           </div>
           <p class="metric-note">R² is the mean of squared Pearson correlations across valid experiments, not the regression coefficient of determination. Split cells include valid-experiment counts; these sets can differ by condition. Overall R² is recomputed at the experiment level, not averaged from the two split columns.</p>
-          <p class="metric-note">Unified Parser conditions use Qwen3-VL-8B-Thinking + SAM3.1 + VGGT-Ω + SpatialTrackerV2. The reasoning model and abstraction context ratio are shown separately. These are the recorded ratio conditions, not a claim of held-out optimality.</p>
+          <p class="metric-note">Unified Parser conditions use SAM3.1 + VGGT-Ω + SpatialTrackerV2, with the corresponding VLM identifier. The reasoning model and abstraction context ratio are shown separately; exact run sources are listed in the examples below. These are recorded ratio conditions, not a claim of held-out optimality.</p>
         </div>
 
         <div role="tabpanel" id="panel-parsing" aria-labelledby="tab-parsing" hidden>
@@ -166,6 +167,37 @@
           <div class="table-scroll" tabindex="0" role="region" aria-label="Parsing stage latency"><table class="results-table"><thead><tr><th scope="col">Stage</th><th scope="col">Mean (s)</th><th scope="col">Median (s)</th><th scope="col">P95 (s)</th></tr></thead><tbody id="stage-timing"></tbody></table></div>
           <p class="metric-note">Identifier and 2D Mask: 280 samples. Analyzer and Point Tracker: 40 routed 3D samples. Stage means have different denominators.</p>
         </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="examples" aria-labelledby="examples-title">
+      <div class="section-heading"><p class="section-label">Inside a saved run</p><h2 id="examples-title">Model inputs &amp; predictions</h2><p>Original visual input, question, supplied code, and recorded answer across the three reasoning models and code conditions.</p></div>
+      <div id="examples-loading" role="status">Loading saved examples…</div>
+      <div id="examples-error" role="alert" hidden><p>Saved examples could not be loaded.</p><button class="text-link" id="examples-retry">Retry</button></div>
+      <div id="examples-viewer" hidden>
+        <div class="example-selectors">
+          <label>Example<select id="example-select" aria-label="Example"></select></label>
+          <label>Reasoning model<select id="example-model" aria-label="Example reasoning model"></select></label>
+          <label>Code condition<select id="example-condition" aria-label="Example code condition"><option value="abstracted">Predicted + abstraction</option><option value="full">Predicted full code</option><option value="oracle">GT + abstraction</option></select></label>
+        </div>
+        <div class="example-run-heading"><span id="example-run-label"></span><span id="example-run-score"></span></div>
+        <div class="example-input-grid">
+          <figure class="example-visual">
+            <div class="example-field-heading"><h3>Input video</h3><a id="example-video-download" class="icon-button" download aria-label="Download original video" title="Download original video"><img src="assets/icons/download.svg" alt=""></a></div>
+            <video id="example-video" controls playsinline preload="metadata" aria-label="Original input video"></video>
+            <p id="example-video-note" class="figure-note"></p>
+          </figure>
+          <div class="example-qa">
+            <div><div class="example-field-heading"><h3>Input question</h3><span id="example-question-group"></span></div><p id="example-question"></p><p id="example-answer-schema" class="figure-note"></p></div>
+            <div class="example-prediction"><span class="small-label">Recorded prediction</span><strong id="example-prediction"></strong><p id="example-prediction-note" class="figure-note"></p></div>
+            <details class="example-reference"><summary>Human reference · evaluation only</summary><p id="example-human"></p><p class="figure-note">Not part of the model input. Human ratings are aggregate judgments, not a single correct answer.</p></details>
+          </div>
+        </div>
+        <div class="example-code-heading"><div><h3 id="example-code-title">Supplied code</h3><p id="example-code-meta" class="figure-note"></p></div><a id="example-code-download" class="text-link" download>Delivered code (.gz) <img src="assets/icons/download.svg" alt=""></a></div>
+        <div class="code-tool"><div class="code-toolbar"><span id="example-code-label"></span><span id="example-code-size"></span></div><pre class="code-panel example-code-panel" tabindex="0" aria-label="Saved code excerpt"><code id="example-code"></code></pre><div class="code-footer"><span id="example-excerpt-note"></span></div></div>
+        <details class="example-provenance"><summary>Run details &amp; saved response</summary><dl id="example-provenance"></dl><pre id="example-response" tabindex="0" aria-label="Saved model response"></pre><a id="example-record-download" class="text-link" download>Example record <img src="assets/icons/download.svg" alt=""></a></details>
+        <p class="metric-note">Examples are illustrative records, not a new evaluation. R² above is the full condition’s experiment-level score, not a score for this individual answer. No inference was rerun for this viewer.</p>
+        <p id="example-status" class="sr-only" aria-live="polite"></p>
       </div>
     </section>
 

@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "thinking_oracle",
+  "qa_id": "physics_package_3783e9a67ca6fade0f27",
+  "prediction": {
+    "display": "Color 1",
+    "answer": "Color 1",
+    "note": "Saved categorical answer."
+  },
+  "human_reference": "Color 1: 0.0%; Color 2: 100.0%",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 24775,
+    "source_bytes": 78088,
+    "sha256": "6be47965e7d2ac58fe3cc179fb0351bb6c79566da98ff219b4931599315dad89",
+    "public_sha256": "6be47965e7d2ac58fe3cc179fb0351bb6c79566da98ff219b4931599315dad89",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-mass-thinking_oracle.txt.gz",
+    "excerpt": "[\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_03\"], \"path\": \"/objects/2/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_05\"], \"path\": \"/objects/4/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_08\"], \"path\": \"/objects/7/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_09\"], \"path\": \"/objects/8/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_06\"], \"path\": \"/objects/5/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0}\n]",
+    "excerpt_note": "8-record excerpt from 370 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 24775,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": \"Color 1\",\n  \"evidence_summary\": \"The purple blocks (Color 1) are consistently larger in volume than the gray blocks (Color 2) across all frames, indicating greater mass and thus heavier weight.\",\n  \"confidence\": null,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_463d61839e\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "0a99ce979214e49362d9161beeecc68661313f877be369bc5f76dfc5f67fab5a",
+    "trace_fingerprint": "9c9eefecf3e38f2dca6ed02576ee1857fe09290eb0111978d77be640168f3bbd",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentC_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "instruct_abstracted",
+  "qa_id": "physics_package_9d90e863adb211cab8d5",
+  "prediction": {
+    "display": "7 / 7",
+    "answer": 7,
+    "note": "Saved likelihood rating, not model confidence. An answer-format repair pass was recorded."
+  },
+  "human_reference": "Human mean: 4.7 on the 1-7 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff; format-repair pass: the code token count describes the initial answer pass",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 25482,
+    "source_bytes": 77945,
+    "sha256": "7d0fcdd1124ffd47f1e904b59e2ca489c295c4c744d707658226bf56678e1e2e",
+    "public_sha256": "7d0fcdd1124ffd47f1e904b59e2ca489c295c4c744d707658226bf56678e1e2e",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-fall-instruct_abstracted.txt.gz",
+    "excerpt": "[\n  {\"frames\": [8], \"group\": \"geometry_2d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/direct/bbox_2d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8},\n  {\"frames\": [8], \"group\": \"geometry_2d\", \"objects\": [\"block_01\"], \"path\": \"/objects/0/direct/bbox_2d/8/source\", \"precision\": \"typed\", \"value\": {\"field\": \"source\", \"value\": \"segmenter\", \"value_type\": \"str\"}},\n  {\"frames\": [4], \"group\": \"geometry_2d\", \"objects\": [\"block_03\"], \"path\": \"/objects/2/direct/bbox_2d/4/frame_offset\", \"precision\": \"atomic\", \"value\": 4},\n  {\"frames\": [8], \"group\": \"geometry_2d\", \"objects\": [\"block_09\"], \"path\": \"/objects/8/direct/bbox_2d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8},\n  {\"frames\": [5], \"group\": \"geometry_2d\", \"objects\": [\"block_02\"], \"path\": \"/objects/1/computed/center_2d/5/frame_offset\", \"precision\": \"atomic\", \"value\": 5},\n  {\"frames\": [5], \"group\": \"geometry_2d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/computed/center_2d/5/frame_offset\", \"precision\": \"atomic\", \"value\": 5},\n  {\"frames\": [8], \"group\": \"geometry_2d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/direct/bbox_2d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8},\n  {\"frames\": [4], \"group\": \"geometry_2d\", \"objects\": [\"block_08\"], \"path\": \"/objects/7/direct/bbox_2d/4/frame_offset\", \"precision\": \"atomic\", \"value\": 4}\n]",
+    "excerpt_note": "8-record excerpt from 370 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 25482,
+    "format_repair": true
+  },
+  "response": "{\n  \"answer\": 7,\n  \"evidence_summary\": \"Selected evidence supports this answer.\",\n  \"confidence\": null,\n  \"evidence_ids\": [],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "8c357e02b0fbe0e3fcd4a7231b7d76320287e495984fd43e60c2b602c942e1dc",
+    "trace_fingerprint": "367be542f201fec36954373ad947213950280460368c6b2f24a1b21b41e4f3de",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentB_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}

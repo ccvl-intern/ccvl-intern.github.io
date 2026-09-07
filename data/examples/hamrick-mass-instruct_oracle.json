@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "instruct_oracle",
+  "qa_id": "physics_package_3783e9a67ca6fade0f27",
+  "prediction": {
+    "display": "Color 2",
+    "answer": "Color 2",
+    "note": "Saved categorical answer."
+  },
+  "human_reference": "Color 1: 0.0%; Color 2: 100.0%",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 18300,
+    "source_bytes": 54859,
+    "sha256": "b8ad98b8d371afecd5af2faf527ce5f7bc3ea704d4dfe02309040ebf2ebfdc8a",
+    "public_sha256": "b8ad98b8d371afecd5af2faf527ce5f7bc3ea704d4dfe02309040ebf2ebfdc8a",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-mass-instruct_oracle.txt.gz",
+    "excerpt": "[\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_03\"], \"path\": \"/objects/2/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_05\"], \"path\": \"/objects/4/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_08\"], \"path\": \"/objects/7/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_09\"], \"path\": \"/objects/8/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_06\"], \"path\": \"/objects/5/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0}\n]",
+    "excerpt_note": "8-record excerpt from 263 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 18300,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": \"Color 2\",\n  \"evidence_summary\": \"The gray blocks (Color 2) are positioned at the bottom of the tower, supporting the purple blocks (Color 1) above them, indicating they are heavier.\",\n  \"confidence\": null,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_463d61839e\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "0c18bdbb576fadee6d4314b76345146f25d52986df91e3c26eea029725be1efa",
+    "trace_fingerprint": "768557d0e44b4ecccb28289f481b3f817a8009483cc3cb59c23b77004bbf9b08",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentC_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}

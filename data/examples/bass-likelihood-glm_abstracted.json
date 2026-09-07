@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "glm_abstracted",
+  "qa_id": "physics_package_214e12975f6672c9e82f",
+  "prediction": {
+    "display": "0 / 100",
+    "answer": 0,
+    "note": "Saved likelihood rating, not model confidence."
+  },
+  "human_reference": "Human mean: 53.3833 on the 0-100 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 18068,
+    "source_bytes": 64473,
+    "sha256": "c6e474e47cd218dfa788ea334304374a1a7fb5da9c735077bbaa12cfa43579ef",
+    "public_sha256": "c6e474e47cd218dfa788ea334304374a1a7fb5da9c735077bbaa12cfa43579ef",
+    "local_path_redactions": 0,
+    "download": "data/examples/bass-likelihood-glm_abstracted.txt.gz",
+    "excerpt": "[\n  {\"frames\": [8], \"group\": \"relations\", \"objects\": [\"sky\", \"pink_sphere\"], \"path\": \"/relations/8/object_id\", \"precision\": \"atomic\", \"value\": \"sky\"},\n  {\"frames\": [4], \"group\": \"relations\", \"objects\": [\"sky\", \"gray_cannonball\"], \"path\": \"/relations/4/object_id\", \"precision\": \"atomic\", \"value\": \"sky\"},\n  {\"frames\": [11], \"group\": \"relations\", \"objects\": [\"sky\", \"hole\"], \"path\": \"/relations/11/object_id\", \"precision\": \"atomic\", \"value\": \"sky\"},\n  {\"frames\": [5], \"group\": \"motion\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/computed/velocity_2d/4/frame_offset\", \"precision\": \"atomic\", \"value\": 5},\n  {\"frames\": [0], \"group\": \"geometry_2d\", \"objects\": [\"pink_sphere\"], \"path\": \"/objects/1/computed/center_2d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [5], \"group\": \"motion\", \"objects\": [\"gray_cannonball\"], \"path\": \"/objects/0/computed/velocity_2d/4/frame_offset\", \"precision\": \"atomic\", \"value\": 5},\n  {\"frames\": [5], \"group\": \"geometry_2d\", \"objects\": [\"gray_cannonball\"], \"path\": \"/objects/0/computed/center_2d/5/frame_offset\", \"precision\": \"atomic\", \"value\": 5},\n  {\"frames\": [8], \"group\": \"geometry_2d\", \"objects\": [\"dirt_ground\"], \"path\": \"/objects/4/direct/bbox_2d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8}\n]",
+    "excerpt_note": "8-record excerpt from 370 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 18068,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": 0,\n  \"evidence_summary\": \"The pink sphere remains stationary throughout the video, while the gray cannonball moves. The pink sphere does not move towards the grass surface, and there is no indication of it reaching the grass surface. Therefore, the pink sphere will not end up on the grass.\",\n  \"confidence\": 0.6871160463416506,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Bass2022Partial_exp1_clip_0_0_MIRROR_57808a052f\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "6e42e24c43293b3d4f2d0f4abbbc4f9a6211e7458f0d4542e1332dd6c10e6992",
+    "trace_fingerprint": "6f1d1d2b279a0b82016633cdf22591523daddfd96a20c1db979c93dd252ac64f",
+    "inference_rerun": false,
+    "source_record_id": "pg_0_0_mir",
+    "csv_prediction_verified": true
+  }
+}

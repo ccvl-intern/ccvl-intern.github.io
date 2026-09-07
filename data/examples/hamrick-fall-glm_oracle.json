@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "glm_oracle",
+  "qa_id": "physics_package_9d90e863adb211cab8d5",
+  "prediction": {
+    "display": "4 / 7",
+    "answer": 4,
+    "note": "Saved likelihood rating, not model confidence."
+  },
+  "human_reference": "Human mean: 4.7 on the 1-7 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 5325,
+    "source_bytes": 19949,
+    "sha256": "85df1c4e514ab731d22cacaaeb06796bbc8f27f867f34e0942dc8054c7c2d45e",
+    "public_sha256": "85df1c4e514ab731d22cacaaeb06796bbc8f27f867f34e0942dc8054c7c2d45e",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-fall-glm_oracle.txt.gz",
+    "excerpt": "[\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_01\"], \"path\": \"/objects/0/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_02\"], \"path\": \"/objects/1/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [], \"group\": \"geometry_3d\", \"objects\": [], \"path\": \"/geometry/coordinate_conventions/bbox_3d\", \"precision\": \"atomic\", \"value\": \"oriented world cuboid\"},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_06\"], \"path\": \"/objects/5/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_01\"], \"path\": \"/objects/0/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0}\n]",
+    "excerpt_note": "8-record excerpt from 103 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 5325,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": 4,\n  \"evidence_summary\": \"The tower appears to be in a relatively stable configuration across the frames, with no obvious signs of instability or imbalanced positioning. The blocks seem to be stacked in a way that distributes weight relatively evenly, suggesting moderate stability. Based on visual assessment of the tower's structure and positioning, it appears to have moderate stability, warranting a middle-range likelihood score.\",\n  \"confidence\": 0.605846477103376,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_b99682e68a\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "9e8ca0734c082cba30ea9a25762600d0e68b00a5982c207deebd323c79015ec4",
+    "trace_fingerprint": "08d83a9449a0ca967c140cd57862bff747560a67e3c671f207c22e0778b9f5e6",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentB_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}

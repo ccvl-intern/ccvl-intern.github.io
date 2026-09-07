@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "glm_oracle",
+  "qa_id": "physics_package_3783e9a67ca6fade0f27",
+  "prediction": {
+    "display": "Color 1",
+    "answer": "Color 1",
+    "note": "Saved categorical answer."
+  },
+  "human_reference": "Color 1: 0.0%; Color 2: 100.0%",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 5665,
+    "source_bytes": 20015,
+    "sha256": "c6254e00711c39140d0adceac0455a849d21cbceb52ad2e3c42c6f758fb23b41",
+    "public_sha256": "c6254e00711c39140d0adceac0455a849d21cbceb52ad2e3c42c6f758fb23b41",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-mass-glm_oracle.txt.gz",
+    "excerpt": "[\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_03\"], \"path\": \"/objects/2/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_05\"], \"path\": \"/objects/4/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_08\"], \"path\": \"/objects/7/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_09\"], \"path\": \"/objects/8/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_06\"], \"path\": \"/objects/5/computed/bbox_3d/0/source\", \"precision\": \"atomic\", \"value\": \"released_reference_geometry\"},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/computed/bbox_3d/0/confidence\", \"precision\": \"typed\", \"value\": {\"field\": \"confidence\", \"value\": 1.0, \"value_type\": \"float\"}},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/computed/bbox_3d/0/confidence\", \"precision\": \"typed\", \"value\": {\"field\": \"confidence\", \"value\": 1.0, \"value_type\": \"float\"}}\n]",
+    "excerpt_note": "8-record excerpt from 103 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 5665,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": \"Color 1\",\n  \"evidence_summary\": \"The reference-geometry code indicates that the purple blocks (Color 1) have larger bounding box volumes and more substantial structural elements compared to the gray blocks (Color 2), suggesting greater mass and therefore heavier weight.\",\n  \"confidence\": 0.7190610063625072,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_463d61839e\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "6b7a4304b7ca33dd81aeb447c106b8cd926d097d0f9e156cd7bcdcb89f364cd5",
+    "trace_fingerprint": "65f839d8c487de22709c6d5270f7b485662e2074ef106690569fb58e928269ba",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentC_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}

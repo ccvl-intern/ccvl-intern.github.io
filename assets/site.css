@@ -240,6 +240,53 @@ details[open] .details-mark { transform: rotate(225deg); }
 #data-error { margin: 20px 0; padding: 15px; border: 1px solid #bd6a6a; }
 #data-error button { text-decoration: underline; color: var(--red); font-size: 13px; }
 .noscript-note { padding: 24px; }
+#examples { scroll-margin-top: 16px; }
+#examples-viewer[aria-busy="true"] > :not(.example-selectors):not(.example-run-heading) { visibility: hidden; }
+.example-selectors { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 20px; }
+.example-selectors label { display: flex; flex-direction: column; gap: 7px; color: var(--muted); font-size: 12px; min-width: 0; }
+.example-selectors select { width: 100%; font-size: 13px; }
+.example-run-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; padding: 20px 0; margin: 14px 0 26px; border-bottom: 1px solid var(--line); font-size: 13px; }
+#example-run-label { color: var(--muted); }
+#example-run-score { font-weight: 600; color: var(--teal-dark); font-variant-numeric: tabular-nums; }
+.example-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; align-items: start; }
+.example-input-grid > * { min-width: 0; }
+.example-field-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 36px; margin-bottom: 14px; }
+.example-field-heading h3, .example-code-heading h3 { font-size: 20px; }
+.example-field-heading > span { color: var(--muted); font-size: 11px; }
+#example-video { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #101414; border-radius: 4px; }
+.example-qa { display: grid; gap: 24px; }
+#example-question { color: var(--ink); font-size: 20px; line-height: 1.5; overflow-wrap: anywhere; }
+.example-prediction { padding: 20px 0; border-block: 1px solid var(--line); }
+.example-prediction strong { display: block; color: var(--teal-dark); font-size: 30px; line-height: 1.35; margin-top: 6px; overflow-wrap: anywhere; }
+.example-prediction .figure-note { margin-top: 7px; }
+.example-reference { font-size: 13px; }
+.example-reference summary, .example-provenance summary { color: var(--muted); cursor: pointer; }
+.example-reference > p { margin-top: 12px; }
+.example-reference > p:first-of-type { color: var(--ink); font-variant-numeric: tabular-nums; }
+.example-code-heading { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin: 36px 0 16px; }
+.example-code-heading .figure-note { margin-top: 7px; }
+.example-code-heading .text-link { flex: 0 0 auto; font-size: 12px; }
+.example-code-panel { max-height: 355px; min-height: 180px; white-space: pre-wrap; overflow-wrap: anywhere; }
+#example-code-label { overflow-wrap: anywhere; min-width: 0; }
+#example-code-size { flex: 0 0 auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+.example-provenance { margin-top: 22px; font-size: 13px; }
+.example-provenance dl { display: grid; grid-template-columns: 130px minmax(0,1fr); gap: 8px 20px; padding: 20px 0 10px; }
+.example-provenance dt { color: var(--muted); }
+.example-provenance dd { margin: 0; overflow-wrap: anywhere; font: 11px/1.7 "SFMono-Regular", Consolas, monospace; }
+.example-provenance pre { background: var(--soft); border: 1px solid var(--line); padding: 18px; max-height: 280px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; line-height: 1.7; }
+#examples-error { border-left: 3px solid var(--red); padding: 14px 18px; }
+@media (max-width: 700px) {
+  .example-selectors { grid-template-columns: 1fr; gap: 14px; }
+  .example-input-grid { grid-template-columns: 1fr; gap: 28px; }
+  .example-run-heading { font-size: 12px; gap: 5px; }
+  .example-qa { gap: 18px; }
+  #example-question { font-size: 18px; }
+  .example-prediction strong { font-size: 27px; }
+  .example-code-heading { align-items: start; flex-direction: column; gap: 12px; }
+  .example-provenance dl { grid-template-columns: 1fr; gap: 3px; }
+  .example-provenance dd { margin-bottom: 10px; }
+  #examples .code-toolbar { flex-wrap: wrap; padding-inline: 14px; }
+}
 @media (min-width: 1500px) { .masthead { padding-top: 62px; } .masthead h1 { font-size: 54px; } }
 @media (min-width: 701px) and (max-height: 800px) {
   .masthead { padding-top: 24px; }

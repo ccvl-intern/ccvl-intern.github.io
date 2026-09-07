@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "thinking_full",
+  "qa_id": "physics_package_214e12975f6672c9e82f",
+  "prediction": {
+    "display": "50 / 100",
+    "answer": 50,
+    "note": "Saved likelihood rating, not model confidence."
+  },
+  "human_reference": "Human mean: 53.3833 on the 0-100 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256. Local filesystem paths are redacted in the public copy.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 25058,
+    "source_bytes": 47538,
+    "sha256": "67b4fb345773b4054a1187275e7229e6f1bd16e6169e9a7cb4d8a69c7428d1e7",
+    "public_sha256": "b5f0b4a68d6d55bb7cbe9cea697b962c62141cff5ca6e96865de864a6e54f27d",
+    "local_path_redactions": 3,
+    "download": "data/examples/bass-likelihood-thinking_full.txt.gz",
+    "excerpt": "[\n  {\n    \"schema_version\": \"2.0.0\",\n    \"code_id\": \"code_f049bf3060286551fa9f\",\n    \"sample_id\": \"Bass2022Partial_exp1_clip_0_0_MIRROR_57808a052f\",\n    \"dataset_id\": \"Bass2022Partial\",\n    \"parse_mode\": \"dynamic_2d\",\n    \"media_path\": \"[local artifact path]\",\n    \"timebase\": {\n      \"frame_count\": 16,\n      \"source_indices\": [\n        0,\n        2,\n        4,\n        6,\n        8,\n        10,\n        12,\n        14,\n        17,\n        19,\n        21,\n        23,\n        25,\n        27,\n        29,\n        31\n      ],\n      \"timestamps_sec\": [\n        0.0,\n        0.04,\n        0.08,\n        0.12,\n        0.16,\n        0.2,\n        0.24,\n        0.28,\n        0.34,\n        0.38,\n        0.42,\n        0.46,\n        0.5,\n        0.54,\n        0.58,\n        0.62\n      ],\n      \"source_fps\": 50.0,\n      \"source_size\": [\n        1000,\n        510\n      ]\n    },\n    \"objects\": [\n      {\n        \"object_id\": \"gray_cannonball\",\n        \"label\": \"gray cannonball\",\n        \"role\": \"dynamic\",\n        \"identity_confidence\": {\n          \"value\": 0.9935563484151091,\n          \"source\": \"identifier\",\n          \"evidence_ids\": [\n            \"identifier_candidate_crops:4\",\n            \"identifier_candidate_assignment:ed4fc06b3248f9d8\",\n            \"identifier_generation_confidence:0.993556\",\n            \"identifier_generation_group:1/2\",\n            \"identifier_candidate_crops:2\",\n            \"identifier_candidate_assignment:f7c536bc8a80c028\",\n            \"identifier_generation_confidence:0.986602\",\n            \"identifier_generation_group:2/2\",\n            \"identifier_generation_groups:2\",\n            \"identifier_keyframes:0,5,10,15\",\n            \"rough_box_interpolation:linear\"\n          ]\n        },\n        \"rough_boxes\": [\n          [\n            879.0,\n            269.0,\n            921.0,\n            311.0\n          ],\n          [\n            879.0,\n            269.0,\n            921.0,\n            311.0\n          ],\n          [\n            879.0,\n            269.0,\n            921.0,\n            311.0\n          ],\n          [\n            879.0,\n            269.0,\n            921.0,\n            311.0\n          ],\n          [",
+    "excerpt_note": "First 100 of 3,969 formatted lines; full delivered text is downloadable.",
+    "cutoff_applied": false,
+    "original_tokens": 25058,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": 50,\n  \"evidence_summary\": \"The pink sphere's center_2d trajectory shows a consistent downward movement (y increases) from frame 0 to 15, with y values rising from 67.28 to 129.48. The grass surface is at y=409-432, so the sphere is moving toward the ground but not yet reaching it. The distance_decreasing relation between pink_sphere and grass_surface indicates the sphere is approaching the grass, but the current position (y=129) is still well above the grass (y=409). The trajectory suggests it will eventually reach the grass, but the question asks for likelihood of ending up on the grass, which is not certain based on the visible frames.\",\n  \"confidence\": null,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:code_f049bf3060286551fa9f\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "b3dfc947e2cbb6ae1d3c03c81786e0bf4fe7a80fc4ffe901584e70be09935ce6",
+    "trace_fingerprint": "54c6bee5f580e54738bd424cd17cc9b6a4b164ad078c5d7c054b709a61c3dfa7",
+    "inference_rerun": false,
+    "source_record_id": "pg_0_0_mir",
+    "csv_prediction_verified": true
+  }
+}

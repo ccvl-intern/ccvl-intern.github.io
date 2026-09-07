@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "glm_abstracted",
+  "qa_id": "physics_package_9d90e863adb211cab8d5",
+  "prediction": {
+    "display": "5 / 7",
+    "answer": 5,
+    "note": "Saved likelihood rating, not model confidence."
+  },
+  "human_reference": "Human mean: 4.7 on the 1-7 scale.",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 26580,
+    "source_bytes": 84985,
+    "sha256": "1bebf3750cc330e4407df631ad07b7ceda8a2e38f71e78872255da776c178f52",
+    "public_sha256": "1bebf3750cc330e4407df631ad07b7ceda8a2e38f71e78872255da776c178f52",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-fall-glm_abstracted.txt.gz",
+    "excerpt": "[\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_08\"], \"path\": \"/objects/7/computed/center_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [4], \"group\": \"geometry_3d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/computed/bbox_3d/4/frame_offset\", \"precision\": \"atomic\", \"value\": 4},\n  {\"frames\": [5], \"group\": \"geometry_3d\", \"objects\": [\"block_02\"], \"path\": \"/objects/1/computed/center_3d/5/frame_offset\", \"precision\": \"atomic\", \"value\": 5},\n  {\"frames\": [0], \"group\": \"geometry_3d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/computed/bbox_3d/0/frame_offset\", \"precision\": \"atomic\", \"value\": 0},\n  {\"frames\": [8], \"group\": \"geometry_3d\", \"objects\": [\"block_06\"], \"path\": \"/objects/5/computed/bbox_3d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8},\n  {\"frames\": [9], \"group\": \"geometry_3d\", \"objects\": [\"block_01\"], \"path\": \"/objects/0/computed/bbox_3d/9/frame_offset\", \"precision\": \"atomic\", \"value\": 9},\n  {\"frames\": [9], \"group\": \"geometry_3d\", \"objects\": [\"block_05\"], \"path\": \"/objects/4/computed/bbox_3d/9/frame_offset\", \"precision\": \"atomic\", \"value\": 9},\n  {\"frames\": [8], \"group\": \"geometry_3d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/computed/bbox_3d/8/frame_offset\", \"precision\": \"atomic\", \"value\": 8}\n]",
+    "excerpt_note": "8-record excerpt from 370 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 26580,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": 5,\n  \"evidence_summary\": \"The tower appears to be stable throughout the frames, with no significant changes in its structure or position that would suggest it is about to fall. The confidence in the stability of the tower is high, as indicated by the consistent confidence values for the blocks and the overall structure. The tower maintains its form and position across all frames, suggesting it is not likely to fall.\",\n  \"confidence\": 0.5532506516102162,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_b99682e68a\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "8127699d43883dd51ab5da542052e0c34dd12d1b49da81bc54c60f6345d3656b",
+    "trace_fingerprint": "0ee240b14569d106c24fdfd3fb020bd7abbdc6cd901526b3b36bbe07131eafd3",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentB_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}

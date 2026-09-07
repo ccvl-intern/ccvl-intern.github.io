@@ -1,0 +1,35 @@
+{
+  "schema_version": "saved_run_example.1",
+  "condition_id": "instruct_abstracted",
+  "qa_id": "physics_package_3783e9a67ca6fade0f27",
+  "prediction": {
+    "display": "Color 1",
+    "answer": "Color 1",
+    "note": "Saved categorical answer."
+  },
+  "human_reference": "Color 1: 0.0%; Color 2: 100.0%",
+  "input_policy": "8 sampled frames; code delivered without a token cutoff",
+  "code": {
+    "description": "Archived delivered-code text, verified against the trace SHA-256.",
+    "label": "Delivered code excerpt",
+    "delivered_tokens": 33783,
+    "source_bytes": 115371,
+    "sha256": "6545220ee7c48fa8ef3268c08abf1c754e6db633ce626fcf168f2bfbad330302",
+    "public_sha256": "6545220ee7c48fa8ef3268c08abf1c754e6db633ce626fcf168f2bfbad330302",
+    "local_path_redactions": 0,
+    "download": "data/examples/hamrick-mass-instruct_abstracted.txt.gz",
+    "excerpt": "[\n  {\"frames\": [15], \"group\": \"geometry_2d\", \"objects\": [\"block_10\"], \"path\": \"/objects/9/direct/bbox_2d/15/source\", \"precision\": \"atomic\", \"value\": \"segmenter\"},\n  {\"frames\": [6], \"group\": \"geometry_2d\", \"objects\": [\"block_02\"], \"path\": \"/objects/1/direct/bbox_2d/6/frame_offset\", \"precision\": \"atomic\", \"value\": 6},\n  {\"frames\": [6], \"group\": \"geometry_2d\", \"objects\": [\"block_01\"], \"path\": \"/objects/0/computed/center_2d/6/frame_offset\", \"precision\": \"atomic\", \"value\": 6},\n  {\"frames\": [16], \"group\": \"geometry_2d\", \"objects\": [\"block_03\"], \"path\": \"/objects/2/direct/bbox_2d/16/source\", \"precision\": \"typed\", \"value\": {\"field\": \"source\", \"value\": \"segmenter\", \"value_type\": \"str\"}},\n  {\"frames\": [4], \"group\": \"geometry_2d\", \"objects\": [\"block_04\"], \"path\": \"/objects/3/direct/bbox_2d/4/source\", \"precision\": \"atomic\", \"value\": \"segmenter\"},\n  {\"frames\": [9], \"group\": \"geometry_2d\", \"objects\": [\"block_09\"], \"path\": \"/objects/8/computed/center_2d/9/frame_offset\", \"precision\": \"atomic\", \"value\": 9},\n  {\"frames\": [7], \"group\": \"geometry_2d\", \"objects\": [\"block_07\"], \"path\": \"/objects/6/direct/bbox_2d/7/frame_offset\", \"precision\": \"atomic\", \"value\": 7},\n  {\"frames\": [16], \"group\": \"geometry_2d\", \"objects\": [\"block_05\"], \"path\": \"/objects/4/direct/bbox_2d/16/source\", \"precision\": \"atomic\", \"value\": \"segmenter\"}\n]",
+    "excerpt_note": "8-record excerpt from 370 supplied records, in stored order; not a new abstraction.",
+    "cutoff_applied": false,
+    "original_tokens": 33783,
+    "format_repair": false
+  },
+  "response": "{\n  \"answer\": \"Color 1\",\n  \"evidence_summary\": \"The semantic attributes indicate that the dominant color of block_10 (Color 1) is magenta, while the dominant color of block_08 (Color 2) is gray. In the context of the tower, the magenta blocks are positioned at the base and top, while the gray blocks are in the middle, suggesting the magenta blocks are heavier due to their position and likely greater mass.\",\n  \"confidence\": null,\n  \"evidence_ids\": [\n    \"visual_frame:0\",\n    \"visual_frame:1\",\n    \"visual_frame:2\",\n    \"visual_frame:3\",\n    \"visual_frame:4\",\n    \"visual_frame:5\",\n    \"visual_frame:6\",\n    \"visual_frame:7\",\n    \"parsed_code:Hamrick2016Inferring_exp1_tower_01833_1010010011_stimulus_463d61839e\"\n  ],\n  \"tool_calls\": [],\n  \"invalid_tool_calls\": []\n}",
+  "provenance": {
+    "source_sha256": "4f012407a60a4623accc6eef03502c1f1f51e937ffba6b1635f8278e43d1a418",
+    "trace_fingerprint": "1d8f9fb48605a7834b2f69f877eb4cbccc1ff870b2f5d0e418efcbd701d604b7",
+    "inference_rerun": false,
+    "source_record_id": "c1_cb0_experimentC_tower_01833_1010010011",
+    "csv_prediction_verified": true
+  }
+}
