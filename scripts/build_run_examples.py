@@ -95,6 +95,7 @@ def main():
     traces = read(args.traces)
     questions = {q["qa_id"]: q for q in read(args.source / "questions.json")["questions"]}
     reasoning = read(args.site / "data/reasoning_results.json")
+    question_styles = read(args.site / "data/question_styles.json")
     out = args.site / "data/examples"
     out.mkdir(parents=True, exist_ok=True)
     manifest = {"schema_version": "saved_run_examples.1", "default_example": next(iter(EXAMPLES)),
@@ -137,6 +138,11 @@ def main():
         example = {"id": qid, "label": label, "sample_id": q["sample_id"], "study": q["study"], "question": q["question"],
                    "answer_format": form, "answer_schema": schema, "group": group,
                    "media": {"src": media_path, "sha256": sha(src.read_bytes()), "note": "Original stimulus clip. The saved inference used 8 sampled frames."}, "runs": {}}
+        if qid in question_styles:
+            style = question_styles[qid]
+            assert style["recorded_question"] == q["question"]
+            assert style["source_record_id"] == q["source_record_id"] and style["query_tag"] == q["query_tag"]
+            example["question_style"] = style
         for item in [x for x in traces if x["qa_id"] == qid]:
             cid, trace = item["condition"], item["trace"]
             condition = conditions[cid]

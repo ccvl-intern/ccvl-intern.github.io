@@ -256,6 +256,8 @@ details[open] .details-mark { transform: rotate(225deg); }
 #example-video { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #101414; border-radius: 4px; }
 .example-qa { display: grid; gap: 24px; }
 #example-question { color: var(--ink); font-size: 20px; line-height: 1.5; overflow-wrap: anywhere; }
+.question-color { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.question-swatch { display: inline-block; flex: 0 0 24px; width: 24px; height: 16px; border: 1px solid #0003; border-radius: 2px; }
 .example-prediction { padding: 20px 0; border-block: 1px solid var(--line); }
 .example-prediction strong { display: block; color: var(--teal-dark); font-size: 30px; line-height: 1.35; margin-top: 6px; overflow-wrap: anywhere; }
 .example-prediction .figure-note { margin-top: 7px; }

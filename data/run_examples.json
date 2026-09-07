@@ -139,6 +139,27 @@
         "instruct_abstracted": "data/examples/hamrick-mass-instruct_abstracted.json",
         "thinking_abstracted": "data/examples/hamrick-mass-thinking_abstracted.json",
         "glm_abstracted": "data/examples/hamrick-mass-glm_abstracted.json"
+      },
+      "question_style": {
+        "source_file": "Hamrick2016Inferring/exp1/trial.jsonl",
+        "source_record_id": "c1_cb0_experimentC_tower_01833_1010010011",
+        "query_tag": "heavy_color_choice",
+        "recorded_question": "Which block color is heavier? Color 1: ████ , Color 2: ████",
+        "source_prompt_html": "Which block color is heavier? Color 1: <font color=\"#A925A7\">████</font>, Color 2: <font color=\"#253421\">████</font>",
+        "parts": [
+          "Which block color is heavier? ",
+          {
+            "label": "Color 1",
+            "name": "Purple",
+            "color": "#A925A7"
+          },
+          ", ",
+          {
+            "label": "Color 2",
+            "name": "Dark green",
+            "color": "#253421"
+          }
+        ]
       }
     },
     {
