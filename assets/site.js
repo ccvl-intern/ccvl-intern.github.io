@@ -5,6 +5,20 @@ const $ = selector => document.querySelector(selector);
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 const metricPair = (mean, sd) => `${percent(mean)} <span class="deviation">± ${percent(sd)}</span>`;
+const figureObserver = new IntersectionObserver(entries => {
+  entries.filter(entry => entry.isIntersecting).forEach(entry => loadFigureImage(entry.target));
+}, { rootMargin: "80px" });
+
+function loadFigureImage(img) {
+  if (!img.dataset.src) return;
+  img.src = img.dataset.src;
+  delete img.dataset.src;
+  figureObserver.unobserve(img);
+}
+
+function observeFigures(root = document) {
+  root.querySelectorAll("img[data-src]").forEach(img => figureObserver.observe(img));
+}
 
 const scenes = [
   ["bass2022_partial", "bass-cannonball", "Bass et al., 2022", "2d", 1292, 382],
@@ -171,12 +185,13 @@ function renderGallery() {
   $("#demo-grid").innerHTML = scenes.map(([studyId, file, label, mode, width, height]) => {
     const study = state.results.geometry.studies.find(row => row.id === studyId);
     return `<article class="demo-card" data-mode="${mode}">
-      <div class="animation-frame"><img id="gif-${file}" class="animated-media" src="assets/demos/${file}.gif" alt="${escapeHtml(label)}: original video at left, bbox-only reconstruction at right" width="${width}" height="${height}" loading="lazy"></div>
+      <div class="animation-frame"><img id="gif-${file}" class="animated-media" data-src="assets/demos/${file}.gif" alt="${escapeHtml(label)}: original video at left, bbox-only reconstruction at right" width="${width}" height="${height}"></div>
       <div class="demo-caption"><div><h3>${label}</h3><p>${mode === "2d" ? "2D" : "3D"} boxes · Study mIoU <span>${percent(study.mean_iou)}</span></p></div><button class="icon-button" data-expand="gif-${file}" aria-label="Enlarge ${label} comparison" title="Enlarge comparison"><img src="assets/icons/maximize-2.svg" alt=""></button></div>
     </article>`;
   }).join("");
   $("#gallery-status").textContent = `${scenes.length} examples`;
   document.querySelectorAll("#demo-grid .animated-media").forEach(bindMotionImage);
+  observeFigures($("#demo-grid"));
 }
 
 // Freeze only the displayed GIF; source assets and reconstruction data are untouched.
@@ -219,6 +234,7 @@ function setPaused(paused) {
 function openFigure(id) {
   const source = document.getElementById(id);
   if (!source) return;
+  loadFigureImage(source);
   const target = $("#dialog-image");
   unfreezeImage(target);
   target.classList.toggle("animated-media", source.src.endsWith(".gif"));
@@ -329,5 +345,6 @@ async function loadData() {
 
 document.addEventListener("DOMContentLoaded", () => {
   bindInteractions();
+  observeFigures();
   loadData();
 });

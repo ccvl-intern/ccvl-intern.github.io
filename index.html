@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260908-threeway">
-  <script src="assets/site.js?v=20260908-threeway" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20260908-viewport">
+  <script src="assets/site.js?v=20260908-viewport" defer></script>
   <script src="assets/examples.js?v=20260908-colors" defer></script>
 </head>
 <body>
@@ -35,7 +35,7 @@
       </div>
       <figure class="teaser" id="demo">
         <div class="animation-frame">
-          <img id="teaser-gif" class="animated-media" src="assets/demos/hamrick-tower.gif" alt="Original Hamrick tower at left and the matching bbox-only reconstruction at right" width="1292" height="536" fetchpriority="high">
+          <img id="teaser-gif" class="animated-media" data-src="assets/demos/hamrick-tower.gif" alt="Original Hamrick tower at left and the matching bbox-only reconstruction at right" width="1292" height="536" fetchpriority="high">
         </div>
         <figcaption>
           <span><b>Original video</b><small>Hamrick et al., 2016</small></span>
@@ -72,7 +72,7 @@
           <li><span class="stage-number">04</span><h3>Point Tracker</h3><b>SpatialTrackerV2</b><p>3D trajectories, visibility,<br>and motion evidence.</p></li>
         </ol>
         <figure class="paper-figure">
-          <img id="pipeline-figure" src="assets/slides/parseanything.png" alt="Unified Parser pipeline from the project slides, with object masks, geometry, sampling and lifting, and 3D tracking" width="2001" height="1125" loading="lazy">
+          <img id="pipeline-figure" data-src="assets/slides/parseanything.png" alt="Unified Parser pipeline from the project slides, with object masks, geometry, sampling and lifting, and 3D tracking" width="2001" height="1125">
           <figcaption><span>Unified Parser architecture · project slides</span><button class="icon-button" data-expand="pipeline-figure" aria-label="Enlarge parsing pipeline" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption>
         </figure>
 
@@ -95,7 +95,7 @@
             <p class="section-label">Visual consistency</p><h3>Agentic refinement</h3>
             <p>The VLM writes a Blender program from parsed code, compares its render with the original video, and edits the code directly. It checks intersections, gaps, and temporal consistency without seeing ground truth.</p>
             <figure class="paper-figure">
-              <img id="refinement-figure" src="assets/slides/agentic-refinement.png" alt="Agentic refinement: parsed code, agent, Blender render, video comparison, and code revision" width="2001" height="1125" loading="lazy">
+              <img id="refinement-figure" data-src="assets/slides/agentic-refinement.png" alt="Agentic refinement: parsed code, agent, Blender render, video comparison, and code revision" width="2001" height="1125">
               <figcaption><span>Render → compare → refine</span><button class="icon-button" data-expand="refinement-figure" aria-label="Enlarge refinement loop" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption>
             </figure>
             <div id="refinement-summary" class="pilot-result" aria-label="Refinement pilot result"></div>
@@ -105,7 +105,7 @@
             <p class="section-label">Task-specific evidence</p><h3>Adaptive abstraction</h3>
             <p>A VLM selects and derives code using confidence, length, importance, and relevance. Importance and relevance are VLM-scored; selection iterates within a total video + question + code context budget.</p>
             <figure class="paper-figure">
-              <img id="abstraction-figure" src="assets/slides/adaptive-abstraction.png" alt="Adaptive abstraction with confidence, length, importance, relevance, and an iterative code-generation loop" width="2001" height="1125" loading="lazy">
+              <img id="abstraction-figure" data-src="assets/slides/adaptive-abstraction.png" alt="Adaptive abstraction with confidence, length, importance, relevance, and an iterative code-generation loop" width="2001" height="1125">
               <figcaption><span>Score → select → derive</span><button class="icon-button" data-expand="abstraction-figure" aria-label="Enlarge adaptive abstraction" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption>
             </figure>
             <div class="selection-objectives"><span>Confidence</span><span>Length</span><span>Importance</span><span>Relevance</span></div>
@@ -219,9 +219,9 @@
         </details>
         <details class="research-details" id="datasets"><summary><span>Tasks and datasets</span><span class="details-mark" aria-hidden="true"></span></summary>
           <div class="dataset-grid">
-            <figure class="paper-figure"><img id="dataset-coggym" src="assets/slides/physics-subsets.png" alt="The 14 physics studies from the project slides" width="2001" height="1125" loading="lazy"><figcaption><span>Physics_subsets · CogGym</span><button class="icon-button" data-expand="dataset-coggym" aria-label="Enlarge CogGym studies" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption></figure>
-            <figure class="paper-figure"><img id="dataset-physbench" src="assets/slides/physbench.png" alt="PhysBench tasks from the project slides" width="2001" height="1125" loading="lazy"><figcaption><span>PhysBench</span><button class="icon-button" data-expand="dataset-physbench" aria-label="Enlarge PhysBench tasks" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption></figure>
-            <figure class="paper-figure"><img id="dataset-physion" src="assets/slides/physion.png" alt="Physion object contact prediction tasks from the project slides" width="2001" height="1125" loading="lazy"><figcaption><span>Physion</span><button class="icon-button" data-expand="dataset-physion" aria-label="Enlarge Physion tasks" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption></figure>
+            <figure class="paper-figure"><img id="dataset-coggym" data-src="assets/slides/physics-subsets.png" alt="The 14 physics studies from the project slides" width="2001" height="1125"><figcaption><span>Physics_subsets · CogGym</span><button class="icon-button" data-expand="dataset-coggym" aria-label="Enlarge CogGym studies" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption></figure>
+            <figure class="paper-figure"><img id="dataset-physbench" data-src="assets/slides/physbench.png" alt="PhysBench tasks from the project slides" width="2001" height="1125"><figcaption><span>PhysBench</span><button class="icon-button" data-expand="dataset-physbench" aria-label="Enlarge PhysBench tasks" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption></figure>
+            <figure class="paper-figure"><img id="dataset-physion" data-src="assets/slides/physion.png" alt="Physion object contact prediction tasks from the project slides" width="2001" height="1125"><figcaption><span>Physion</span><button class="icon-button" data-expand="dataset-physion" aria-label="Enlarge Physion tasks" title="Enlarge figure"><img src="assets/icons/maximize-2.svg" alt=""></button></figcaption></figure>
           </div>
         </details>
       </div>
