@@ -1,6 +1,7 @@
 import unittest
 
-from build_reasoning_comparisons import CONDITIONS, matched_comparisons, matched_study_comparisons
+from build_reasoning_comparisons import (CONDITIONS, VIDEO_MODEL_SLUGS, matched_comparisons,
+                                        matched_study_comparisons as build_studies)
 
 
 def sample_report():
@@ -73,6 +74,19 @@ def study_report():
     return report
 
 
+def video_report():
+    return {"models": [{"model_slug": slug, "status": "passed", "question_count": 636,
+        "coggym": {"experiments": [
+            {"experiment": "Beller2020Language/exp1", "r2_pooled": 0.1, "predicted_item_count": 4},
+            {"experiment": "Beller2020Language/exp2", "r2_pooled": 0.2, "predicted_item_count": 40},
+            {"experiment": "Bass2022Partial/exp1", "r2_pooled": 0.9, "predicted_item_count": 40},
+        ]}} for slug in VIDEO_MODEL_SLUGS.values()]}
+
+
+def matched_study_comparisons(report):
+    return build_studies(report, video_report())
+
+
 class StudyComparisonTests(unittest.TestCase):
     def test_matched_mean_is_per_experiment_not_item_weighted(self):
         models = matched_study_comparisons(study_report())
@@ -83,6 +97,7 @@ class StudyComparisonTests(unittest.TestCase):
             self.assertEqual(row["n"], 2)
             self.assertEqual([e["experiment"] for e in row["experiments"]], ["exp1", "exp2"])
             self.assertAlmostEqual(row["full"], 0.3)
+            self.assertAlmostEqual(row["video_only"], 0.15)
             self.assertAlmostEqual(row["abstracted"], 0.45)
             self.assertAlmostEqual(row["delta"], 0.15)
             self.assertEqual(model["excluded_experiments"], ["Bass2022Partial/exp1"])
@@ -141,6 +156,35 @@ class StudyComparisonTests(unittest.TestCase):
             row["r2"]["all"] = None
         with self.assertRaisesRegex(ValueError, "No common valid studies"):
             matched_study_comparisons(report)
+
+    def test_video_missing_changes_all_three_cohorts(self):
+        video = video_report()
+        for model in video["models"]:
+            model["coggym"]["experiments"][1]["r2_pooled"] = None
+        for model in build_studies(study_report(), video):
+            row = model["studies"][0]
+            self.assertEqual(row["n"], 1)
+            self.assertAlmostEqual(row["video_only"], 0.1)
+            self.assertAlmostEqual(row["full"], 0.2)
+            self.assertAlmostEqual(row["abstracted"], 0.3)
+
+    def test_video_zero_is_valid(self):
+        video = video_report()
+        video["models"][0]["coggym"]["experiments"][0]["r2_pooled"] = 0
+        result = build_studies(study_report(), video)
+        self.assertAlmostEqual(result[0]["studies"][0]["video_only"], 0.1)
+
+    def test_video_item_mismatch_rejected(self):
+        video = video_report()
+        video["models"][0]["coggym"]["experiments"][0]["predicted_item_count"] = 5
+        with self.assertRaisesRegex(ValueError, "Item counts differ"):
+            build_studies(study_report(), video)
+
+    def test_incomplete_video_rejected(self):
+        video = video_report()
+        video["models"][0]["question_count"] = 635
+        with self.assertRaisesRegex(ValueError, "Incomplete video-only"):
+            build_studies(study_report(), video)
 
 
 if __name__ == "__main__":

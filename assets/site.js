@@ -1,6 +1,6 @@
 "use strict";
 
-const state = { results: null, code: null, reasoning: null, videoOnly: null, studyReasoning: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
+const state = { results: null, code: null, reasoning: null, videoOnly: null, studyReasoning: null, throughput: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
 const $ = selector => document.querySelector(selector);
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -177,18 +177,18 @@ function renderStudyReasoning() {
     const change = row.delta * 100;
     const delta = `${change > 0 ? "+" : ""}${change.toFixed(2)}`;
     const style = change > 0 ? "positive" : change < 0 ? "negative" : "";
-    return `<tr data-study="${escapeHtml(row.study)}"><th scope="row">${escapeHtml(row.label)}<small>${row.experiments.map(item => escapeHtml(item.experiment)).join(", ")} · n = ${row.n}</small></th><td>${(row.full * 100).toFixed(2)}</td><td><b>${(row.abstracted * 100).toFixed(2)}</b></td><td class="${style}">${delta}</td></tr>`;
+    return `<tr data-study="${escapeHtml(row.study)}"><th scope="row">${escapeHtml(row.label)}<small>${row.experiments.map(item => escapeHtml(item.experiment)).join(", ")} · n = ${row.n}</small></th><td>${(row.video_only * 100).toFixed(2)}</td><td>${(row.full * 100).toFixed(2)}</td><td><b>${(row.abstracted * 100).toFixed(2)}</b></td><td class="${style}">${delta}</td></tr>`;
   }).join("");
 }
 
 function renderTiming() {
-  const timing = state.results.timing;
+  const timing = state.throughput;
   $("#efficiency-summary").innerHTML = [
-    [timing.mean_exclusive_sec_per_sample, "Mean / sample"],
-    [timing.median_exclusive_sec_per_sample, "Median / sample"],
-    [timing.p95_exclusive_sec_per_sample, "P95 / sample"],
-  ].map(([value, label]) => `<div><strong>${value.toFixed(2)} s</strong><span>${label}</span></div>`).join("");
-  $("#stage-timing").innerHTML = timing.stages.map(stage => `<tr><th scope="row">${escapeHtml(stage.label)}</th><td>${stage.mean.toFixed(2)}</td><td>${stage.median.toFixed(2)}</td><td>${stage.p95.toFixed(2)}</td></tr>`).join("");
+    [timing.images_per_second_per_gpu.toFixed(3), "Images / second / GPU"],
+    [timing.sampled_frame_count.toLocaleString("en-US"), "Sampled input images"],
+    [timing.sample_count, "Samples"],
+  ].map(([value, label]) => `<div><strong>${value}</strong><span>${label}</span></div>`).join("");
+  $("#stage-timing").innerHTML = `<tr><th scope="row">Unified Parser<small>Qwen3-VL-8B-Instruct + SAM3.1 + VGGT-Ω + SpatialTrackerV2</small></th><td>RTX A5000</td><td><b>${timing.images_per_second_per_gpu.toFixed(3)}</b></td></tr>`;
 }
 
 function renderRefinement() {
@@ -347,13 +347,13 @@ function bindInteractions() {
 async function loadData() {
   $("#data-error").hidden = true;
   try {
-    const names = ["results", "hamrick_code", "reasoning_results", "video_only_results", "study_reasoning_results"];
+    const names = ["results", "hamrick_code", "reasoning_results", "video_only_results", "study_reasoning_results", "parsing_throughput"];
     const data = await Promise.all(names.map(async name => {
-      const response = await fetch(`data/${name}.json?v=20260909-study-r2`);
+      const response = await fetch(`data/${name}.json?v=20260909-direct-throughput`);
       if (!response.ok) throw new Error(`Could not load ${name} (${response.status})`);
       return response.json();
     }));
-    [state.results, state.code, state.reasoning, state.videoOnly, state.studyReasoning] = data;
+    [state.results, state.code, state.reasoning, state.videoOnly, state.studyReasoning, state.throughput] = data;
     renderHeadline();
     renderDemo();
     renderSplitComparisons();

@@ -1,0 +1,20 @@
+{
+  "device": "NVIDIA RTX A5000",
+  "gpu_count_per_worker": 1,
+  "worker_count": 4,
+  "sample_count": 280,
+  "sampled_frame_count": 4439,
+  "worker_wall_time_sec": 13657.10791680077,
+  "images_per_second_per_gpu": 0.3250322123133558,
+  "unit": "sampled input images/second/GPU",
+  "evaluation_date": "2026-08-04",
+  "status": "archived",
+  "identifier": "Qwen3-VL-8B-Instruct",
+  "source_revision": "4ebdbe0ec13c10a3b1141c714c301a79dcf99895+tree.6bfc3c47072ce2fa23512671ff353548174fa9643622f64b3cf11962a9cc4fa6",
+  "protocol": "Sum of sampled input frame instances divided by summed wall time of independent one-GPU workers. Includes model loading, decoding, reconstruction and code writing; not combined multi-GPU throughput or full-video FPS.",
+  "source_sha256": {
+    "per_sample.csv": "e1cc13ea2a71bc019c5d43d6abe80fb857e5ecd66f2bcde390c1e6770254c3bc",
+    "summary.json": "11882debef878703193283dc3d9375d2e68fc79e455497a82e0992b72b1b7ee7",
+    "devices.json": "97d765454b4e51e4b0f83a42e64bc20b48acf68db62a5df54ea4af51e5ed9331"
+  }
+}

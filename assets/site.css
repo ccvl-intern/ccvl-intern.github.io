@@ -189,7 +189,7 @@ select { background: white; border: 1px solid #cdd8d5; border-radius: 4px; font-
 #panel-studies { scroll-margin-top: 84px; }
 .study-reasoning-controls { flex-wrap: wrap; margin-top: 0; }
 .study-reasoning-controls label { flex-wrap: wrap; }
-.study-reasoning-table { table-layout: fixed; }
+.study-reasoning-table { table-layout: fixed; min-width: 620px; }
 .study-reasoning-table th:first-child { width: 40%; }
 .study-reasoning-table th, .study-reasoning-table td { white-space: normal; }
 .study-reasoning-table td { white-space: nowrap; }

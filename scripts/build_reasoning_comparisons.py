@@ -14,6 +14,11 @@ CONDITIONS = (
     ("Qwen3-VL-8B-Thinking", 0.9),
     ("GLM-4.1V-9B-Thinking", 0.7),
 )
+VIDEO_MODEL_SLUGS = {
+    "Qwen3-VL-8B-Instruct": "qwen3_vl_8b_instruct",
+    "Qwen3-VL-8B-Thinking": "qwen3_vl_8b_thinking",
+    "GLM-4.1V-9B-Thinking": "glm_4_1v_9b_thinking",
+}
 
 STUDY_LABELS = {
     "Bass2022Partial": "Bass et al., 2022",
@@ -32,14 +37,20 @@ STUDY_LABELS = {
 }
 
 
-def matched_study_comparisons(report):
-    """Use the same finite experiments on both sides; never impute missing R2."""
+def matched_study_comparisons(report, video_report):
+    """Compare video-only and both code conditions on common valid experiments."""
     by_name = {row["display_name"]: row for row in report["conditions"]}
+    video_models = {row["model_slug"]: row for row in video_report["models"]}
+    if len(video_models) != len(video_report["models"]):
+        raise ValueError("Duplicate video-only model")
     models = []
     for reasoner, ratio in CONDITIONS:
         names = {"full": f"Unified Parser / {reasoner}",
                  "abstracted": f"Task-specific Abstraction / {reasoner} (r={ratio})"}
         conditions = {key: by_name[name] for key, name in names.items()}
+        video = video_models[VIDEO_MODEL_SLUGS[reasoner]]
+        if video["status"] != "passed" or video["question_count"] != 636:
+            raise ValueError(f"Incomplete video-only run: {reasoner}")
         if {row["mapped_item_coverage_sha256"] for row in conditions.values()} != {
             report["mapped_item_coverage_sha256"]
         }:
@@ -50,7 +61,14 @@ def matched_study_comparisons(report):
             experiments[key] = {row["experiment"]: row for row in entries}
             if len(experiments[key]) != len(entries):
                 raise ValueError(f"Duplicate experiment: {reasoner}/{key}")
-        if set(experiments["full"]) != set(experiments["abstracted"]):
+        video_entries = video["coggym"]["experiments"]
+        experiments["video_only"] = {row["experiment"]: {
+            "r2": {"all": row["r2_pooled"]},
+            "item_counts": {"all": row["predicted_item_count"]},
+        } for row in video_entries}
+        if len(experiments["video_only"]) != len(video_entries):
+            raise ValueError(f"Duplicate experiment: {reasoner}/video_only")
+        if any(set(rows) != set(experiments["full"]) for rows in experiments.values()):
             raise ValueError(f"Experiment coverage differs: {reasoner}")
         grouped, excluded = {}, []
         for name in sorted(experiments["full"]):
@@ -74,12 +92,13 @@ def matched_study_comparisons(report):
             full = mean(row["full"] for row in rows)
             abstracted = mean(row["abstracted"] for row in rows)
             studies.append({"study": study, "label": STUDY_LABELS[study],
+                "video_only": mean(row["video_only"] for row in rows),
                 "full": full, "abstracted": abstracted, "delta": abstracted - full,
                 "n": len(rows), "experiments": rows})
         if not studies:
             raise ValueError(f"No common valid studies: {reasoner}")
         models.append({"reasoner": reasoner, "abstraction_ratio": ratio,
-            "source_conditions": names, "studies": studies,
+            "source_conditions": {"video_only": f"Video + question / {reasoner}", **names}, "studies": studies,
             "excluded_experiments": excluded})
     return models
 
@@ -133,24 +152,29 @@ def matched_comparisons(report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--video-report", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1] / "data/reasoning_results.json")
     parser.add_argument("--study-output", type=Path, default=Path(__file__).resolve().parents[1] / "data/study_reasoning_results.json")
     args = parser.parse_args()
     source = args.report.read_bytes()
     report = json.loads(source)
+    video_source = args.video_report.read_bytes()
     result = json.loads(args.output.read_text())
-    studies = matched_study_comparisons(report)
+    studies = matched_study_comparisons(report, json.loads(video_source))
     result["matched_comparisons"] = matched_comparisons(report)
     result["provenance"]["comparison_report_sha256"] = hashlib.sha256(source).hexdigest()
     result["provenance"]["comparison_cohort"] = "Common valid experiments across direct VLM full code, Unified Parser full code, and Unified Parser abstracted code."
     args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
     study_result = {
-        "schema_version": "ccvl_study_reasoning.1",
+        "schema_version": "ccvl_study_reasoning.2",
         "provenance": {"report": "physics_280_uncertainty_split_20260906",
             "report_sha256": hashlib.sha256(source).hexdigest(), "inference_rerun": False,
+            "video_only_report": "physics_280_video_only_vlm_matrix_20260826_r3/results.json",
+            "video_only_report_sha256": hashlib.sha256(video_source).hexdigest(),
             "status": "archived", "mapped_item_coverage_sha256": report["mapped_item_coverage_sha256"]},
-        "metric": "Mean squared Pearson correlation within each study, over the same valid experiments in both conditions.",
-        "missing_policy": "Experiments with undefined R2 on either side are excluded from both; studies with no remaining pairs are omitted.",
+        "metric": "Mean squared Pearson correlation within each study, over the same valid experiments in all three conditions.",
+        "matching": "Experiment IDs and evaluated item counts are matched across all three conditions. The coverage fingerprint applies to the two code conditions; video-only is the saved 26 August run, not the corrected rerun.",
+        "missing_policy": "Experiments with undefined R2 in any condition are excluded from all three; studies with no remaining comparisons are omitted.",
         "models": studies,
     }
     args.study_output.write_text(json.dumps(study_result, indent=2, ensure_ascii=False, allow_nan=False) + "\n")

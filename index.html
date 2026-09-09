@@ -165,13 +165,11 @@
         </div>
 
         <div role="tabpanel" id="panel-studies" aria-labelledby="tab-studies" hidden>
-          <div class="result-title-row"><div><p class="result-number">Table 7</p><h3 id="table-7-title">Reasoning by study</h3><p>Before: full code · After: task-specific abstraction · R² (%) ↑</p></div><a class="text-link download-link" href="data/study_reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="result-title-row"><div><p class="result-number">Table 7</p><h3 id="table-7-title">Reasoning by study</h3><p>Direct: video + question, no code · Before: full code · After: task-specific abstraction · R² (%) ↑</p></div><a class="text-link download-link" href="data/study_reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
           <div class="table-toolbar study-reasoning-controls"><label>Reasoning model <select id="study-reasoner" aria-label="Reasoning model"><option value="Qwen3-VL-8B-Instruct">Qwen3-VL-8B-Instruct</option><option value="Qwen3-VL-8B-Thinking" selected>Qwen3-VL-8B-Thinking</option><option value="GLM-4.1V-9B-Thinking">GLM-4.1V-9B-Thinking</option></select></label><p id="study-reasoning-status" role="status"></p></div>
           <div class="table-scroll" tabindex="0" role="region" aria-label="Per-study reasoning before and after abstraction">
-            <table class="results-table study-reasoning-table" aria-labelledby="table-7-title" aria-describedby="study-reasoning-note"><thead><tr><th scope="col">Study</th><th scope="col">Before<br>R² (%)</th><th scope="col">After<br>R² (%)</th><th scope="col">Change<br>(pp)</th></tr></thead><tbody id="study-reasoning-body"></tbody></table>
+            <table class="results-table study-reasoning-table" aria-labelledby="table-7-title"><thead><tr><th scope="col">Study</th><th scope="col">VLM direct<br>R² (%)</th><th scope="col">Before<br>R² (%)</th><th scope="col">After<br>R² (%)</th><th scope="col">Change<br>(pp)</th></tr></thead><tbody id="study-reasoning-body"></tbody></table>
           </div>
-          <p class="metric-note" id="study-reasoning-note">Saved results · 6 September 2026, not the corrected rerun. R² is squared Pearson correlation with human item means. Each study averages the same valid experiments before and after abstraction; experiment IDs and counts appear under its name. Experiments with undefined R² on either side are excluded from both sides; studies with no valid pairs are omitted. No cross-study average or zero imputation is used.</p>
-          <p class="metric-note">Both conditions include the original visual input and question. The Unified Parser uses the corresponding VLM identifier + SAM3.1 + VGGT-Ω + SpatialTrackerV2. Full-code inputs use the saved context cutoff. Abstraction ratios are fixed to the recorded conditions in Table 1, not selected separately for each study. pp = percentage points.</p>
           <div class="study-parsing-results">
           <div class="result-title-row"><div><p class="result-number">Figure 2</p><h3>Parsing accuracy by study</h3><p>20 samples per study · 14 studies · mIoU (%)</p></div><span class="chart-key"><i></i>2D <i class="three-d"></i>3D</span></div>
           <div id="study-bars" class="study-bars" aria-label="Per-study mIoU"></div>
@@ -180,10 +178,10 @@
         </div>
 
         <div role="tabpanel" id="panel-efficiency" aria-labelledby="tab-efficiency" hidden>
-          <div class="result-title-row"><div><p class="result-number">Table 4</p><h3 id="table-4-title">Parsing efficiency</h3><p>Stage latency reported in the project slides.</p></div><span>NVIDIA RTX A5000 · 4 workers</span></div>
+          <div class="result-title-row"><div><p class="result-number">Table 4</p><h3 id="table-4-title">Parsing throughput</h3><p>End-to-end sampled images per second, per GPU.</p></div><span>NVIDIA RTX A5000 · 1 GPU per worker</span></div>
           <div class="efficiency-summary" id="efficiency-summary"></div>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Parsing stage latency"><table class="results-table" aria-labelledby="table-4-title"><thead><tr><th scope="col">Stage</th><th scope="col">Mean (s)</th><th scope="col">Median (s)</th><th scope="col">P95 (s)</th></tr></thead><tbody id="stage-timing"></tbody></table></div>
-          <p class="metric-note">Identifier and 2D Mask: 280 samples. Analyzer and Point Tracker: 40 routed 3D samples. Stage means have different denominators.</p>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Per-GPU parsing throughput"><table class="results-table" aria-labelledby="table-4-title"><thead><tr><th scope="col">Pipeline</th><th scope="col">GPU</th><th scope="col">Throughput<br>(images/s/GPU) ↑</th></tr></thead><tbody id="stage-timing"></tbody></table></div>
+          <p class="metric-note">Measured on 4 August 2026. Four independent one-GPU workers; 4,439 sampled input frames / 13,657.11 GPU-worker seconds. Includes model loading, decoding, reconstruction and code writing. This is per-GPU throughput, not combined four-GPU speed or full-video FPS.</p>
         </div>
       </div>
     </section>

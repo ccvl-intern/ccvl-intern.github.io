@@ -1,19 +1,23 @@
 {
-  "schema_version": "ccvl_study_reasoning.1",
+  "schema_version": "ccvl_study_reasoning.2",
   "provenance": {
     "report": "physics_280_uncertainty_split_20260906",
     "report_sha256": "7323b529db33b6a54b59ced681580a3c840953f50a0f8f389e4c5ca90aac7094",
     "inference_rerun": false,
+    "video_only_report": "physics_280_video_only_vlm_matrix_20260826_r3/results.json",
+    "video_only_report_sha256": "0810fb757f91d257c84aa38bc0fb2f79aacbc88efd1657920a00ddb722b7289e",
     "status": "archived",
     "mapped_item_coverage_sha256": "fb83e18b406ed60de89c74b57039d898ba8d79ee4927c591abeb435917a9ed42"
   },
-  "metric": "Mean squared Pearson correlation within each study, over the same valid experiments in both conditions.",
-  "missing_policy": "Experiments with undefined R2 on either side are excluded from both; studies with no remaining pairs are omitted.",
+  "metric": "Mean squared Pearson correlation within each study, over the same valid experiments in all three conditions.",
+  "matching": "Experiment IDs and evaluated item counts are matched across all three conditions. The coverage fingerprint applies to the two code conditions; video-only is the saved 26 August run, not the corrected rerun.",
+  "missing_policy": "Experiments with undefined R2 in any condition are excluded from all three; studies with no remaining comparisons are omitted.",
   "models": [
     {
       "reasoner": "Qwen3-VL-8B-Instruct",
       "abstraction_ratio": 0.7,
       "source_conditions": {
+        "video_only": "Video + question / Qwen3-VL-8B-Instruct",
         "full": "Unified Parser / Qwen3-VL-8B-Instruct",
         "abstracted": "Task-specific Abstraction / Qwen3-VL-8B-Instruct (r=0.7)"
       },
@@ -21,6 +25,7 @@
         {
           "study": "Beller2020Language",
           "label": "Beller et al., 2020",
+          "video_only": 3.93199946729689e-05,
           "full": 3.93199946729689e-05,
           "abstracted": 3.93199946729689e-05,
           "delta": 0.0,
@@ -30,6 +35,7 @@
               "experiment": "exp1",
               "full": 3.93199946729689e-05,
               "abstracted": 3.93199946729689e-05,
+              "video_only": 3.93199946729689e-05,
               "item_count": 76
             }
           ]
@@ -37,6 +43,7 @@
         {
           "study": "Gerstenberg2021A_Counterfactual",
           "label": "Gerstenberg et al., 2021",
+          "video_only": 0.04415695796010622,
           "full": 0.006914045621929241,
           "abstracted": 0.27567115014147386,
           "delta": 0.2687571045195446,
@@ -46,6 +53,7 @@
               "experiment": "exp3",
               "full": 0.006914045621929241,
               "abstracted": 0.27567115014147386,
+              "video_only": 0.04415695796010622,
               "item_count": 16
             }
           ]
@@ -53,6 +61,7 @@
         {
           "study": "hamrick2016inferring",
           "label": "Hamrick et al., 2016",
+          "video_only": 0.9654576992206203,
           "full": 0.9079460634649045,
           "abstracted": 0.9079460634649045,
           "delta": 0.0,
@@ -62,44 +71,25 @@
               "experiment": "exp1",
               "full": 0.9079460634649045,
               "abstracted": 0.9079460634649045,
+              "video_only": 0.9654576992206203,
               "item_count": 6
-            }
-          ]
-        },
-        {
-          "study": "Smith2019Modeling",
-          "label": "Smith et al., 2019",
-          "full": 0.0795696971803183,
-          "abstracted": 0.07884168756039961,
-          "delta": -0.0007280096199186875,
-          "n": 1,
-          "experiments": [
-            {
-              "experiment": "exp1",
-              "full": 0.0795696971803183,
-              "abstracted": 0.07884168756039961,
-              "item_count": 13
             }
           ]
         },
         {
           "study": "sosa2021Moral",
           "label": "Sosa et al., 2021",
-          "full": 0.07976938716025365,
-          "abstracted": 0.09905180701161267,
-          "delta": 0.01928241985135902,
-          "n": 2,
+          "video_only": 0.008717891450123295,
+          "full": 0.06828584502101048,
+          "abstracted": 0.07979566546668694,
+          "delta": 0.011509820445676458,
+          "n": 1,
           "experiments": [
-            {
-              "experiment": "exp2",
-              "full": 0.09125292929949683,
-              "abstracted": 0.11830794855653842,
-              "item_count": 10
-            },
             {
               "experiment": "exp3",
               "full": 0.06828584502101048,
               "abstracted": 0.07979566546668694,
+              "video_only": 0.008717891450123295,
               "item_count": 21
             }
           ]
@@ -107,6 +97,7 @@
         {
           "study": "Sosa2025Blending",
           "label": "Sosa et al., 2025",
+          "video_only": 0.24493455396399394,
           "full": 0.19565803439167845,
           "abstracted": 0.19565803439167845,
           "delta": 0.0,
@@ -116,12 +107,14 @@
               "experiment": "exp1",
               "full": 0.3829544830238709,
               "abstracted": 0.3829544830238709,
+              "video_only": 0.3829544830238709,
               "item_count": 12
             },
             {
               "experiment": "exp2",
               "full": 0.008361585759485965,
               "abstracted": 0.008361585759485965,
+              "video_only": 0.10691462490411699,
               "item_count": 36
             }
           ]
@@ -129,6 +122,7 @@
         {
           "study": "stephan2021counterfactual",
           "label": "Stephan et al., 2021",
+          "video_only": 0.07311985691542448,
           "full": 0.014917705060992308,
           "abstracted": 0.3258318680545106,
           "delta": 0.31091416299351826,
@@ -138,12 +132,14 @@
               "experiment": "exp1",
               "full": 0.02981042019655176,
               "abstracted": 0.010454178417891794,
+              "video_only": 0.14229663684212243,
               "item_count": 12
             },
             {
               "experiment": "exp3",
               "full": 2.4989925432854827e-05,
               "abstracted": 0.6412095576911294,
+              "video_only": 0.003943076988726545,
               "item_count": 16
             }
           ]
@@ -151,6 +147,7 @@
         {
           "study": "Ullman2018Learning",
           "label": "Ullman et al., 2018",
+          "video_only": 0.0007716999998904223,
           "full": 0.0698809397238346,
           "abstracted": 0.014546598335025064,
           "delta": -0.05533434138880954,
@@ -160,51 +157,33 @@
               "experiment": "exp1",
               "full": 0.0698809397238346,
               "abstracted": 0.014546598335025064,
+              "video_only": 0.0007716999998904223,
               "item_count": 744
-            }
-          ]
-        },
-        {
-          "study": "Wu2022That",
-          "label": "Wu et al., 2022",
-          "full": 0.00020700182606403364,
-          "abstracted": 0.15572579029824696,
-          "delta": 0.15551878847218292,
-          "n": 1,
-          "experiments": [
-            {
-              "experiment": "exp2",
-              "full": 0.00020700182606403364,
-              "abstracted": 0.15572579029824696,
-              "item_count": 8
             }
           ]
         },
         {
           "study": "Zhou2023Mental",
           "label": "Zhou et al., 2023",
-          "full": 0.4565463968779958,
-          "abstracted": 0.2480944236259714,
-          "delta": -0.20845197325202441,
-          "n": 3,
+          "video_only": 0.34098672881899567,
+          "full": 0.572262594522388,
+          "abstracted": 0.3411281835272389,
+          "delta": -0.23113441099514914,
+          "n": 2,
           "experiments": [
             {
               "experiment": "exp1",
               "full": 0.5430329098806806,
               "abstracted": 0.00944092897813039,
+              "video_only": 0.009158019561643955,
               "item_count": 61
             },
             {
               "experiment": "exp2",
               "full": 0.6014922791640953,
               "abstracted": 0.6728154380763474,
+              "video_only": 0.6728154380763474,
               "item_count": 12
-            },
-            {
-              "experiment": "exp3",
-              "full": 0.2251140015892115,
-              "abstracted": 0.062026903823436466,
-              "item_count": 6
             }
           ]
         }
@@ -214,36 +193,26 @@
         "Bates2019Modeling/exp2",
         "Gerstenberg2021A_Counterfactual/exp1",
         "Gerstenberg2022What/exp2",
-        "sosa2021Moral/exp1"
+        "Smith2019Modeling/exp1",
+        "Wu2022That/exp2",
+        "Zhou2023Mental/exp3",
+        "sosa2021Moral/exp1",
+        "sosa2021Moral/exp2"
       ]
     },
     {
       "reasoner": "Qwen3-VL-8B-Thinking",
       "abstraction_ratio": 0.9,
       "source_conditions": {
+        "video_only": "Video + question / Qwen3-VL-8B-Thinking",
         "full": "Unified Parser / Qwen3-VL-8B-Thinking",
         "abstracted": "Task-specific Abstraction / Qwen3-VL-8B-Thinking (r=0.9)"
       },
       "studies": [
         {
-          "study": "Bass2022Partial",
-          "label": "Bass et al., 2022",
-          "full": 0.05579477856209331,
-          "abstracted": 0.0070690120311257465,
-          "delta": -0.048725766530967565,
-          "n": 1,
-          "experiments": [
-            {
-              "experiment": "exp1",
-              "full": 0.05579477856209331,
-              "abstracted": 0.0070690120311257465,
-              "item_count": 37
-            }
-          ]
-        },
-        {
           "study": "Beller2020Language",
           "label": "Beller et al., 2020",
+          "video_only": 3.93199946729689e-05,
           "full": 3.93199946729689e-05,
           "abstracted": 3.93199946729689e-05,
           "delta": 0.0,
@@ -253,6 +222,7 @@
               "experiment": "exp1",
               "full": 3.93199946729689e-05,
               "abstracted": 3.93199946729689e-05,
+              "video_only": 3.93199946729689e-05,
               "item_count": 76
             }
           ]
@@ -260,6 +230,7 @@
         {
           "study": "Gerstenberg2021A_Counterfactual",
           "label": "Gerstenberg et al., 2021",
+          "video_only": 0.00198992040519866,
           "full": 0.12467809488521055,
           "abstracted": 0.06755857932517272,
           "delta": -0.05711951556003783,
@@ -269,12 +240,14 @@
               "experiment": "exp1",
               "full": 0.0029937841621895723,
               "abstracted": 0.02607408754017393,
+              "video_only": 0.0032427028728919047,
               "item_count": 16
             },
             {
               "experiment": "exp3",
               "full": 0.24636240560823153,
               "abstracted": 0.1090430711101715,
+              "video_only": 0.0007371379375054153,
               "item_count": 16
             }
           ]
@@ -282,6 +255,7 @@
         {
           "study": "Gerstenberg2022What",
           "label": "Gerstenberg et al., 2022",
+          "video_only": 0.13005276138421817,
           "full": 0.4508322207865962,
           "abstracted": 0.21819792693160125,
           "delta": -0.23263429385499493,
@@ -291,6 +265,7 @@
               "experiment": "exp2",
               "full": 0.4508322207865962,
               "abstracted": 0.21819792693160125,
+              "video_only": 0.13005276138421817,
               "item_count": 6
             }
           ]
@@ -298,6 +273,7 @@
         {
           "study": "hamrick2016inferring",
           "label": "Hamrick et al., 2016",
+          "video_only": 0.8250566510775758,
           "full": 0.8250566510775758,
           "abstracted": 0.8707520963680265,
           "delta": 0.045695445290450776,
@@ -307,6 +283,7 @@
               "experiment": "exp1",
               "full": 0.8250566510775758,
               "abstracted": 0.8707520963680265,
+              "video_only": 0.8250566510775758,
               "item_count": 6
             }
           ]
@@ -314,6 +291,7 @@
         {
           "study": "Smith2019Modeling",
           "label": "Smith et al., 2019",
+          "video_only": 0.030544605012089648,
           "full": 0.029010883386851077,
           "abstracted": 0.2218609685329484,
           "delta": 0.19285008514609733,
@@ -323,6 +301,7 @@
               "experiment": "exp1",
               "full": 0.029010883386851077,
               "abstracted": 0.2218609685329484,
+              "video_only": 0.030544605012089648,
               "item_count": 13
             }
           ]
@@ -330,27 +309,24 @@
         {
           "study": "sosa2021Moral",
           "label": "Sosa et al., 2021",
-          "full": 0.018431771065424016,
-          "abstracted": 0.2256692273236971,
-          "delta": 0.20723745625827308,
-          "n": 3,
+          "video_only": 0.10803977278540701,
+          "full": 0.02348435753851774,
+          "abstracted": 0.3368874056042909,
+          "delta": 0.3134030480657732,
+          "n": 2,
           "experiments": [
             {
               "experiment": "exp1",
               "full": 0.011906257679800521,
               "abstracted": 0.6644830042582979,
+              "video_only": 0.028682080935306487,
               "item_count": 8
-            },
-            {
-              "experiment": "exp2",
-              "full": 0.008326598119236561,
-              "abstracted": 0.003232870762509493,
-              "item_count": 10
             },
             {
               "experiment": "exp3",
               "full": 0.035062457397234965,
               "abstracted": 0.009291806950283968,
+              "video_only": 0.18739746463550752,
               "item_count": 21
             }
           ]
@@ -358,6 +334,7 @@
         {
           "study": "Sosa2025Blending",
           "label": "Sosa et al., 2025",
+          "video_only": 0.09057683600654573,
           "full": 0.19565803439167845,
           "abstracted": 0.24493455396399394,
           "delta": 0.04927651957231549,
@@ -367,12 +344,14 @@
               "experiment": "exp1",
               "full": 0.3829544830238709,
               "abstracted": 0.3829544830238709,
+              "video_only": 0.07423904710897447,
               "item_count": 12
             },
             {
               "experiment": "exp2",
               "full": 0.008361585759485965,
               "abstracted": 0.10691462490411699,
+              "video_only": 0.10691462490411699,
               "item_count": 36
             }
           ]
@@ -380,6 +359,7 @@
         {
           "study": "stephan2021counterfactual",
           "label": "Stephan et al., 2021",
+          "video_only": 0.028474384083367846,
           "full": 0.016876748592639157,
           "abstracted": 0.33543748695967757,
           "delta": 0.3185607383670384,
@@ -389,12 +369,14 @@
               "experiment": "exp1",
               "full": 0.02981042019655176,
               "abstracted": 0.3725759907174767,
+              "video_only": 0.02981042019655175,
               "item_count": 12
             },
             {
               "experiment": "exp3",
               "full": 0.003943076988726549,
               "abstracted": 0.2982989832018784,
+              "video_only": 0.027138347970183944,
               "item_count": 16
             }
           ]
@@ -402,6 +384,7 @@
         {
           "study": "Ullman2018Learning",
           "label": "Ullman et al., 2018",
+          "video_only": 6.437853313641499e-05,
           "full": 0.00877876100791937,
           "abstracted": 0.0008429554100393263,
           "delta": -0.007935805597880043,
@@ -411,6 +394,7 @@
               "experiment": "exp1",
               "full": 0.00877876100791937,
               "abstracted": 0.0008429554100393263,
+              "video_only": 6.437853313641499e-05,
               "item_count": 744
             }
           ]
@@ -418,6 +402,7 @@
         {
           "study": "Wu2022That",
           "label": "Wu et al., 2022",
+          "video_only": 0.2194307384005736,
           "full": 0.00015366724851670108,
           "abstracted": 0.426961946568752,
           "delta": 0.42680827932023535,
@@ -427,6 +412,7 @@
               "experiment": "exp2",
               "full": 0.00015366724851670108,
               "abstracted": 0.426961946568752,
+              "video_only": 0.2194307384005736,
               "item_count": 8
             }
           ]
@@ -434,6 +420,7 @@
         {
           "study": "Zhou2023Mental",
           "label": "Zhou et al., 2023",
+          "video_only": 0.43900689607759447,
           "full": 0.14053100989875728,
           "abstracted": 0.30061806301601685,
           "delta": 0.16008705311725957,
@@ -443,31 +430,37 @@
               "experiment": "exp1",
               "full": 0.15564432493111716,
               "abstracted": 0.8835168229369847,
+              "video_only": 0.009875447927133307,
               "item_count": 61
             },
             {
               "experiment": "exp2",
               "full": 0.23253510976538913,
               "abstracted": 0.01832891350698043,
+              "video_only": 0.6728154380763474,
               "item_count": 12
             },
             {
               "experiment": "exp3",
               "full": 0.03341359499976555,
               "abstracted": 8.452604085414959e-06,
+              "video_only": 0.6343298022293027,
               "item_count": 6
             }
           ]
         }
       ],
       "excluded_experiments": [
-        "Bates2019Modeling/exp2"
+        "Bass2022Partial/exp1",
+        "Bates2019Modeling/exp2",
+        "sosa2021Moral/exp2"
       ]
     },
     {
       "reasoner": "GLM-4.1V-9B-Thinking",
       "abstraction_ratio": 0.7,
       "source_conditions": {
+        "video_only": "Video + question / GLM-4.1V-9B-Thinking",
         "full": "Unified Parser / GLM-4.1V-9B-Thinking",
         "abstracted": "Task-specific Abstraction / GLM-4.1V-9B-Thinking (r=0.7)"
       },
@@ -475,6 +468,7 @@
         {
           "study": "Beller2020Language",
           "label": "Beller et al., 2020",
+          "video_only": 0.0009829998668242214,
           "full": 0.003820414937499048,
           "abstracted": 0.00028968620303625,
           "delta": -0.0035307287344627978,
@@ -484,6 +478,7 @@
               "experiment": "exp1",
               "full": 0.003820414937499048,
               "abstracted": 0.00028968620303625,
+              "video_only": 0.0009829998668242214,
               "item_count": 76
             }
           ]
@@ -491,6 +486,7 @@
         {
           "study": "Gerstenberg2021A_Counterfactual",
           "label": "Gerstenberg et al., 2021",
+          "video_only": 0.0897873393297766,
           "full": 0.06747288727152038,
           "abstracted": 0.00604112462069667,
           "delta": -0.061431762650823715,
@@ -500,29 +496,15 @@
               "experiment": "exp1",
               "full": 0.06747288727152038,
               "abstracted": 0.00604112462069667,
+              "video_only": 0.0897873393297766,
               "item_count": 16
-            }
-          ]
-        },
-        {
-          "study": "Gerstenberg2022What",
-          "label": "Gerstenberg et al., 2022",
-          "full": 0.046960977319631385,
-          "abstracted": 0.00964969993146704,
-          "delta": -0.037311277388164345,
-          "n": 1,
-          "experiments": [
-            {
-              "experiment": "exp2",
-              "full": 0.046960977319631385,
-              "abstracted": 0.00964969993146704,
-              "item_count": 6
             }
           ]
         },
         {
           "study": "hamrick2016inferring",
           "label": "Hamrick et al., 2016",
+          "video_only": 0.8707520963680265,
           "full": 0.8125934140108969,
           "abstracted": 0.891061183163782,
           "delta": 0.07846776915288511,
@@ -532,6 +514,7 @@
               "experiment": "exp1",
               "full": 0.8125934140108969,
               "abstracted": 0.891061183163782,
+              "video_only": 0.8707520963680265,
               "item_count": 6
             }
           ]
@@ -539,6 +522,7 @@
         {
           "study": "Smith2019Modeling",
           "label": "Smith et al., 2019",
+          "video_only": 0.013772442164937363,
           "full": 0.06091348385498458,
           "abstracted": 0.17172998216771224,
           "delta": 0.11081649831272766,
@@ -548,6 +532,7 @@
               "experiment": "exp1",
               "full": 0.06091348385498458,
               "abstracted": 0.17172998216771224,
+              "video_only": 0.013772442164937363,
               "item_count": 13
             }
           ]
@@ -555,6 +540,7 @@
         {
           "study": "sosa2021Moral",
           "label": "Sosa et al., 2021",
+          "video_only": 0.2514102402971648,
           "full": 0.14495517536924737,
           "abstracted": 0.21147478993028107,
           "delta": 0.0665196145610337,
@@ -564,18 +550,21 @@
               "experiment": "exp1",
               "full": 0.022743967347213186,
               "abstracted": 0.4320932598732445,
+              "video_only": 0.6644830042582979,
               "item_count": 8
             },
             {
               "experiment": "exp2",
               "full": 0.2855145414299683,
               "abstracted": 0.002342068184780527,
+              "video_only": 0.08960127918533023,
               "item_count": 10
             },
             {
               "experiment": "exp3",
               "full": 0.12660701733056062,
               "abstracted": 0.1999890417328182,
+              "video_only": 0.00014643744786637611,
               "item_count": 21
             }
           ]
@@ -583,6 +572,7 @@
         {
           "study": "Sosa2025Blending",
           "label": "Sosa et al., 2025",
+          "video_only": 0.09057683600654573,
           "full": 0.32145672811686155,
           "abstracted": 0.10755254081843456,
           "delta": -0.21390418729842697,
@@ -592,12 +582,14 @@
               "experiment": "exp1",
               "full": 0.3829544830238709,
               "abstracted": 0.0016220723801528545,
+              "video_only": 0.07423904710897447,
               "item_count": 12
             },
             {
               "experiment": "exp2",
               "full": 0.2599589732098521,
               "abstracted": 0.21348300925671626,
+              "video_only": 0.10691462490411699,
               "item_count": 36
             }
           ]
@@ -605,6 +597,7 @@
         {
           "study": "stephan2021counterfactual",
           "label": "Stephan et al., 2021",
+          "video_only": 0.003943076988726549,
           "full": 0.0021653885781213167,
           "abstracted": 0.06910180205583016,
           "delta": 0.06693641347770884,
@@ -614,6 +607,7 @@
               "experiment": "exp3",
               "full": 0.0021653885781213167,
               "abstracted": 0.06910180205583016,
+              "video_only": 0.003943076988726549,
               "item_count": 16
             }
           ]
@@ -621,6 +615,7 @@
         {
           "study": "Ullman2018Learning",
           "label": "Ullman et al., 2018",
+          "video_only": 0.05025154755053656,
           "full": 0.011624792179039741,
           "abstracted": 0.03571460703330872,
           "delta": 0.024089814854268976,
@@ -630,6 +625,7 @@
               "experiment": "exp1",
               "full": 0.011624792179039741,
               "abstracted": 0.03571460703330872,
+              "video_only": 0.05025154755053656,
               "item_count": 744
             }
           ]
@@ -637,6 +633,7 @@
         {
           "study": "Wu2022That",
           "label": "Wu et al., 2022",
+          "video_only": 0.21943073840057348,
           "full": 0.015046137418101228,
           "abstracted": 0.31540168213138725,
           "delta": 0.300355544713286,
@@ -646,6 +643,7 @@
               "experiment": "exp2",
               "full": 0.015046137418101228,
               "abstracted": 0.31540168213138725,
+              "video_only": 0.21943073840057348,
               "item_count": 8
             }
           ]
@@ -653,28 +651,25 @@
         {
           "study": "Zhou2023Mental",
           "label": "Zhou et al., 2023",
-          "full": 0.5533255608218314,
-          "abstracted": 0.4934124998939669,
-          "delta": -0.05991306092786447,
-          "n": 3,
+          "video_only": 0.618782312475705,
+          "full": 0.7438529769812884,
+          "abstracted": 0.29836822477826996,
+          "delta": -0.4454847522030184,
+          "n": 2,
           "experiments": [
             {
               "experiment": "exp1",
               "full": 0.8985382562376992,
               "abstracted": 0.0011698082026615902,
+              "video_only": 0.8810235785913346,
               "item_count": 61
             },
             {
               "experiment": "exp2",
               "full": 0.5891676977248775,
               "abstracted": 0.5955666413538784,
+              "video_only": 0.3565410463600755,
               "item_count": 12
-            },
-            {
-              "experiment": "exp3",
-              "full": 0.17227072850291728,
-              "abstracted": 0.8835010501253607,
-              "item_count": 6
             }
           ]
         }
@@ -683,6 +678,8 @@
         "Bass2022Partial/exp1",
         "Bates2019Modeling/exp2",
         "Gerstenberg2021A_Counterfactual/exp3",
+        "Gerstenberg2022What/exp2",
+        "Zhou2023Mental/exp3",
         "stephan2021counterfactual/exp1"
       ]
     }
