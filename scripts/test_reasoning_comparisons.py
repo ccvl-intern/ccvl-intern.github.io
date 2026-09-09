@@ -1,6 +1,6 @@
 import unittest
 
-from build_reasoning_comparisons import CONDITIONS, matched_comparisons
+from build_reasoning_comparisons import CONDITIONS, matched_comparisons, matched_study_comparisons
 
 
 def sample_report():
@@ -58,6 +58,89 @@ class MatchedComparisonTests(unittest.TestCase):
             item["r2"]["uncertainty"] = None
         with self.assertRaisesRegex(ValueError, "No common valid experiments"):
             matched_comparisons(report)
+
+
+def study_report():
+    report = sample_report()
+    for condition in report["conditions"]:
+        for index, row in enumerate(condition["experiments"]):
+            row["experiment"] = ("Beller2020Language/exp1", "Beller2020Language/exp2",
+                                 "Bass2022Partial/exp1")[index]
+            row["r2"]["all"] = row["r2"]["non_uncertainty"]
+            row["item_counts"] = {"all": 4 if index == 0 else 40}
+        if condition["display_name"].startswith("Unified Parser / "):
+            condition["experiments"][2]["r2"]["all"] = None
+    return report
+
+
+class StudyComparisonTests(unittest.TestCase):
+    def test_matched_mean_is_per_experiment_not_item_weighted(self):
+        models = matched_study_comparisons(study_report())
+        self.assertEqual(len(models), 3)
+        for model in models:
+            self.assertEqual(len(model["studies"]), 1)
+            row = model["studies"][0]
+            self.assertEqual(row["n"], 2)
+            self.assertEqual([e["experiment"] for e in row["experiments"]], ["exp1", "exp2"])
+            self.assertAlmostEqual(row["full"], 0.3)
+            self.assertAlmostEqual(row["abstracted"], 0.45)
+            self.assertAlmostEqual(row["delta"], 0.15)
+            self.assertEqual(model["excluded_experiments"], ["Bass2022Partial/exp1"])
+
+    def test_zero_is_valid_and_decreases_are_retained(self):
+        report = study_report()
+        for condition in report["conditions"]:
+            if condition["display_name"].startswith("Task-specific Abstraction / "):
+                for row in condition["experiments"]:
+                    row["r2"]["all"] = 0.0
+        for model in matched_study_comparisons(report):
+            row = model["studies"][0]
+            self.assertEqual(row["abstracted"], 0.0)
+            self.assertAlmostEqual(row["delta"], -0.3)
+
+    def test_no_dependence_on_direct_vlm_scores(self):
+        report = study_report()
+        report["conditions"] = [c for c in report["conditions"] if " / " in c["display_name"]]
+        self.assertEqual(len(matched_study_comparisons(report)), 3)
+
+    def test_invalid_metric_is_not_treated_as_missing(self):
+        for value in (float("nan"), float("inf"), -0.1, 1.1, True):
+            with self.subTest(value=value):
+                report = study_report()
+                report["conditions"][1]["experiments"][0]["r2"]["all"] = value
+                with self.assertRaisesRegex(ValueError, "Invalid squared correlation"):
+                    matched_study_comparisons(report)
+
+    def test_rejects_mismatched_inputs(self):
+        report = study_report()
+        report["conditions"][1]["mapped_item_coverage_sha256"] = "different"
+        with self.assertRaisesRegex(ValueError, "coverage differs"):
+            matched_study_comparisons(report)
+
+    def test_rejects_different_item_counts(self):
+        report = study_report()
+        report["conditions"][1]["experiments"][0]["item_counts"]["all"] += 1
+        with self.assertRaisesRegex(ValueError, "Item counts differ"):
+            matched_study_comparisons(report)
+
+    def test_rejects_duplicate_experiments(self):
+        report = study_report()
+        report["conditions"][1]["experiments"].append(report["conditions"][1]["experiments"][0])
+        with self.assertRaisesRegex(ValueError, "Duplicate experiment"):
+            matched_study_comparisons(report)
+
+    def test_rejects_different_experiment_sets(self):
+        report = study_report()
+        report["conditions"][1]["experiments"].pop()
+        with self.assertRaisesRegex(ValueError, "Experiment coverage differs"):
+            matched_study_comparisons(report)
+
+    def test_rejects_all_undefined_studies(self):
+        report = study_report()
+        for row in report["conditions"][1]["experiments"]:
+            row["r2"]["all"] = None
+        with self.assertRaisesRegex(ValueError, "No common valid studies"):
+            matched_study_comparisons(report)
 
 
 if __name__ == "__main__":

@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260909-video-only">
-  <script src="assets/site.js?v=20260909-video-only" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20260909-study-r2">
+  <script src="assets/site.js?v=20260909-study-r2" defer></script>
   <script src="assets/examples.js?v=20260908-colors" defer></script>
 </head>
 <body>
@@ -165,9 +165,18 @@
         </div>
 
         <div role="tabpanel" id="panel-studies" aria-labelledby="tab-studies" hidden>
+          <div class="result-title-row"><div><p class="result-number">Table 7</p><h3 id="table-7-title">Reasoning by study</h3><p>Before: full code · After: task-specific abstraction · R² (%) ↑</p></div><a class="text-link download-link" href="data/study_reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="table-toolbar study-reasoning-controls"><label>Reasoning model <select id="study-reasoner" aria-label="Reasoning model"><option value="Qwen3-VL-8B-Instruct">Qwen3-VL-8B-Instruct</option><option value="Qwen3-VL-8B-Thinking" selected>Qwen3-VL-8B-Thinking</option><option value="GLM-4.1V-9B-Thinking">GLM-4.1V-9B-Thinking</option></select></label><p id="study-reasoning-status" role="status"></p></div>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Per-study reasoning before and after abstraction">
+            <table class="results-table study-reasoning-table" aria-labelledby="table-7-title" aria-describedby="study-reasoning-note"><thead><tr><th scope="col">Study</th><th scope="col">Before<br>R² (%)</th><th scope="col">After<br>R² (%)</th><th scope="col">Change<br>(pp)</th></tr></thead><tbody id="study-reasoning-body"></tbody></table>
+          </div>
+          <p class="metric-note" id="study-reasoning-note">Saved results · 6 September 2026, not the corrected rerun. R² is squared Pearson correlation with human item means. Each study averages the same valid experiments before and after abstraction; experiment IDs and counts appear under its name. Experiments with undefined R² on either side are excluded from both sides; studies with no valid pairs are omitted. No cross-study average or zero imputation is used.</p>
+          <p class="metric-note">Both conditions include the original visual input and question. The Unified Parser uses the corresponding VLM identifier + SAM3.1 + VGGT-Ω + SpatialTrackerV2. Full-code inputs use the saved context cutoff. Abstraction ratios are fixed to the recorded conditions in Table 1, not selected separately for each study. pp = percentage points.</p>
+          <div class="study-parsing-results">
           <div class="result-title-row"><div><p class="result-number">Figure 2</p><h3>Parsing accuracy by study</h3><p>20 samples per study · 14 studies · mIoU (%)</p></div><span class="chart-key"><i></i>2D <i class="three-d"></i>3D</span></div>
           <div id="study-bars" class="study-bars" aria-label="Per-study mIoU"></div>
           <p class="metric-note">Values follow the project slides and the packaged parsing audit. Each bar uses the same 0–100% scale. Hamrick and Smith use 3D boxes; other studies use 2D boxes.</p>
+          </div>
         </div>
 
         <div role="tabpanel" id="panel-efficiency" aria-labelledby="tab-efficiency" hidden>

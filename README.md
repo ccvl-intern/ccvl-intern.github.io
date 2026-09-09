@@ -25,11 +25,13 @@ Reasoning R-squared is mean squared Pearson correlation with human item means ac
 
 The separate Video only view (`#video-only`) uses `data/video_only_results.json`, transcribed without numeric changes from `physics_280_video_only_vlm_matrix_20260826_r3/coggym_model_summary.csv`. Its 14 rows are archived video-and-question-only results from August 26, not corrected reruns. They use each model's valid experiments and must not be treated as a matched comparison with the parsed-code views.
 
+Table 7 in Per-study (`#panel-studies`) uses `data/study_reasoning_results.json`, exported by `scripts/build_reasoning_comparisons.py` from the saved September 6 uncertainty-split report. Full-code and abstracted-code R2 use the same finite experiment pairs within each study. Undefined pairs are excluded from both sides, and studies with no remaining pairs are omitted, never zero-filled. Ratios match Table 1: Instruct 0.7, Thinking 0.9, and GLM 0.7. Experiment values and source-report hashes remain in the downloadable JSON. These are archived results, not the corrected ten-round rerun; no inference was performed for this website update.
+
 ## Interface
 
 - Static HTML, CSS, and JavaScript, with no build step or third-party runtime requests.
 - Reasoning, video-only, parsing, per-study, and efficiency views; condition and RPE interval selectors.
-- Stable result labels: Tables 1-6 cover parsed-code reasoning, video-only reasoning, parsing quality, efficiency, PhysBench, and the abstraction pilot. Figures 1-3 cover question-type comparisons, per-study accuracy, and qualitative examples.
+- Stable result labels: Tables 1-6 cover parsed-code reasoning, video-only reasoning, parsing quality, efficiency, PhysBench, and the abstraction pilot; Table 7 adds before/after reasoning by study with a model selector. Figures 1-3 cover question-type comparisons, per-study accuracy, and qualitative examples.
 - Slide GIF gallery, scene filters, figure enlargement, animation pause, and reduced-motion support.
 - Original numerical JSON and slide/GIF files are unchanged by the September 8 design update.
 - Icons are vendored from lucide-static 0.468.0; license is in `assets/icons/LICENSE`.

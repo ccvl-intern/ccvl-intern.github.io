@@ -1,6 +1,6 @@
 "use strict";
 
-const state = { results: null, code: null, reasoning: null, videoOnly: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
+const state = { results: null, code: null, reasoning: null, videoOnly: null, studyReasoning: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
 const $ = selector => document.querySelector(selector);
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -168,6 +168,19 @@ function renderStudies() {
   }).join("");
 }
 
+function renderStudyReasoning() {
+  if (!state.studyReasoning) return;
+  const model = state.studyReasoning.models.find(row => row.reasoner === $("#study-reasoner").value);
+  const n = model.studies.reduce((total, row) => total + row.n, 0);
+  $("#study-reasoning-status").textContent = `Context ratio ${model.abstraction_ratio} · ${model.studies.length} studies · ${n} matched experiments`;
+  $("#study-reasoning-body").innerHTML = model.studies.map(row => {
+    const change = row.delta * 100;
+    const delta = `${change > 0 ? "+" : ""}${change.toFixed(2)}`;
+    const style = change > 0 ? "positive" : change < 0 ? "negative" : "";
+    return `<tr data-study="${escapeHtml(row.study)}"><th scope="row">${escapeHtml(row.label)}<small>${row.experiments.map(item => escapeHtml(item.experiment)).join(", ")} · n = ${row.n}</small></th><td>${(row.full * 100).toFixed(2)}</td><td><b>${(row.abstracted * 100).toFixed(2)}</b></td><td class="${style}">${delta}</td></tr>`;
+  }).join("");
+}
+
 function renderTiming() {
   const timing = state.results.timing;
   $("#efficiency-summary").innerHTML = [
@@ -300,6 +313,7 @@ function bindInteractions() {
   addEventListener("hashchange", openLinkedTab);
   openLinkedTab();
   $("#reasoning-filter").addEventListener("change", renderReasoningTable);
+  $("#study-reasoner").addEventListener("change", renderStudyReasoning);
   $("#rpe-interval").addEventListener("change", renderParsingTable);
   document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
     document.querySelectorAll("[data-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
@@ -333,13 +347,13 @@ function bindInteractions() {
 async function loadData() {
   $("#data-error").hidden = true;
   try {
-    const names = ["results", "hamrick_code", "reasoning_results", "video_only_results"];
+    const names = ["results", "hamrick_code", "reasoning_results", "video_only_results", "study_reasoning_results"];
     const data = await Promise.all(names.map(async name => {
-      const response = await fetch(`data/${name}.json?v=20260909-video-only`);
+      const response = await fetch(`data/${name}.json?v=20260909-study-r2`);
       if (!response.ok) throw new Error(`Could not load ${name} (${response.status})`);
       return response.json();
     }));
-    [state.results, state.code, state.reasoning, state.videoOnly] = data;
+    [state.results, state.code, state.reasoning, state.videoOnly, state.studyReasoning] = data;
     renderHeadline();
     renderDemo();
     renderSplitComparisons();
@@ -347,6 +361,7 @@ async function loadData() {
     renderVideoOnlyTable();
     renderParsingTable();
     renderStudies();
+    renderStudyReasoning();
     renderTiming();
     renderRefinement();
     renderGallery();
