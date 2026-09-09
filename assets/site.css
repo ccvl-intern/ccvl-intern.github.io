@@ -132,6 +132,7 @@ code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospac
 .result-title-row h3 { font-size: 23px; }
 .result-title-row p, .result-title-row > span { font-size: 13px; margin-top: 8px; }
 .result-title-row > span { color: var(--muted); }
+.result-number, .result-title-row .result-number { color: var(--teal); font-size: 12px; font-weight: 650; margin: 0 0 8px; }
 .download-link { flex: 0 0 auto; margin-top: 4px; font-size: 12px; }
 .question-regimes { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 30px; padding: 20px 0; border-block: 1px solid var(--line); margin-bottom: 26px; }
 .question-regimes div { display: flex; align-items: baseline; gap: 10px; }
@@ -182,6 +183,9 @@ select { background: white; border: 1px solid #cdd8d5; border-radius: 4px; font-
 .results-table .method-group th { background: #f0f3f1; color: var(--teal-dark); text-align: left; padding: 10px 16px; font-size: 11px; font-weight: 650; border-top: 1px solid #b9cac4; }
 .reasoning-table { min-width: 870px; }
 .reasoning-table td:nth-child(2), .reasoning-table th:nth-child(2) { text-align: left; }
+.video-only-table { table-layout: fixed; }
+.video-only-table th:first-child { width: 65%; white-space: normal; overflow-wrap: anywhere; }
+#video-only { scroll-margin-top: 84px; }
 .results-table th:first-child { font-weight: 550; }
 .parsing-summary { display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--line); padding: 24px 0; }
 .parsing-summary > div + div { border-left: 1px solid var(--line); padding-left: 32px; }
@@ -370,7 +374,8 @@ details[open] .details-mark { transform: rotate(225deg); }
   .pilot-result strong { font-size: 25px; }
   .selection-objectives { font-size: 11px; gap: 8px; }
   .selection-objectives span { font-size: 12px; }
-  .results-nav { gap: 0; justify-content: space-between; margin-bottom: 25px; }
+  .results-nav { gap: 16px; justify-content: space-between; margin-bottom: 25px; overflow-x: auto; }
+  .results-nav button { flex-shrink: 0; }
   .results-nav button { font-size: 13px; padding-inline: 2px; }
   .result-title-row { flex-wrap: wrap; gap: 12px; }
   .result-title-row h3 { font-size: 22px; }

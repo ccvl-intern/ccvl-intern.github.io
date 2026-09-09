@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260908-viewport">
-  <script src="assets/site.js?v=20260908-viewport" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20260909-video-only">
+  <script src="assets/site.js?v=20260909-video-only" defer></script>
   <script src="assets/examples.js?v=20260908-colors" defer></script>
 </head>
 <body>
@@ -121,13 +121,14 @@
         <div id="data-error" role="alert" hidden><p>Experiment data could not be loaded.</p><button type="button" id="retry-data">Retry</button></div>
         <div class="results-nav" role="tablist" aria-label="Evaluation views">
           <button role="tab" id="tab-reasoning" aria-selected="true" aria-controls="panel-reasoning" tabindex="0">Reasoning</button>
+          <button role="tab" id="tab-video-only" aria-selected="false" aria-controls="video-only" tabindex="-1">Video only</button>
           <button role="tab" id="tab-parsing" aria-selected="false" aria-controls="panel-parsing" tabindex="-1">Parsing</button>
           <button role="tab" id="tab-studies" aria-selected="false" aria-controls="panel-studies" tabindex="-1">Per-study</button>
           <button role="tab" id="tab-efficiency" aria-selected="false" aria-controls="panel-efficiency" tabindex="-1">Efficiency</button>
         </div>
 
         <div role="tabpanel" id="panel-reasoning" aria-labelledby="tab-reasoning">
-          <div class="result-title-row"><div><h3>Direct VLM code vs. Unified Parser code</h3><p>Reasoning R² with the original visual input, question, and each code condition.</p></div><a class="text-link download-link" href="data/reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="result-title-row"><div><p class="result-number">Figure 1</p><h3>Reasoning by question type</h3><p>Direct VLM code vs. Unified Parser code. Reasoning R² with the original visual input and question.</p></div><a class="text-link download-link" href="data/reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
           <div class="question-regimes">
             <div><strong data-question-group="non">500</strong><span>without uncertainty</span></div>
             <div><strong data-question-group="unc">136</strong><span>with uncertainty</span></div>
@@ -136,35 +137,43 @@
           <div class="bar-key"><span><i class="key-direct" aria-hidden="true"></i>VLM-direct full code</span><span><i class="key-full" aria-hidden="true"></i>Unified Parser full code</span><span><i class="key-abstract" aria-hidden="true"></i>Unified Parser abstracted code</span><small>Matched experiments · 0–50% R² scale</small></div>
           <div class="paired-grid"><section><h4>Without uncertainty</h4><div id="paired-non"></div></section><section><h4>With uncertainty</h4><div id="paired-unc"></div></section></div>
           <p class="metric-note">All three bars use the same valid experiments within each model and question group. R² is squared Pearson correlation with human item means; experiments with undefined correlation are excluded from all three bars. Full-code inputs use the saved context cutoff. Abstraction ratios: 0.7 for Instruct and GLM; 0.9 for Thinking.</p>
-          <div class="table-toolbar"><h3>Reasoning results</h3><label>Condition <select id="reasoning-filter" aria-label="Condition"><option value="predicted_parsing">Unified Parser</option><option value="direct_vlm">Direct VLMs</option><option value="gt_abstraction">Ground truth + abstraction</option><option value="all">All conditions</option></select></label></div>
+          <div class="table-toolbar"><div><p class="result-number">Table 1</p><h3 id="table-1-title">Reasoning with parsed code</h3></div><label>Condition <select id="reasoning-filter" aria-label="Condition"><option value="predicted_parsing">Unified Parser</option><option value="direct_vlm">Direct VLMs</option><option value="gt_abstraction">Ground truth + abstraction</option><option value="all">All conditions</option></select></label></div>
           <div class="table-scroll" tabindex="0" role="region" aria-label="Reasoning results table">
-            <table class="results-table reasoning-table"><thead><tr><th scope="col">Reasoning model</th><th scope="col">Evidence</th><th scope="col">Overall R² ↑</th><th scope="col">Without uncertainty<br>R² ↑</th><th scope="col">With uncertainty<br>R² ↑</th></tr></thead><tbody id="reasoning-table-body"></tbody></table>
+            <table class="results-table reasoning-table" aria-labelledby="table-1-title"><thead><tr><th scope="col">Reasoning model</th><th scope="col">Evidence</th><th scope="col">Overall R² ↑</th><th scope="col">Without uncertainty<br>R² ↑</th><th scope="col">With uncertainty<br>R² ↑</th></tr></thead><tbody id="reasoning-table-body"></tbody></table>
           </div>
           <p class="metric-note">R² is the mean of squared Pearson correlations across valid experiments, not the regression coefficient of determination. Split cells include valid-experiment counts; these sets can differ by condition. Overall R² is recomputed at the experiment level, not averaged from the two split columns.</p>
           <p class="metric-note">Unified Parser conditions use SAM3.1 + VGGT-Ω + SpatialTrackerV2, with the corresponding VLM identifier. The reasoning model and abstraction context ratio are shown separately; exact run sources are listed in the examples below. These are recorded ratio conditions, not a claim of held-out optimality.</p>
         </div>
 
+        <div role="tabpanel" id="video-only" aria-labelledby="tab-video-only" hidden>
+          <div class="result-title-row"><div><p class="result-number">Table 2</p><h3 id="table-2-title">Video-only reasoning</h3><p>Original visual input + question. No parsed code.</p></div><a class="text-link download-link" href="data/video_only_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Video-only reasoning results">
+            <table class="results-table video-only-table" aria-labelledby="table-2-title" aria-describedby="video-only-note"><thead><tr><th scope="col">VLM</th><th scope="col">Mean experiment<br>R² ↑</th></tr></thead><tbody id="video-only-table-body"></tbody></table>
+          </div>
+          <p class="metric-note" id="video-only-note">Saved evaluation · 26 August 2026. R² is the mean squared Pearson correlation with human item means across each model's valid experiments. These are archived results, not the corrected rerun. Comparisons with parsed-code conditions require the same valid experiments.</p>
+        </div>
+
         <div role="tabpanel" id="panel-parsing" aria-labelledby="tab-parsing" hidden>
-          <div class="result-title-row"><div><h3>Parsing comparison</h3><p>mIoU ↑ · Normalized Center RPE ↓ · mean ± SD</p></div><a class="text-link download-link" href="data/results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="result-title-row"><div><p class="result-number">Table 3</p><h3 id="table-3-title">Parsing quality</h3><p>mIoU ↑ · Normalized Center RPE ↓ · mean ± SD</p></div><a class="text-link download-link" href="data/results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
           <div class="parsing-summary" id="parsing-summary"></div>
           <div class="table-toolbar"><p>Direct VLMs and explicit component substitutions</p><label>RPE interval <select id="rpe-interval" aria-label="RPE interval"><option value="1_frame">1 frame</option><option value="0_5_sec">0.5 seconds</option><option value="1_sec">1 second</option></select></label></div>
           <div class="table-scroll" tabindex="0" role="region" aria-label="Parsing quality comparison">
-            <table class="results-table"><thead><tr><th scope="col">Method</th><th scope="col">mIoU (%) ↑</th><th id="rpe-column" scope="col">Center RPE@1 frame (%) ↓</th></tr></thead><tbody id="parsing-method-table-body"></tbody></table>
+            <table class="results-table" aria-labelledby="table-3-title"><thead><tr><th scope="col">Method</th><th scope="col">mIoU (%) ↑</th><th id="rpe-column" scope="col">Center RPE@1 frame (%) ↓</th></tr></thead><tbody id="parsing-method-table-body"></tbody></table>
           </div>
           <p class="metric-note">Center RPE is the relative object-center displacement residual divided by the source-frame diagonal. This saved report evaluates temporal 2D Center RPE on 130 samples with released temporal center ground truth. mIoU uses 280 samples; MotionCrafter excludes 34 static images and applies to 246 videos. SD describes sample variation, not repeated random seeds.</p>
           <p class="metric-note">Component variants share the Qwen3-VL-8B-Thinking identifier and the other listed modules; they are not standalone model results. Parsing metrics refer to the code before task-specific evidence selection.</p>
         </div>
 
         <div role="tabpanel" id="panel-studies" aria-labelledby="tab-studies" hidden>
-          <div class="result-title-row"><div><h3>Evaluation of parsing accuracy</h3><p>20 samples per study · 14 studies · mIoU (%)</p></div><span class="chart-key"><i></i>2D <i class="three-d"></i>3D</span></div>
+          <div class="result-title-row"><div><p class="result-number">Figure 2</p><h3>Parsing accuracy by study</h3><p>20 samples per study · 14 studies · mIoU (%)</p></div><span class="chart-key"><i></i>2D <i class="three-d"></i>3D</span></div>
           <div id="study-bars" class="study-bars" aria-label="Per-study mIoU"></div>
           <p class="metric-note">Values follow the project slides and the packaged parsing audit. Each bar uses the same 0–100% scale. Hamrick and Smith use 3D boxes; other studies use 2D boxes.</p>
         </div>
 
         <div role="tabpanel" id="panel-efficiency" aria-labelledby="tab-efficiency" hidden>
-          <div class="result-title-row"><div><h3>Parsing efficiency</h3><p>Stage latency reported in the project slides.</p></div><span>NVIDIA RTX A5000 · 4 workers</span></div>
+          <div class="result-title-row"><div><p class="result-number">Table 4</p><h3 id="table-4-title">Parsing efficiency</h3><p>Stage latency reported in the project slides.</p></div><span>NVIDIA RTX A5000 · 4 workers</span></div>
           <div class="efficiency-summary" id="efficiency-summary"></div>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Parsing stage latency"><table class="results-table"><thead><tr><th scope="col">Stage</th><th scope="col">Mean (s)</th><th scope="col">Median (s)</th><th scope="col">P95 (s)</th></tr></thead><tbody id="stage-timing"></tbody></table></div>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Parsing stage latency"><table class="results-table" aria-labelledby="table-4-title"><thead><tr><th scope="col">Stage</th><th scope="col">Mean (s)</th><th scope="col">Median (s)</th><th scope="col">P95 (s)</th></tr></thead><tbody id="stage-timing"></tbody></table></div>
           <p class="metric-note">Identifier and 2D Mask: 280 samples. Analyzer and Point Tracker: 40 routed 3D samples. Stage means have different denominators.</p>
         </div>
       </div>
@@ -202,7 +211,7 @@
     </section>
 
     <section class="section shell" id="gallery">
-      <div class="section-heading"><p class="section-label">Qualitative results</p><h2>Original Video vs.<br>Our Parsed Code Visualization</h2><p>The original slide GIFs: video on the left, bbox-only reconstruction on the right. Study-level mIoU is shown beneath each example.</p></div>
+      <div class="section-heading"><p class="section-label">Figure 3 · Qualitative results</p><h2>Original Video vs.<br>Our Parsed Code Visualization</h2><p>The original slide GIFs: video on the left, bbox-only reconstruction on the right. Study-level mIoU is shown beneath each example.</p></div>
       <div class="gallery-toolbar"><div class="gallery-filters" role="group" aria-label="Filter scenes"><button data-filter="all" aria-pressed="true">All scenes</button><button data-filter="2d" aria-pressed="false">2D dynamics</button><button data-filter="frozen3d" aria-pressed="false">Frozen 3D</button><button data-filter="dynamic3d" aria-pressed="false">Dynamic 3D</button></div><button class="icon-button" data-toggle-motion aria-label="Pause animations" title="Pause animations"><img src="assets/icons/pause.svg" alt=""></button></div>
       <p class="sr-only" id="gallery-status" aria-live="polite"></p>
       <div id="demo-grid" class="demo-grid"></div>
@@ -213,8 +222,8 @@
       <div class="shell">
         <details class="research-details"><summary><span>Additional results from the slides</span><span class="details-mark" aria-hidden="true"></span></summary>
           <div class="additional-grid">
-            <div><h3>PhysBench</h3><p class="figure-note">Qwen3-VL-8B-Instruct · scores reported in the slides</p><table class="results-table"><tbody><tr><th scope="row">Video only</th><td>54.0%</td></tr><tr><th scope="row">Video + full code</th><td>53.5%</td></tr><tr class="emphasis"><th scope="row">Video + abstracted code</th><td>69.0%</td></tr></tbody></table></div>
-            <div><h3>Adaptive abstraction pilot</h3><p class="figure-note">N = 6 · T = 40 · k₁ = k₂ = k₃ = k₄ = 12</p><table class="results-table"><tbody><tr><th scope="row">Video + Qwen-VL</th><td>47.65%</td></tr><tr><th scope="row">Multi-turn selection</th><td>64.52%</td></tr><tr class="emphasis"><th scope="row">Adaptive abstraction</th><td>66.40%</td></tr></tbody></table><p class="figure-note">265.13 s per iteration. These slide-reported scores are not CogGym R².</p></div>
+            <div><p class="result-number">Table 5</p><h3 id="table-5-title">PhysBench reasoning</h3><p class="figure-note">Qwen3-VL-8B-Instruct · scores reported in the slides</p><table class="results-table" aria-labelledby="table-5-title"><tbody><tr><th scope="row">Video only</th><td>54.0%</td></tr><tr><th scope="row">Video + full code</th><td>53.5%</td></tr><tr class="emphasis"><th scope="row">Video + abstracted code</th><td>69.0%</td></tr></tbody></table></div>
+            <div><p class="result-number">Table 6</p><h3 id="table-6-title">Adaptive abstraction pilot</h3><p class="figure-note">N = 6 · T = 40 · k₁ = k₂ = k₃ = k₄ = 12</p><table class="results-table" aria-labelledby="table-6-title"><tbody><tr><th scope="row">Video + Qwen-VL</th><td>47.65%</td></tr><tr><th scope="row">Multi-turn selection</th><td>64.52%</td></tr><tr class="emphasis"><th scope="row">Adaptive abstraction</th><td>66.40%</td></tr></tbody></table><p class="figure-note">265.13 s per iteration. These slide-reported scores are not CogGym R².</p></div>
           </div>
         </details>
         <details class="research-details" id="datasets"><summary><span>Tasks and datasets</span><span class="details-mark" aria-hidden="true"></span></summary>

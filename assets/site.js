@@ -1,6 +1,6 @@
 "use strict";
 
-const state = { results: null, code: null, reasoning: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
+const state = { results: null, code: null, reasoning: null, videoOnly: null, paused: matchMedia("(prefers-reduced-motion: reduce)").matches };
 const $ = selector => document.querySelector(selector);
 const percent = (value, digits = 2) => value == null ? "N/A" : `${(value * 100).toFixed(digits)}%`;
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -96,6 +96,12 @@ function renderSplitComparisons() {
 
 function splitMetricCell(metric) {
   return metric.r2 == null ? 'N/A<small>no valid experiments</small>' : `${percent(metric.r2)}<small>n = ${metric.n}</small>`;
+}
+
+function renderVideoOnlyTable() {
+  $("#video-only-table-body").innerHTML = state.videoOnly.models.map(row =>
+    `<tr><th scope="row">${escapeHtml(row.model)}</th><td>${percent(row.mean_experiment_r2)}</td></tr>`
+  ).join("");
 }
 
 function renderReasoningTable() {
@@ -285,6 +291,14 @@ function bindInteractions() {
       tabs[target].focus();
     });
   });
+  const openLinkedTab = () => {
+    const tab = tabs.find(button => button.getAttribute("aria-controls") === location.hash.slice(1));
+    if (!tab) return;
+    activateTab(tab);
+    $(".results-nav").scrollIntoView({ block: "start" });
+  };
+  addEventListener("hashchange", openLinkedTab);
+  openLinkedTab();
   $("#reasoning-filter").addEventListener("change", renderReasoningTable);
   $("#rpe-interval").addEventListener("change", renderParsingTable);
   document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
@@ -319,17 +333,18 @@ function bindInteractions() {
 async function loadData() {
   $("#data-error").hidden = true;
   try {
-    const names = ["results", "hamrick_code", "reasoning_results"];
+    const names = ["results", "hamrick_code", "reasoning_results", "video_only_results"];
     const data = await Promise.all(names.map(async name => {
-      const response = await fetch(`data/${name}.json?v=20260908-threeway`);
+      const response = await fetch(`data/${name}.json?v=20260909-video-only`);
       if (!response.ok) throw new Error(`Could not load ${name} (${response.status})`);
       return response.json();
     }));
-    [state.results, state.code, state.reasoning] = data;
+    [state.results, state.code, state.reasoning, state.videoOnly] = data;
     renderHeadline();
     renderDemo();
     renderSplitComparisons();
     renderReasoningTable();
+    renderVideoOnlyTable();
     renderParsingTable();
     renderStudies();
     renderTiming();

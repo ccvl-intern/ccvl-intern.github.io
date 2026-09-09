@@ -23,10 +23,13 @@ Component variants explicitly list the modules used inside the shared pipeline; 
 
 Reasoning R-squared is mean squared Pearson correlation with human item means across valid experiments. The uncertainty comparison charts use paired valid experiments. Full and abstracted code are different reasoning inputs; parsing scores in the parsing view are measured before evidence selection.
 
+The separate Video only view (`#video-only`) uses `data/video_only_results.json`, transcribed without numeric changes from `physics_280_video_only_vlm_matrix_20260826_r3/coggym_model_summary.csv`. Its 14 rows are archived video-and-question-only results from August 26, not corrected reruns. They use each model's valid experiments and must not be treated as a matched comparison with the parsed-code views.
+
 ## Interface
 
 - Static HTML, CSS, and JavaScript, with no build step or third-party runtime requests.
-- Reasoning, parsing, per-study, and efficiency views; condition and RPE interval selectors.
+- Reasoning, video-only, parsing, per-study, and efficiency views; condition and RPE interval selectors.
+- Stable result labels: Tables 1-6 cover parsed-code reasoning, video-only reasoning, parsing quality, efficiency, PhysBench, and the abstraction pilot. Figures 1-3 cover question-type comparisons, per-study accuracy, and qualitative examples.
 - Slide GIF gallery, scene filters, figure enlargement, animation pause, and reduced-motion support.
 - Original numerical JSON and slide/GIF files are unchanged by the September 8 design update.
 - Icons are vendored from lucide-static 0.468.0; license is in `assets/icons/LICENSE`.

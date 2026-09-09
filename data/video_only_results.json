@@ -1,0 +1,24 @@
+{
+  "evaluation_date": "2026-08-26",
+  "status": "archived",
+  "condition": "Original visual input + question; no parsed code",
+  "metric": "Mean experiment-level squared Pearson correlation with human item means",
+  "aggregation": "Each model's valid experiments; not a matched-cohort comparison with code conditions",
+  "source_report": "physics_280_video_only_vlm_matrix_20260826_r3/coggym_model_summary.csv",
+  "models": [
+    {"model": "Qwen3-VL-2B-Instruct", "hf_id": "Qwen/Qwen3-VL-2B-Instruct", "mean_experiment_r2": 0.18940414273352923},
+    {"model": "Qwen3-VL-2B-Thinking", "hf_id": "Qwen/Qwen3-VL-2B-Thinking", "mean_experiment_r2": 0.20512916184053642},
+    {"model": "Qwen3-VL-4B-Instruct", "hf_id": "Qwen/Qwen3-VL-4B-Instruct", "mean_experiment_r2": 0.13498912852650294},
+    {"model": "Qwen3-VL-4B-Thinking", "hf_id": "Qwen/Qwen3-VL-4B-Thinking", "mean_experiment_r2": 0.1963844693914753},
+    {"model": "Qwen3-VL-8B-Instruct", "hf_id": "Qwen/Qwen3-VL-8B-Instruct", "mean_experiment_r2": 0.19498578199448927},
+    {"model": "Qwen3-VL-8B-Thinking", "hf_id": "Qwen/Qwen3-VL-8B-Thinking", "mean_experiment_r2": 0.1753159393644758},
+    {"model": "Qwen3.5-4B", "hf_id": "Qwen/Qwen3.5-4B", "mean_experiment_r2": 0.20013596097940267},
+    {"model": "Qwen3.5-9B", "hf_id": "Qwen/Qwen3.5-9B", "mean_experiment_r2": 0.17626897453515422},
+    {"model": "Molmo2-O-7B", "hf_id": "allenai/Molmo2-O-7B", "mean_experiment_r2": 0.15814811393825817},
+    {"model": "GLM-4.1V-9B-Thinking", "hf_id": "zai-org/GLM-4.1V-9B-Thinking", "mean_experiment_r2": 0.23761105969116797},
+    {"model": "InternVideo2.5-Chat-8B", "hf_id": "OpenGVLab/InternVideo2_5_Chat_8B", "mean_experiment_r2": 0.15521394259390778},
+    {"model": "InternVL3.5-8B", "hf_id": "OpenGVLab/InternVL3_5-8B", "mean_experiment_r2": 0.15602577125399283},
+    {"model": "InternVL3.5-4B", "hf_id": "OpenGVLab/InternVL3_5-4B", "mean_experiment_r2": 0.24374219146342746},
+    {"model": "InternVL3.5-2B", "hf_id": "OpenGVLab/InternVL3_5-2B", "mean_experiment_r2": 0.2513148253762484}
+  ]
+}
