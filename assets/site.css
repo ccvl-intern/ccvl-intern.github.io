@@ -189,15 +189,15 @@ select { background: white; border: 1px solid #cdd8d5; border-radius: 4px; font-
 #panel-studies { scroll-margin-top: 84px; }
 .study-reasoning-controls { flex-wrap: wrap; margin-top: 0; }
 .study-reasoning-controls label { flex-wrap: wrap; }
-.study-reasoning-table { table-layout: fixed; min-width: 620px; }
-.study-reasoning-table th:first-child { width: 40%; }
+.study-reasoning-table { table-layout: fixed; min-width: 820px; }
+.study-reasoning-table th:first-child { width: 30%; }
 .study-reasoning-table th, .study-reasoning-table td { white-space: normal; }
 .study-reasoning-table td { white-space: nowrap; }
 .study-parsing-results { border-top: 1px solid var(--line); padding-top: 36px; margin-top: 40px; }
 @media (max-width: 700px) {
   .study-reasoning-table th, .study-reasoning-table td { padding: 12px 6px; font-size: 11px; }
   .study-reasoning-table thead th { font-size: 11px; }
-  .study-reasoning-table th:first-child { width: 37%; }
+  .study-reasoning-table th:first-child { width: 30%; }
   .study-reasoning-table small { font-size: 9px; }
 }
 .results-table th:first-child { font-weight: 550; }

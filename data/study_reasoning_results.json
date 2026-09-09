@@ -10,6 +10,10 @@
     "mapped_item_coverage_sha256": "fb83e18b406ed60de89c74b57039d898ba8d79ee4927c591abeb435917a9ed42"
   },
   "metric": "Mean squared Pearson correlation within each study, over the same valid experiments in all three conditions.",
+  "differences": {
+    "delta": "Abstracted minus full-code R2.",
+    "delta_vs_video_only": "Abstracted minus video-only R2. Multiply differences by 100 for percentage points."
+  },
   "matching": "Experiment IDs and evaluated item counts are matched across all three conditions. The coverage fingerprint applies to the two code conditions; video-only is the saved 26 August run, not the corrected rerun.",
   "missing_policy": "Experiments with undefined R2 in any condition are excluded from all three; studies with no remaining comparisons are omitted.",
   "models": [
@@ -29,6 +33,7 @@
           "full": 3.93199946729689e-05,
           "abstracted": 3.93199946729689e-05,
           "delta": 0.0,
+          "delta_vs_video_only": 0.0,
           "n": 1,
           "experiments": [
             {
@@ -47,6 +52,7 @@
           "full": 0.006914045621929241,
           "abstracted": 0.27567115014147386,
           "delta": 0.2687571045195446,
+          "delta_vs_video_only": 0.23151419218136765,
           "n": 1,
           "experiments": [
             {
@@ -65,6 +71,7 @@
           "full": 0.9079460634649045,
           "abstracted": 0.9079460634649045,
           "delta": 0.0,
+          "delta_vs_video_only": -0.05751163575571583,
           "n": 1,
           "experiments": [
             {
@@ -83,6 +90,7 @@
           "full": 0.06828584502101048,
           "abstracted": 0.07979566546668694,
           "delta": 0.011509820445676458,
+          "delta_vs_video_only": 0.07107777401656365,
           "n": 1,
           "experiments": [
             {
@@ -101,6 +109,7 @@
           "full": 0.19565803439167845,
           "abstracted": 0.19565803439167845,
           "delta": 0.0,
+          "delta_vs_video_only": -0.04927651957231549,
           "n": 2,
           "experiments": [
             {
@@ -126,6 +135,7 @@
           "full": 0.014917705060992308,
           "abstracted": 0.3258318680545106,
           "delta": 0.31091416299351826,
+          "delta_vs_video_only": 0.2527120111390861,
           "n": 2,
           "experiments": [
             {
@@ -151,6 +161,7 @@
           "full": 0.0698809397238346,
           "abstracted": 0.014546598335025064,
           "delta": -0.05533434138880954,
+          "delta_vs_video_only": 0.013774898335134641,
           "n": 1,
           "experiments": [
             {
@@ -169,6 +180,7 @@
           "full": 0.572262594522388,
           "abstracted": 0.3411281835272389,
           "delta": -0.23113441099514914,
+          "delta_vs_video_only": 0.00014145470824322715,
           "n": 2,
           "experiments": [
             {
@@ -216,6 +228,7 @@
           "full": 3.93199946729689e-05,
           "abstracted": 3.93199946729689e-05,
           "delta": 0.0,
+          "delta_vs_video_only": 0.0,
           "n": 1,
           "experiments": [
             {
@@ -234,6 +247,7 @@
           "full": 0.12467809488521055,
           "abstracted": 0.06755857932517272,
           "delta": -0.05711951556003783,
+          "delta_vs_video_only": 0.06556865891997406,
           "n": 2,
           "experiments": [
             {
@@ -259,6 +273,7 @@
           "full": 0.4508322207865962,
           "abstracted": 0.21819792693160125,
           "delta": -0.23263429385499493,
+          "delta_vs_video_only": 0.08814516554738308,
           "n": 1,
           "experiments": [
             {
@@ -277,6 +292,7 @@
           "full": 0.8250566510775758,
           "abstracted": 0.8707520963680265,
           "delta": 0.045695445290450776,
+          "delta_vs_video_only": 0.045695445290450776,
           "n": 1,
           "experiments": [
             {
@@ -295,6 +311,7 @@
           "full": 0.029010883386851077,
           "abstracted": 0.2218609685329484,
           "delta": 0.19285008514609733,
+          "delta_vs_video_only": 0.19131636352085876,
           "n": 1,
           "experiments": [
             {
@@ -313,6 +330,7 @@
           "full": 0.02348435753851774,
           "abstracted": 0.3368874056042909,
           "delta": 0.3134030480657732,
+          "delta_vs_video_only": 0.22884763281888393,
           "n": 2,
           "experiments": [
             {
@@ -338,6 +356,7 @@
           "full": 0.19565803439167845,
           "abstracted": 0.24493455396399394,
           "delta": 0.04927651957231549,
+          "delta_vs_video_only": 0.1543577179574482,
           "n": 2,
           "experiments": [
             {
@@ -363,6 +382,7 @@
           "full": 0.016876748592639157,
           "abstracted": 0.33543748695967757,
           "delta": 0.3185607383670384,
+          "delta_vs_video_only": 0.30696310287630973,
           "n": 2,
           "experiments": [
             {
@@ -388,6 +408,7 @@
           "full": 0.00877876100791937,
           "abstracted": 0.0008429554100393263,
           "delta": -0.007935805597880043,
+          "delta_vs_video_only": 0.0007785768769029113,
           "n": 1,
           "experiments": [
             {
@@ -406,6 +427,7 @@
           "full": 0.00015366724851670108,
           "abstracted": 0.426961946568752,
           "delta": 0.42680827932023535,
+          "delta_vs_video_only": 0.20753120816817844,
           "n": 1,
           "experiments": [
             {
@@ -424,6 +446,7 @@
           "full": 0.14053100989875728,
           "abstracted": 0.30061806301601685,
           "delta": 0.16008705311725957,
+          "delta_vs_video_only": -0.13838883306157762,
           "n": 3,
           "experiments": [
             {
@@ -472,6 +495,7 @@
           "full": 0.003820414937499048,
           "abstracted": 0.00028968620303625,
           "delta": -0.0035307287344627978,
+          "delta_vs_video_only": -0.0006933136637879713,
           "n": 1,
           "experiments": [
             {
@@ -490,6 +514,7 @@
           "full": 0.06747288727152038,
           "abstracted": 0.00604112462069667,
           "delta": -0.061431762650823715,
+          "delta_vs_video_only": -0.08374621470907993,
           "n": 1,
           "experiments": [
             {
@@ -508,6 +533,7 @@
           "full": 0.8125934140108969,
           "abstracted": 0.891061183163782,
           "delta": 0.07846776915288511,
+          "delta_vs_video_only": 0.020309086795755493,
           "n": 1,
           "experiments": [
             {
@@ -526,6 +552,7 @@
           "full": 0.06091348385498458,
           "abstracted": 0.17172998216771224,
           "delta": 0.11081649831272766,
+          "delta_vs_video_only": 0.15795754000277487,
           "n": 1,
           "experiments": [
             {
@@ -544,6 +571,7 @@
           "full": 0.14495517536924737,
           "abstracted": 0.21147478993028107,
           "delta": 0.0665196145610337,
+          "delta_vs_video_only": -0.03993545036688373,
           "n": 3,
           "experiments": [
             {
@@ -576,6 +604,7 @@
           "full": 0.32145672811686155,
           "abstracted": 0.10755254081843456,
           "delta": -0.21390418729842697,
+          "delta_vs_video_only": 0.016975704811888828,
           "n": 2,
           "experiments": [
             {
@@ -601,6 +630,7 @@
           "full": 0.0021653885781213167,
           "abstracted": 0.06910180205583016,
           "delta": 0.06693641347770884,
+          "delta_vs_video_only": 0.06515872506710362,
           "n": 1,
           "experiments": [
             {
@@ -619,6 +649,7 @@
           "full": 0.011624792179039741,
           "abstracted": 0.03571460703330872,
           "delta": 0.024089814854268976,
+          "delta_vs_video_only": -0.014536940517227842,
           "n": 1,
           "experiments": [
             {
@@ -637,6 +668,7 @@
           "full": 0.015046137418101228,
           "abstracted": 0.31540168213138725,
           "delta": 0.300355544713286,
+          "delta_vs_video_only": 0.09597094373081377,
           "n": 1,
           "experiments": [
             {
@@ -655,6 +687,7 @@
           "full": 0.7438529769812884,
           "abstracted": 0.29836822477826996,
           "delta": -0.4454847522030184,
+          "delta_vs_video_only": -0.32041408769743507,
           "n": 2,
           "experiments": [
             {

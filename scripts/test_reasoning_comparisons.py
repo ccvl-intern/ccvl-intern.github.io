@@ -100,6 +100,7 @@ class StudyComparisonTests(unittest.TestCase):
             self.assertAlmostEqual(row["video_only"], 0.15)
             self.assertAlmostEqual(row["abstracted"], 0.45)
             self.assertAlmostEqual(row["delta"], 0.15)
+            self.assertAlmostEqual(row["delta_vs_video_only"], 0.30)
             self.assertEqual(model["excluded_experiments"], ["Bass2022Partial/exp1"])
 
     def test_zero_is_valid_and_decreases_are_retained(self):
@@ -112,6 +113,25 @@ class StudyComparisonTests(unittest.TestCase):
             row = model["studies"][0]
             self.assertEqual(row["abstracted"], 0.0)
             self.assertAlmostEqual(row["delta"], -0.3)
+            self.assertAlmostEqual(row["delta_vs_video_only"], -0.15)
+
+    def test_direct_comparison_can_decrease_while_full_comparison_increases(self):
+        video = video_report()
+        for model in video["models"]:
+            for experiment in model["coggym"]["experiments"]:
+                experiment["r2_pooled"] = 0.6
+        for model in build_studies(study_report(), video):
+            row = model["studies"][0]
+            self.assertAlmostEqual(row["delta"], 0.15)
+            self.assertAlmostEqual(row["delta_vs_video_only"], -0.15)
+
+    def test_direct_comparison_keeps_zero(self):
+        video = video_report()
+        for model in video["models"]:
+            model["coggym"]["experiments"][0]["r2_pooled"] = 0.3
+            model["coggym"]["experiments"][1]["r2_pooled"] = 0.6
+        for model in build_studies(study_report(), video):
+            self.assertAlmostEqual(model["studies"][0]["delta_vs_video_only"], 0.0)
 
     def test_no_dependence_on_direct_vlm_scores(self):
         report = study_report()
@@ -167,6 +187,7 @@ class StudyComparisonTests(unittest.TestCase):
             self.assertAlmostEqual(row["video_only"], 0.1)
             self.assertAlmostEqual(row["full"], 0.2)
             self.assertAlmostEqual(row["abstracted"], 0.3)
+            self.assertAlmostEqual(row["delta_vs_video_only"], 0.2)
 
     def test_video_zero_is_valid(self):
         video = video_report()

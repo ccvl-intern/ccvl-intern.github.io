@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260909-direct-throughput">
-  <script src="assets/site.js?v=20260909-direct-throughput" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20260909-direct-delta">
+  <script src="assets/site.js?v=20260909-direct-delta" defer></script>
   <script src="assets/examples.js?v=20260908-colors" defer></script>
 </head>
 <body>
@@ -165,10 +165,10 @@
         </div>
 
         <div role="tabpanel" id="panel-studies" aria-labelledby="tab-studies" hidden>
-          <div class="result-title-row"><div><p class="result-number">Table 7</p><h3 id="table-7-title">Reasoning by study</h3><p>Direct: video + question, no code · Before: full code · After: task-specific abstraction · R² (%) ↑</p></div><a class="text-link download-link" href="data/study_reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+          <div class="result-title-row"><div><p class="result-number">Table 7</p><h3 id="table-7-title">Reasoning by study</h3><p>VLM direct: video + question, no code · Full code · Task-specific abstraction · R² (%) ↑</p></div><a class="text-link download-link" href="data/study_reasoning_results.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
           <div class="table-toolbar study-reasoning-controls"><label>Reasoning model <select id="study-reasoner" aria-label="Reasoning model"><option value="Qwen3-VL-8B-Instruct">Qwen3-VL-8B-Instruct</option><option value="Qwen3-VL-8B-Thinking" selected>Qwen3-VL-8B-Thinking</option><option value="GLM-4.1V-9B-Thinking">GLM-4.1V-9B-Thinking</option></select></label><p id="study-reasoning-status" role="status"></p></div>
           <div class="table-scroll" tabindex="0" role="region" aria-label="Per-study reasoning before and after abstraction">
-            <table class="results-table study-reasoning-table" aria-labelledby="table-7-title"><thead><tr><th scope="col">Study</th><th scope="col">VLM direct<br>R² (%)</th><th scope="col">Before<br>R² (%)</th><th scope="col">After<br>R² (%)</th><th scope="col">Change<br>(pp)</th></tr></thead><tbody id="study-reasoning-body"></tbody></table>
+            <table class="results-table study-reasoning-table" aria-labelledby="table-7-title"><thead><tr><th scope="col">Study</th><th scope="col">VLM direct<br>R² (%)</th><th scope="col">Full code<br>R² (%)</th><th scope="col">Abstracted<br>R² (%)</th><th scope="col">Abstracted &minus; full<br>(pp)</th><th scope="col">Abstracted &minus; direct<br>(pp)</th></tr></thead><tbody id="study-reasoning-body"></tbody></table>
           </div>
           <div class="study-parsing-results">
           <div class="result-title-row"><div><p class="result-number">Figure 2</p><h3>Parsing accuracy by study</h3><p>20 samples per study · 14 studies · mIoU (%)</p></div><span class="chart-key"><i></i>2D <i class="three-d"></i>3D</span></div>

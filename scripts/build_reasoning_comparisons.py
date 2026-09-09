@@ -89,11 +89,13 @@ def matched_study_comparisons(report, video_report):
                 "item_count": pair["full"]["item_counts"]["all"]})
         studies = []
         for study, rows in sorted(grouped.items(), key=lambda item: STUDY_LABELS[item[0]]):
+            video_only = mean(row["video_only"] for row in rows)
             full = mean(row["full"] for row in rows)
             abstracted = mean(row["abstracted"] for row in rows)
             studies.append({"study": study, "label": STUDY_LABELS[study],
-                "video_only": mean(row["video_only"] for row in rows),
+                "video_only": video_only,
                 "full": full, "abstracted": abstracted, "delta": abstracted - full,
+                "delta_vs_video_only": abstracted - video_only,
                 "n": len(rows), "experiments": rows})
         if not studies:
             raise ValueError(f"No common valid studies: {reasoner}")
@@ -173,6 +175,8 @@ def main():
             "video_only_report_sha256": hashlib.sha256(video_source).hexdigest(),
             "status": "archived", "mapped_item_coverage_sha256": report["mapped_item_coverage_sha256"]},
         "metric": "Mean squared Pearson correlation within each study, over the same valid experiments in all three conditions.",
+        "differences": {"delta": "Abstracted minus full-code R2.",
+            "delta_vs_video_only": "Abstracted minus video-only R2. Multiply differences by 100 for percentage points."},
         "matching": "Experiment IDs and evaluated item counts are matched across all three conditions. The coverage fingerprint applies to the two code conditions; video-only is the saved 26 August run, not the corrected rerun.",
         "missing_policy": "Experiments with undefined R2 in any condition are excluded from all three; studies with no remaining comparisons are omitted.",
         "models": studies,

@@ -174,10 +174,12 @@ function renderStudyReasoning() {
   const n = model.studies.reduce((total, row) => total + row.n, 0);
   $("#study-reasoning-status").textContent = `Context ratio ${model.abstraction_ratio} · ${model.studies.length} studies · ${n} matched experiments`;
   $("#study-reasoning-body").innerHTML = model.studies.map(row => {
-    const change = row.delta * 100;
-    const delta = `${change > 0 ? "+" : ""}${change.toFixed(2)}`;
-    const style = change > 0 ? "positive" : change < 0 ? "negative" : "";
-    return `<tr data-study="${escapeHtml(row.study)}"><th scope="row">${escapeHtml(row.label)}<small>${row.experiments.map(item => escapeHtml(item.experiment)).join(", ")} · n = ${row.n}</small></th><td>${(row.video_only * 100).toFixed(2)}</td><td>${(row.full * 100).toFixed(2)}</td><td><b>${(row.abstracted * 100).toFixed(2)}</b></td><td class="${style}">${delta}</td></tr>`;
+    const changes = [row.delta, row.delta_vs_video_only].map(value => {
+      const change = Number((value * 100).toFixed(2));
+      const style = change > 0 ? "positive" : change < 0 ? "negative" : "";
+      return `<td class="${style}">${change > 0 ? "+" : ""}${change.toFixed(2)}</td>`;
+    }).join("");
+    return `<tr data-study="${escapeHtml(row.study)}"><th scope="row">${escapeHtml(row.label)}<small>${row.experiments.map(item => escapeHtml(item.experiment)).join(", ")} · n = ${row.n}</small></th><td>${(row.video_only * 100).toFixed(2)}</td><td>${(row.full * 100).toFixed(2)}</td><td><b>${(row.abstracted * 100).toFixed(2)}</b></td>${changes}</tr>`;
   }).join("");
 }
 
@@ -349,7 +351,7 @@ async function loadData() {
   try {
     const names = ["results", "hamrick_code", "reasoning_results", "video_only_results", "study_reasoning_results", "parsing_throughput"];
     const data = await Promise.all(names.map(async name => {
-      const response = await fetch(`data/${name}.json?v=20260909-direct-throughput`);
+      const response = await fetch(`data/${name}.json?v=20260909-direct-delta`);
       if (!response.ok) throw new Error(`Could not load ${name} (${response.status})`);
       return response.json();
     }));
