@@ -9,11 +9,20 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260909-direct-delta">
-  <script src="assets/site.js?v=20260909-direct-delta" defer></script>
-  <script src="assets/examples.js?v=20260908-colors" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20260911-password">
+  <script src="assets/site.js?v=20260911-password" defer></script>
+  <script src="assets/examples.js?v=20260911-password" defer></script>
+  <script src="assets/access.js?v=20260911-password" defer></script>
 </head>
 <body>
+  <main class="password-screen">
+    <form id="password-form" class="password-window" aria-labelledby="password-title" novalidate>
+      <h1 id="password-title">Password</h1>
+      <input id="site-password" type="password" placeholder="Enter password" autocomplete="current-password" enterkeyhint="go" aria-labelledby="password-title" aria-describedby="password-error" autofocus>
+      <p id="password-error" role="alert"></p>
+    </form>
+  </main>
+  <template id="project-content">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="nav-shell">
@@ -255,5 +264,6 @@
     <div class="dialog-media animation-frame"><img id="dialog-image" alt=""></div>
   </dialog>
   <noscript><p class="noscript-note">JavaScript is required for interactive results. <a href="data/results.json">Parsing data</a> and <a href="data/reasoning_results.json">reasoning data</a> are available as JSON.</p></noscript>
+  </template>
 </body>
 </html>

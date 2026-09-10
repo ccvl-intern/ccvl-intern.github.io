@@ -375,8 +375,8 @@ async function loadData() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("site:unlocked", () => {
   bindInteractions();
   observeFigures();
   loadData();
-});
+}, { once: true });

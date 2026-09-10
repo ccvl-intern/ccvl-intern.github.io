@@ -137,9 +137,9 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("site:unlocked", () => {
     ["example-select", "example-model", "example-condition"].forEach(id => el(id).addEventListener("change", render));
     el("examples-retry").addEventListener("click", () => examples ? render() : load());
     load();
-  });
+  }, { once: true });
 })();

@@ -22,6 +22,13 @@ button { cursor: pointer; }
 button, a, select, summary { -webkit-tap-highlight-color: transparent; }
 button { background: none; border: 0; }
 [hidden] { display: none !important; }
+.password-screen { min-height: 100svh; display: grid; place-items: center; padding: 24px; background: var(--soft); }
+.password-window { width: min(100%, 380px); padding: 32px 28px 24px; background: var(--white); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 8px 32px #20252608; }
+.password-window h1 { margin: 0 0 24px; font-size: 24px; font-weight: 600; }
+.password-window input { display: block; width: 100%; height: 48px; padding: 10px 12px; border: 1px solid #a9b5b3; border-radius: 4px; background: var(--white); color: var(--ink); font: inherit; font-size: 16px; letter-spacing: 0; }
+.password-window input:focus { outline: 2px solid var(--teal); outline-offset: 2px; }
+.password-window input[aria-invalid="true"] { border-color: var(--red); }
+.password-window #password-error { min-height: 24px; margin: 12px 0 0; color: var(--red); font-size: 14px; line-height: 24px; }
 #examples { min-height: 100svh; }
 :focus-visible { outline: 3px solid #21868e; outline-offset: 4px; }
 .shell, .nav-shell { width: min(calc(100% - 64px), var(--shell)); margin-inline: auto; }
