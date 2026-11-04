@@ -47,7 +47,7 @@ jobs:
 
           const main = (await api('branches/main')).data;
           const run = (await api('actions/runs/41932874935')).data;
-          const job = (await api('actions/jobs/126934034242')).data;
+          const job = (await api('actions/jobs/126936885630')).data;
           if (main.commit.sha !== expectedMain || run.head_sha !== expectedMain ||
               run.head_branch !== 'main' || run.conclusion !== 'failure' ||
               job.run_id !== run.id || job.name !== 'deploy' || job.conclusion !== 'failure') {
@@ -57,19 +57,20 @@ jobs:
           const path = `pages/deployments/${stale}`;
           const terminal = new Set(['succeed', 'failed', 'cancelled', 'canceled', 'deployment_failed', 'deployment_cancelled', 'deployment_canceled']);
           let state = await api(path);
-          console.log(`Stale Pages deployment: ${state.data.status}`);
-          if (!terminal.has(state.data.status)) {
-            await api(`${path}/cancel`, 'POST', [204]);
-            console.log('Cancellation accepted for the exact stale deployment');
-            for (let attempt = 0; attempt < 24; attempt++) {
-              await new Promise(resolve => setTimeout(resolve, 5000));
-              state = await api(path, 'GET', [200, 404]);
-              console.log(`Cancellation check: ${state.data?.status || state.status}`);
-              if (state.status === 404 || terminal.has(state.data.status)) break;
-            }
-            if (state.status !== 404 && !terminal.has(state.data.status)) throw new Error('Pages cancellation has not completed');
+          console.log(`::notice::Stale Pages deployment before cancellation: ${JSON.stringify(state.data)}`);
+          // A failed status has not released this deployment's backend lock.
+          await api(`${path}/cancel`, 'POST', [204]);
+          console.log('::notice::Cancellation accepted for the exact stale deployment');
+          for (let attempt = 0; attempt < 24; attempt++) {
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            state = await api(path, 'GET', [200, 404]);
+            console.log(`Cancellation check: ${state.data?.status || state.status}`);
+            if (state.status === 404 || terminal.has(state.data.status)) break;
           }
+          console.log(`::notice::Stale Pages deployment after cancellation: ${JSON.stringify(state.data)}`);
+          if (state.status !== 404 && !terminal.has(state.data.status)) throw new Error('Pages cancellation has not completed');
+          await new Promise(resolve => setTimeout(resolve, 30000));
 
-          await api('actions/jobs/126934034242/rerun', 'POST', [201]);
-          console.log('Retry accepted for the failed publish job; successful build and site files are unchanged');
+          await api('actions/jobs/126936885630/rerun', 'POST', [201]);
+          console.log('::notice::Retry accepted for the failed publish job; successful build and site files are unchanged');
           JS
