@@ -154,11 +154,10 @@ nav a:hover, nav a[aria-current] { color: var(--teal); }
 .interface-flow > li > p { font-size: 12px; color: var(--muted); margin-top: 14px; }
 .mini-facts { font-size: 12px; min-height: 120px; }
 .mini-facts > div { display: grid; grid-template-columns: 1.1fr 1fr .5fr; border-bottom: 1px solid var(--line); padding: 4px 0; }
-.mini-graph { min-height: 120px; padding-top: 8px; }
-.graph-pair { display: flex; align-items: center; padding-top: 6px; }
-.graph-node { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 40px; border: 2px solid var(--teal); border-radius: 50%; font: 700 19px var(--serif); }
-.graph-edge { flex: 1; text-align: center; font-size: 12px; border-bottom: 1px solid var(--teal); padding-bottom: 4px; }
-.graph-wall { margin-top: 20px; border-block: 2px solid #8b948e; text-align: center; font-size: 12px; background: var(--soft); }
+.representation-kinds { margin: 0; min-height: 120px; font-size: 12px; }
+.representation-kinds > div { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.representation-kinds dt { font-weight: 650; }
+.representation-kinds dd { margin: 0; color: var(--teal-dark); text-align: right; }
 .evidence-kinds { margin: 0; min-height: 120px; font-size: 12px; }
 .evidence-kinds > div { border-left: 2px solid var(--teal); padding-left: 10px; margin-bottom: 9px; }
 .evidence-kinds > div:last-child { border-color: var(--coral); }
@@ -378,10 +377,9 @@ summary { cursor: pointer; font-weight: 600; padding: 4px 0; }
 .table-section { margin-top: 52px; border-top: 1px solid var(--line); padding-top: 32px; }
 .result-heading { display: flex; justify-content: space-between; align-items: center; gap: 22px; margin-bottom: 22px; margin-top: 28px; }
 .result-heading h3 { font-size: 22px; margin-top: 5px; }
-#development-table td:nth-child(3), #development-table td:last-child { text-align: left; }
-#development-table td:nth-child(3) { min-width: 240px; }
-#development-table td:last-child { min-width: 150px; font-size: 12px; }
-#development-table th { min-width: 180px; }
+#development-table td:not(:nth-child(2)) { min-width: 125px; }
+#development-table th { min-width: 200px; }
+.result-table .ours-score { color: var(--teal-dark); background: #eaf3ef; }
 .protocol-line { display: flex; flex-wrap: wrap; gap: 12px 28px; padding-bottom: 22px; color: var(--muted); font-size: 13px; }
 .search-label { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; }
 input, select { border: 1px solid #b9c5bf; background: #fff; padding: 10px 12px; min-height: 44px; max-width: 100%; }
@@ -519,13 +517,9 @@ input[type=search] { width: 210px; }
   .interface-flow > li:nth-child(2)::after { display: none; }
   .interface-flow h2 { font-size: 13px; gap: 5px; min-height: 28px; }
   .interface-flow h2 > span { width: 18px; height: 18px; flex-basis: 18px; line-height: 18px; font-size: 10px; }
-  .mini-facts, .mini-graph, .evidence-kinds, .interface-flow blockquote { min-height: 0; font-size: 11px; }
+  .mini-facts, .representation-kinds, .evidence-kinds, .interface-flow blockquote { min-height: 0; font-size: 11px; }
   .mini-facts > div { padding-block: 2px; }
-  .mini-graph { padding-top: 0; }
-  .graph-pair { padding-top: 0; }
-  .graph-node { width: 30px; height: 30px; flex-basis: 30px; font-size: 15px; }
-  .graph-wall { margin-top: 14px; font-size: 11px; }
-  .graph-edge { font-size: 10px; }
+  .representation-kinds > div { gap: 4px; padding: 6px 0; }
   .evidence-kinds > div { padding-left: 6px; margin-bottom: 4px; }
   .evidence-kinds dd { font-size: 10px; }
   .interface-flow blockquote { font-size: 14px; }

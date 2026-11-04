@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/research.css?v=20261105-gt-subsets">
-  <script src="assets/research.js?v=20261105-gt-subsets" defer></script>
+  <link rel="stylesheet" href="assets/research.css?v=20261105-five-conditions">
+  <script src="assets/research.js?v=20261105-five-conditions" defer></script>
   <script src="assets/examples.js?v=20261105" defer></script>
   <script src="assets/access.js?v=20261105" defer></script>
 </head>
@@ -45,12 +45,12 @@
         <figure class="interface-figure" aria-label="Schematic: saved parsing becomes task-bound evidence, then readable VLM input">
           <ol class="interface-flow">
             <li><h2><span>1</span> Saved parsing</h2><div class="mini-facts"><div><b>Identity</b><b>Position</b><b>Time</b></div><div><span>A</span><span>(x, y)</span><span>t</span></div><div><span>B</span><span>(x, y)</span><span>t</span></div><div><span>Wall</span><span>extent</span><span>t</span></div></div><p>Observations, not the answer.</p></li>
-            <li><h2><span>2</span> Task-bound graph</h2><div class="mini-graph" aria-label="Schematic relation: A near B at time t, with a contextual wall"><div class="graph-pair"><span class="graph-node">A</span><span class="graph-edge">near at t</span><span class="graph-node">B</span></div><div class="graph-wall">Wall / context</div></div><p>Bind objects, time and the question.</p></li>
+            <li><h2><span>2</span> Task-conditioned representation</h2><dl class="representation-kinds" aria-label="Alternative task representations: graph, timeline or state table"><div><dt>Graph</dt><dd>A &harr; B</dd></div><div><dt>Timeline</dt><dd>t<sub>0</sub> &rarr; t<sub>1</sub></dd></div><div><dt>State table</dt><dd>Object &middot; state</dd></div></dl><p>Bind objects, time and the question.</p></li>
             <li><h2><span>3</span> Computed evidence</h2><dl class="evidence-kinds"><div><dt>Observed</dt><dd>Visible source state</dd></div><div><dt>Derived</dt><dd>Measured relation</dd></div><div><dt>Modeled</dt><dd>Conditional outcome</dd></div></dl><p>Keep assumptions and unknowns.</p></li>
             <li><h2><span>4</span> Readable input</h2><blockquote>No A-B contact within the modeled horizon; later events remain unknown.</blockquote><p>Explicit meaning, not a JSON dump.</p></li>
           </ol>
           <div class="vlm-handoff"><span>Evidence + original video + question</span><img src="assets/icons/arrow-up-right.svg" alt="then" class="flow-arrow"><strong>VLM judgment</strong></div>
-          <figcaption><b>Figure 1.</b> Programs prepare evidence; the VLM judges. Operators differ by study.</figcaption>
+          <figcaption><b>Figure 1.</b> Programs prepare task-conditioned evidence; the VLM judges. Graphs, timelines or state tables organize the evidence; representations and operators differ by study.</figcaption>
         </figure>
       </section>
 
@@ -118,12 +118,12 @@ Walls, times, visibility...</pre></div><img class="flow-arrow" src="assets/icons
                 <aside class="method-boundary"><strong>What this does not establish</strong><p id="postparse-boundary"></p></aside>
               </details>
               <div class="study-result-heading"><h4>04 / Did it help?</h4><span class="caption">Recorded R&sup2; (%) / same 0-100 axis</span></div>
-              <figure class="study-result-figure"><div class="result-legend"><span><i class="legend-control"></i>Controls</span><span><i class="legend-predicted"></i>Predicted input + method</span><span><i class="legend-reference"></i>GT / reference input</span></div><div id="study-result-bars" class="study-result-bars"></div><figcaption id="study-bar-note"></figcaption></figure>
+              <figure class="study-result-figure"><div class="result-legend"><span><i class="legend-control"></i>Controls</span><span><i class="legend-predicted"></i>Ours / predicted input</span><span><i class="legend-reference"></i>GT / reference input</span></div><div id="study-result-bars" class="study-result-bars"></div><figcaption id="study-bar-note"></figcaption></figure>
               <div class="reference-note"><h5>GT-input / reference coverage</h5><p id="study-reference-note"></p></div>
               <div class="study-conclusion"><div><p class="small-label">What the result supports</p><h4 id="study-takeaway"></h4></div><div><p class="small-label">Still unresolved</p><p id="study-visible-limit"></p></div></div>
               <div class="study-scoreline" id="study-scoreline"></div>
               <p class="caption metric-primer">R&sup2; measures squared correlation with human judgments, not answer accuracy. Signed r keeps the direction; nRMSE measures response error. Undefined is not zero.</p>
-              <details class="paper-details"><summary>Numerical comparison &amp; all recorded controls</summary><label class="check-label"><input id="all-study-conditions" type="checkbox"> All recorded conditions</label>
+              <details class="paper-details"><summary>Detailed metrics &amp; ablations</summary><label class="check-label"><input id="all-study-conditions" type="checkbox"> Include ablations and earlier controls</label>
               <div class="table-scroll" role="region" aria-label="Selected study comparison" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Condition</th><th scope="col">R&sup2; (%)</th><th scope="col">Signed r</th><th scope="col">nRMSE</th></tr></thead><tbody id="study-comparison"></tbody></table></div>
               <p id="study-metric-note" class="caption"></p>
               <div id="study-diagnostic" class="research-note" hidden></div>
@@ -134,9 +134,9 @@ Walls, times, visibility...</pre></div><img class="flow-arrow" src="assets/icons
             </article>
 
             <div class="table-section" id="development-results">
-              <div class="result-heading"><div><p class="small-label">Table 1</p><h3>Subset results: predicted and GT/reference inputs</h3></div><a class="text-link" href="data/research-20261105.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
-              <div class="table-scroll" role="region" aria-label="All development panel results" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Study</th><th scope="col">Questions</th><th scope="col">Method</th><th scope="col">Predicted input<br>R&sup2; (%)</th><th scope="col">GT / reference input<br>R&sup2; (%)</th><th scope="col">Outcome</th></tr></thead><tbody id="development-table"></tbody></table></div>
-              <p class="caption">Separate development subsets; no cross-study aggregate. GT-input tests probe performance with reference parsing. Partial GT and differently presented historical controls do not establish a verified upper bound; coverage is listed per row.</p>
+              <div class="result-heading"><div><p class="small-label">Table 1</p><h3>Subset results: five input conditions</h3></div><a class="text-link" href="data/research-20261105.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+              <div class="table-scroll" role="region" aria-label="All development panel results" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Study / method</th><th scope="col">Questions</th><th scope="col">Video only<br>R&sup2; (%)</th><th scope="col">VLM direct code<br>R&sup2; (%)</th><th scope="col">Full code<br>R&sup2; (%)</th><th scope="col" class="ours-score">Ours<br>R&sup2; (%)</th><th scope="col">GT / reference input<br>R&sup2; (%)</th></tr></thead><tbody id="development-table"></tbody></table></div>
+              <p class="caption">Separate development subsets; no cross-study aggregate. All answers use Qwen3.5-27B; direct-code parser variants and input differences are labeled. Partial GT and differently presented historical controls do not establish a verified upper bound. Ablations remain in each study's detailed metrics.</p>
             </div>
           </div>
         </div>

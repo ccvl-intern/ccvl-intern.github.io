@@ -42,11 +42,15 @@
     return value.toFixed(digits);
   }
 
+  function missingScore(row) {
+    return row.comparability === "not_run" ? "Not run" : row.status === "unavailable_clean_control" ? "Unavailable" : "Undefined";
+  }
+
   function metricRow(row, candidateId) {
     const unavailable = row.status === "unavailable_clean_control";
     const hint = row.reason || (unavailable ? "Clean matched control unavailable; not zero" : "Correlation is undefined; see the experiment record");
     const note = comparabilityLabels[row.comparability] || "";
-    const cell = unavailable ? '<span class="metric-missing">Unavailable</span>' : number(row.r2_percent, 2, hint);
+    const cell = Number.isFinite(row.r2_percent) ? number(row.r2_percent) : `<span class="metric-missing" title="${escape(hint)}">${missingScore(row)}</span>`;
     return `<tr class="${row.id === candidateId ? "candidate-row" : unavailable ? "excluded-row" : ""}"><th scope="row">${escape(row.label)}${note ? `<small>${escape(note)}</small>` : ""}</th><td>${cell}</td><td>${number(row.signed_r, 4, row.r2_percent == null ? hint : "Not reported")}</td><td>${number(row.nrmse, 4, "Not reported")}</td></tr>`;
   }
 
@@ -89,7 +93,7 @@
     $("study-result-bars").innerHTML = `<div class="result-axis" aria-hidden="true"><span>0</span><span>50</span><span>100%</span></div>` + story.comparison_ids.map((id, index) => {
       const row = panel.results.find(result => result.id === id);
       const defined = Number.isFinite(row.r2_percent);
-      const missing = row.comparability === "not_run" ? "Not run" : row.status === "unavailable_clean_control" ? "Unavailable" : "Undefined";
+      const missing = missingScore(row);
       const reference = id === panel.headline.reference_id;
       const historical = reference && row.comparability === "historical_reference_presentation";
       return `<div class="result-bar-row ${id === panel.headline.candidate_id ? "is-candidate" : ""} ${reference ? "is-reference" : ""} ${historical ? "is-historical" : ""}"><span class="result-bar-label">${escape(story.comparison_labels[index])}${reference ? `<small>${escape(story.reference_scope)}</small>` : ""}</span><div class="result-track ${defined ? "" : "no-score"}" aria-hidden="true">${defined ? `<span style="width:${row.r2_percent}%"></span>` : "No score"}</div><strong>${defined ? `${number(row.r2_percent)}%` : missing}</strong></div>`;
@@ -175,12 +179,10 @@
   }
 
   function studyRows(panel) {
-    const ids = new Set([...panel.headline.control_ids, panel.headline.candidate_id, panel.headline.reference_id]);
-    if (panel.id === "wu8") ids.add("predicted_semantic_graph");
-    if (panel.id === "beller20") ids.add("dense_event_notes");
-    if (panel.id === "stephan8") ids.add("predictedtask");
-    if (panel.id === "sosa22") ids.add("fixed_8b_direct_code");
-    const rows = $("all-study-conditions").checked ? panel.results : panel.results.filter(row => ids.has(row.id));
+    const story = storyData.stories.find(row => row.panel_id === panel.id);
+    const rows = $("all-study-conditions").checked ? panel.results : story.comparison_ids.map((id, index) => ({
+      ...panel.results.find(row => row.id === id), label: story.comparison_labels[index]
+    }));
     $("study-comparison").innerHTML = rows.map(row => metricRow(row, panel.headline.candidate_id)).join("");
   }
 
@@ -253,12 +255,19 @@
   function renderDevelopment() {
     $("study-tabs").innerHTML = data.panels.map(panel => `<button role="tab" id="study-tab-${panel.id}" aria-selected="false" aria-controls="study-panel" tabindex="-1" data-study="${panel.id}">${escape(label(panel))}</button>`).join("");
     $("development-table").innerHTML = data.panels.map(panel => {
-      const candidate = panel.results.find(row => row.id === panel.headline.candidate_id);
-      const reference = panel.results.find(row => row.id === panel.headline.reference_id);
       const story = storyData.stories.find(row => row.panel_id === panel.id);
       const slider = panel.id === "bass42" ? panel.diagnostics.find(item => item.id === "slider40") : null;
-      const sliderNote = id => slider ? `<small>Slider only: ${number(slider.results.find(row => row.id === id).r2_percent)}</small>` : "";
-      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a><small>${escape(panel.title)}</small></th><td>${panel.question_count}</td><td>${escape(panel.method.name)}</td><td><b>${number(candidate.r2_percent)}</b>${sliderNote(candidate.id)}</td><td class="reference-score"><b>${number(reference.r2_percent)}</b><small>${escape(story.reference_scope)}</small>${sliderNote(reference.id)}</td><td>${escape(verdicts[panel.id][0])}</td></tr>`;
+      const cells = story.comparison_ids.map((id, index) => {
+        const row = panel.results.find(result => result.id === id);
+        const candidate = id === panel.headline.candidate_id;
+        const reference = id === panel.headline.reference_id;
+        const name = story.comparison_labels[index];
+        const note = reference ? story.reference_scope : candidate || ["Video only", "Full code"].includes(name) ? "" : name;
+        const value = Number.isFinite(row.r2_percent) ? number(row.r2_percent) : `<span class="metric-missing">${missingScore(row)}</span>`;
+        const sliderNote = slider ? `<small>Slider only: ${number(slider.results.find(result => result.id === id).r2_percent)}</small>` : "";
+        return `<td class="${candidate ? "ours-score" : reference ? "reference-score" : ""}"><b>${value}</b>${note ? `<small>${escape(note)}</small>` : ""}${sliderNote}</td>`;
+      }).join("");
+      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a><small>${escape(panel.method.name)}</small></th><td>${panel.question_count}</td>${cells}</tr>`;
     }).join("");
     $("study-tabs").querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectStudy(button.dataset.study, true)));
     keyboardTabs($("study-tabs"), button => selectStudy(button.dataset.study, true));
@@ -299,7 +308,7 @@
       const mediaResponse = await fetch("data/study-media.json?v=20261105-stimuli");
       if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
       studyMedia = await mediaResponse.json();
-      const storyResponse = await fetch("data/study-story.json?v=20261105-gt-subsets");
+      const storyResponse = await fetch("data/study-story.json?v=20261105-five-conditions");
       if (!storyResponse.ok) throw new Error(`Study story: ${storyResponse.status}`);
       storyData = await storyResponse.json();
       renderProgress();

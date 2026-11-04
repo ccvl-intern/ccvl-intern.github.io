@@ -144,6 +144,37 @@ test('GT/reference results are exposed without claiming a complete upper bound',
   assert.match(html, /do not establish a verified upper bound/);
 });
 
+test('the overview covers alternative representations and the main results use five fixed roles', () => {
+  assert.match(html, /Task-conditioned representation/);
+  assert.doesNotMatch(html, /Task-bound graph/);
+  assert.match(html, /Alternative task representations: graph, timeline or state table/);
+  assert.match(html, /Detailed metrics &amp; ablations/);
+  const expectedControls = {
+    bass42: ['video', 'saved_direct_code', 'full_code'],
+    ger2021_8: ['video_rules', 'own_27b_direct_code', 'full_code_rules'],
+    ger2022_8: ['video_rules', 'saved_8b_direct_rules', 'full_code_rules'],
+    wu8: ['video', 'own_27b_direct_code', 'full_code'],
+    sosa22: ['video_prospective', 'fixed_8b_direct_code', 'full_prospective_unmeasured'],
+    beller20: ['video', 'saved_8b_direct', 'full_code'],
+    smith5: ['video', 'fixed_8b_direct_code', 'full_code'],
+    stephan8: ['video', 'saved_direct_code', 'full_code']
+  };
+  for (const story of stories.stories) {
+    const panel = data.panels.find(row => row.id === story.panel_id);
+    assert.deepEqual(story.comparison_ids, [...expectedControls[panel.id], panel.headline.candidate_id, panel.headline.reference_id]);
+    assert.match(story.comparison_labels[3], /\(ours\)/);
+    assert.match(story.comparison_labels[0], /^Video/);
+    assert.match(story.comparison_labels[1], /direct/);
+    assert.match(story.comparison_labels[2], /^Full code/);
+  }
+  const story = id => stories.stories.find(row => row.panel_id === id);
+  assert.match(story('ger2021_8').comparison_labels[1], /27B/);
+  assert.match(story('wu8').comparison_labels[1], /27B/);
+  for (const id of ['ger2022_8', 'beller20']) assert.match(story(id).comparison_labels[1], /8B-Thinking/);
+  assert.ok(data.panels.find(row => row.id === 'bass42').results.some(row => row.id === 'predicted_factual'));
+  assert.ok(data.panels.find(row => row.id === 'wu8').results.some(row => row.id === 'predicted_semantic_graph'));
+});
+
 test('all eight paired illustrations are source-bound and byte-verified', async () => {
   assert.deepEqual(media.records.map(row => row.panel_id), data.panels.map(row => row.id));
   for (const record of media.records) {
