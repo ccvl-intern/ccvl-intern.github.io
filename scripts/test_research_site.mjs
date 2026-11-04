@@ -114,6 +114,9 @@ test('visual walkthroughs keep every study, comparison and visible limitation gr
     assert.ok(story.limit.length > 40);
     assert.equal(story.comparison_ids.length, story.comparison_labels.length);
     assert.ok(story.comparison_ids.includes(panel.headline.candidate_id));
+    assert.equal(story.comparison_ids.filter(id => id === panel.headline.reference_id).length, 1);
+    assert.ok(story.reference_scope.length > 10);
+    assert.ok(story.reference_note.length > 40);
     for (const id of story.comparison_ids) assert.ok(panel.results.some(row => row.id === id));
     assert.ok(story.comparison_note.length > 40);
     assert.equal(Object.hasOwn(story, 'r2_percent'), false, 'Charts must read audited scores, not copy editorial numbers');
@@ -127,6 +130,18 @@ test('visual walkthroughs keep every study, comparison and visible limitation gr
   for (const id of ['study-question', 'study-recipe', 'evidence-highlights', 'study-takeaway', 'study-visible-limit', 'study-result-bars', 'study-status-map']) {
     assert.ok(html.includes(`id="${id}"`));
   }
+});
+
+test('GT/reference results are exposed without claiming a complete upper bound', () => {
+  const expected = ['66.96', '81.50', '61.15', '93.89', '69.33', '32.63', '52.68', '98.47'];
+  assert.deepEqual(data.panels.map(panel => panel.results.find(row => row.id === panel.headline.reference_id).r2_percent.toFixed(2)), expected);
+  assert.match(html, /<h2>Subset Results<\/h2>/);
+  assert.doesNotMatch(html, /Local gains\. Not yet a unified solution\./);
+  assert.match(html, /GT \/ reference input<br>R&sup2;/);
+  assert.match(html, /Not yet evaluated for the unified 50-question method/);
+  assert.match(stories.stories.find(row => row.panel_id === 'wu8').reference_scope, /Historical/);
+  assert.match(stories.stories.find(row => row.panel_id === 'wu8').reference_note, /no independent matched GT/);
+  assert.match(html, /do not establish a verified upper bound/);
 });
 
 test('all eight paired illustrations are source-bound and byte-verified', async () => {

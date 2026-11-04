@@ -117,6 +117,18 @@ nav a:hover, nav a[aria-current] { color: var(--teal); }
 .result-track > span { height: 100%; background: #a1afa7; display: block; }
 .is-candidate .result-track > span { background: var(--teal); }
 .is-candidate > strong, .is-candidate .result-bar-label { color: var(--teal-dark); font-weight: 650; }
+.result-legend { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 16px; font-size: 12px; color: var(--muted); }
+.result-legend > span { display: inline-flex; align-items: center; gap: 7px; }
+.result-legend i { display: inline-block; width: 16px; height: 8px; flex-shrink: 0; }
+.legend-control { background: #a1afa7; }
+.legend-predicted { background: var(--teal); }
+.legend-reference, .is-reference .result-track > span { background: #496da0; }
+.is-reference > strong, .is-reference .result-bar-label, .reference-score > b { color: #375780; }
+.result-bar-label > small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; margin-top: 3px; }
+.is-historical .result-track > span { background: transparent; border: 1px dashed #496da0; }
+.reference-note { border-left: 3px solid #496da0; padding-left: 16px; margin: 20px 0; }
+.reference-note h5 { margin: 0 0 6px; font-size: 13px; color: #375780; }
+.reference-note p { font-size: 12px; color: var(--muted); }
 .result-track.no-score { background: none; border-bottom: 1px dashed #9aaba1; height: auto; font-size: 10px; color: var(--muted); }
 .study-conclusion { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; border-block: 1px solid var(--line); padding-block: 23px; margin: 24px 0; }
 .study-conclusion h4 { font: 700 23px/1.35 var(--serif); color: var(--teal-dark); margin-top: 8px; }

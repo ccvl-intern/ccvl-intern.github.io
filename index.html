@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/research.css?v=20261105-research-story">
-  <script src="assets/research.js?v=20261105-research-story" defer></script>
+  <link rel="stylesheet" href="assets/research.css?v=20261105-gt-subsets">
+  <script src="assets/research.js?v=20261105-gt-subsets" defer></script>
   <script src="assets/examples.js?v=20261105" defer></script>
   <script src="assets/access.js?v=20261105" defer></script>
 </head>
@@ -55,11 +55,11 @@
       </section>
 
       <section class="section shell section-rule" id="progress">
-        <div class="section-intro"><p class="small-label">Research snapshot / <time id="progress-date"></time> / not live</p><h2>Local gains. Not yet a unified solution.</h2><p>CogGym tests physical judgments against human responses. The goal is to improve on video only, direct VLM-parsed code and full parser code under matched conditions.</p></div>
+        <div class="section-intro"><p class="small-label">Research snapshot / <time id="progress-date"></time> / not live</p><h2>Subset Results</h2><p>Study-specific methods on CogGym subsets, with video-only, parsed-code and GT/reference-input comparisons.</p></div>
         <ol class="research-roadmap" aria-label="Research stages">
-          <li><span class="roadmap-marker">1</span><p class="small-label">Earlier comparison completed</p><strong id="progress-cohort-count"></strong><span>One shared task-graph method</span><a href="#results">Full-cohort goal unmet</a></li>
+          <li><span class="roadmap-marker">1</span><p class="small-label">Earlier comparison completed</p><strong id="progress-cohort-count"></strong><span>One shared task-graph method</span><a href="#results">Full-cohort comparison</a></li>
           <li><span class="roadmap-marker">2</span><p class="small-label">Study-specific development</p><strong id="progress-method-count"></strong><span>Different operators, separate panels</span><a href="#study-bass42">Two panels selected for unification</a></li>
-          <li class="roadmap-pending"><span class="roadmap-marker">3</span><p class="small-label">Next validation / prepared</p><strong id="progress-unified-count"></strong><span>Bass + Gerstenberg 2021</span><a href="#next-test">Unified result not available</a></li>
+          <li class="roadmap-pending"><span class="roadmap-marker">3</span><p class="small-label">Next validation / prepared</p><strong id="progress-unified-count"></strong><span>Bass + Gerstenberg 2021</span><a href="#next-test">Evaluation status</a></li>
         </ol>
         <div class="progress-ledger-heading"><h3>Where each method stands</h3><span class="caption">Development R&sup2; / not accuracy</span></div>
         <div id="study-status-map" class="study-status-map" aria-label="Study outcomes"></div>
@@ -118,7 +118,8 @@ Walls, times, visibility...</pre></div><img class="flow-arrow" src="assets/icons
                 <aside class="method-boundary"><strong>What this does not establish</strong><p id="postparse-boundary"></p></aside>
               </details>
               <div class="study-result-heading"><h4>04 / Did it help?</h4><span class="caption">Recorded R&sup2; (%) / same 0-100 axis</span></div>
-              <figure class="study-result-figure"><div id="study-result-bars" class="study-result-bars"></div><figcaption id="study-bar-note"></figcaption></figure>
+              <figure class="study-result-figure"><div class="result-legend"><span><i class="legend-control"></i>Controls</span><span><i class="legend-predicted"></i>Predicted input + method</span><span><i class="legend-reference"></i>GT / reference input</span></div><div id="study-result-bars" class="study-result-bars"></div><figcaption id="study-bar-note"></figcaption></figure>
+              <div class="reference-note"><h5>GT-input / reference coverage</h5><p id="study-reference-note"></p></div>
               <div class="study-conclusion"><div><p class="small-label">What the result supports</p><h4 id="study-takeaway"></h4></div><div><p class="small-label">Still unresolved</p><p id="study-visible-limit"></p></div></div>
               <div class="study-scoreline" id="study-scoreline"></div>
               <p class="caption metric-primer">R&sup2; measures squared correlation with human judgments, not answer accuracy. Signed r keeps the direction; nRMSE measures response error. Undefined is not zero.</p>
@@ -133,9 +134,9 @@ Walls, times, visibility...</pre></div><img class="flow-arrow" src="assets/icons
             </article>
 
             <div class="table-section" id="development-results">
-              <div class="result-heading"><div><p class="small-label">Table 1</p><h3>Development results at a glance</h3></div><a class="text-link" href="data/research-20261105.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
-              <div class="table-scroll" role="region" aria-label="All development panel results" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Study</th><th scope="col">Questions</th><th scope="col">Method</th><th scope="col">R&sup2; (%)</th><th scope="col">Outcome</th></tr></thead><tbody id="development-table"></tbody></table></div>
-              <p class="caption">Separate, previously exposed development panels; no cross-panel aggregate. A high R&sup2; alone does not establish calibrated judgments, positive correlation, or improvement over every control.</p>
+              <div class="result-heading"><div><p class="small-label">Table 1</p><h3>Subset results: predicted and GT/reference inputs</h3></div><a class="text-link" href="data/research-20261105.json" download>Results JSON <img src="assets/icons/download.svg" alt=""></a></div>
+              <div class="table-scroll" role="region" aria-label="All development panel results" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Study</th><th scope="col">Questions</th><th scope="col">Method</th><th scope="col">Predicted input<br>R&sup2; (%)</th><th scope="col">GT / reference input<br>R&sup2; (%)</th><th scope="col">Outcome</th></tr></thead><tbody id="development-table"></tbody></table></div>
+              <p class="caption">Separate development subsets; no cross-study aggregate. GT-input tests probe performance with reference parsing. Partial GT and differently presented historical controls do not establish a verified upper bound; coverage is listed per row.</p>
             </div>
           </div>
         </div>
@@ -219,7 +220,7 @@ Walls, times, visibility...</pre></div><img class="flow-arrow" src="assets/icons
             <article><span class="small-label">Evidence interface</span><h3>Meaning must be explicit.</h3><p>Bass improves when event occurrence is separated from finite-horizon absence. The same physical facts can be misunderstood when their semantics are compressed.</p></article>
             <article><span class="small-label">Reasoning &amp; transfer</span><h3>A local gain is not a general solution.</h3><p>Numerical timelines help selected conditional tasks; other studies still expose scale-polarity errors, unsupported assumptions and weak calibration.</p></article>
           </div>
-          <div class="progress-note" id="next-test"><div><p class="small-label">Next validation / recorded snapshot, not live</p><h3>One shared interface. Matched controls.</h3></div><div><ol class="next-test-steps"><li><b>Prepared</b><span>50 questions; 126 cached comparison rows</span></li><li><b>Pending at snapshot</b><span>0 / 74 new requests completed</span></li><li><b>Not established</b><span>Transfer to the full 490-question cohort</span></li></ol><p class="caption">No unified-method score is reported. Preparation is not a reasoning improvement.</p></div></div>
+          <div class="progress-note" id="next-test"><div><p class="small-label">Next validation / recorded snapshot, not live</p><h3>One shared interface. Matched controls.</h3></div><div><ol class="next-test-steps"><li><b>Prepared</b><span>50 questions; 126 cached comparison rows</span></li><li><b>Pending at snapshot</b><span>0 / 74 new requests completed</span></li><li><b>GT-input control</b><span>Not yet evaluated for the unified 50-question method</span></li><li><b>Not established</b><span>Transfer to the full 490-question cohort</span></li></ol><p class="caption">No unified-method score is reported. Preparation is not a reasoning improvement.</p></div></div>
         </div>
       </section>
     </main>

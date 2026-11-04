@@ -14,9 +14,11 @@
       ],
       "takeaway": "Explicit event meaning improves the local comparison.",
       "limit": "The 72.14% score includes two perfect categorical checks; the 40 slider questions alone score 44.28%.",
-      "comparison_ids": ["video", "saved_direct_code", "full_code", "predicted_factual", "predicted_event_semantics"],
-      "comparison_labels": ["Video only", "8B-Instruct direct code", "Full code", "Factual events / matched base", "Explicit event meaning"],
-      "comparison_note": "Factual events versus explicit event meaning isolates the semantic change. All answers use the 27B reasoner."
+      "comparison_ids": ["video", "saved_direct_code", "full_code", "predicted_factual", "predicted_event_semantics", "reference_event_semantics"],
+      "comparison_labels": ["Video only", "8B-Instruct direct code", "Full code", "Factual events / matched base", "Explicit event meaning", "GT/source reference + semantics"],
+      "comparison_note": "Factual events versus explicit event meaning isolates the semantic change. All answers use the 27B reasoner.",
+      "reference_scope": "Partial scene / event reference",
+      "reference_note": "Partial source-supported events, not complete GT. Source headers and content differ from the predicted arm. Slider-only R²: predicted 44.28%, reference 33.91%."
     },
     {
       "panel_id": "ger2021_8",
@@ -30,9 +32,11 @@
       ],
       "takeaway": "Contact-by-contact timelines outperform all recorded local code controls.",
       "limit": "Only eight questions. The intervention starts from assumed observed motion; explanation faithfulness is still incomplete.",
-      "comparison_ids": ["video_rules", "own_27b_direct_code", "full_code_rules", "predicted_chain"],
-      "comparison_labels": ["Video + rules", "27B direct code + rules", "Full code + rules", "Conditional timeline"],
-      "comparison_note": "All four conditions share the same source-derived mechanism rules."
+      "comparison_ids": ["video_rules", "own_27b_direct_code", "full_code_rules", "predicted_chain", "reference_chain"],
+      "comparison_labels": ["Video + rules", "27B direct code + rules", "Full code + rules", "Conditional timeline", "GT/reference + timeline"],
+      "comparison_note": "All conditions share the same source-derived mechanism rules.",
+      "reference_scope": "Partial reference geometry",
+      "reference_note": "Reference geometry passes through the conditional-timeline method. Geometry is partial; body approximations and unsupported contacts remain."
     },
     {
       "panel_id": "ger2022_8",
@@ -46,9 +50,11 @@
       ],
       "takeaway": "The timeline improves over video and full code; the direct-code comparison is unresolved.",
       "limit": "Direct-code answers are constant, making its R² undefined. The crossing is modeled, not observed ground truth.",
-      "comparison_ids": ["video_rules", "saved_8b_direct_rules", "full_code_rules", "predicted_chain"],
-      "comparison_labels": ["Video + rules", "8B-Thinking direct code + rules", "Full code + rules", "Conditional timeline"],
-      "comparison_note": "Shared source rules. Undefined correlation is missing, not a zero-length score."
+      "comparison_ids": ["video_rules", "saved_8b_direct_rules", "full_code_rules", "predicted_chain", "reference_chain"],
+      "comparison_labels": ["Video + rules", "8B-Thinking direct code + rules", "Full code + rules", "Conditional timeline", "GT/reference + timeline"],
+      "comparison_note": "Shared source rules. Undefined correlation is missing, not a zero-length score.",
+      "reference_scope": "Factual reference state",
+      "reference_note": "Factual-reference state uses the same numerical execution and answer schema. It is not GT for the unobserved counterfactual world."
     },
     {
       "panel_id": "wu8",
@@ -62,9 +68,11 @@
       ],
       "takeaway": "Route calculations add value beyond the same observed-state graph.",
       "limit": "Older video/code controls have less observation coverage; full-code R² is undefined. This is not a clean all-control win.",
-      "comparison_ids": ["own_27b_direct_code", "full_code", "predicted_semantic_graph", "predicted_semantic_graph_certificate"],
-      "comparison_labels": ["27B direct code / less coverage", "Full code / less coverage", "Graph only / matched facts", "Graph + routes / matched facts"],
-      "comparison_note": "Only graph-only versus graph-plus-routes isolates the calculation on the same facts."
+      "comparison_ids": ["own_27b_direct_code", "full_code", "predicted_semantic_graph", "predicted_semantic_graph_certificate", "source_state_json_temporal_route"],
+      "comparison_labels": ["27B direct code / less coverage", "Full code / less coverage", "Graph only / matched facts", "Graph + routes / matched facts", "Earlier source reference + routes"],
+      "comparison_note": "Only graph-only versus graph-plus-routes isolates the calculation on the same facts.",
+      "reference_scope": "Historical / different presentation",
+      "reference_note": "93.89% uses an earlier reference-JSON presentation. Current same-method reference inputs duplicate predicted inputs, so no independent matched GT result is established."
     },
     {
       "panel_id": "sosa22",
@@ -78,9 +86,11 @@
       ],
       "takeaway": "Complete-scene evidence improves over the clarified video control, but ties historical direct code.",
       "limit": "Equally clarified direct-code and full-code controls were not run. The graph does not simulate the future.",
-      "comparison_ids": ["video_prospective", "fixed_8b_direct_code", "full_prospective_unmeasured", "scene_graph"],
-      "comparison_labels": ["Video + clarification", "8B-Instruct direct / old wording", "Full code + clarification", "Scene graph + clarification"],
-      "comparison_note": "Historical direct code uses different wording; unmeasured controls cannot establish superiority."
+      "comparison_ids": ["video_prospective", "fixed_8b_direct_code", "full_prospective_unmeasured", "scene_graph", "partial_oracle_scene_graph"],
+      "comparison_labels": ["Video + clarification", "8B-Instruct direct / old wording", "Full code + clarification", "Scene graph + clarification", "GT/reference + scene graph"],
+      "comparison_note": "Historical direct code uses different wording; unmeasured controls cannot establish superiority.",
+      "reference_scope": "Initial-only dynamic reference",
+      "reference_note": "Reference input uses the complete-scene graph and prospective clarification. Dynamic GT covers the initial state only, not the full motion."
     },
     {
       "panel_id": "beller20",
@@ -94,9 +104,11 @@
       ],
       "takeaway": "Event-local positions improve the result, but not enough to pass the preset gate.",
       "limit": "The gain over dense notes is 9.48 pp, below the frozen 10 pp requirement. Added pixel measurements also change perception coverage.",
-      "comparison_ids": ["video", "saved_8b_direct", "dense_event_notes", "anchored_paths"],
-      "comparison_labels": ["Video / less coverage", "8B-Thinking direct / less coverage", "Dense event notes", "Paths + positions"],
-      "comparison_note": "Development sequence, not a representation-only comparison. Full code and remaining conditions are in the table below."
+      "comparison_ids": ["video", "saved_8b_direct", "dense_event_notes", "anchored_paths", "ball_oracle_anchored"],
+      "comparison_labels": ["Video / less coverage", "8B-Thinking direct / less coverage", "Dense event notes", "Paths + positions", "Ball GT/reference + paths"],
+      "comparison_note": "Development sequence, not a representation-only comparison. Full code and remaining conditions are in the table below.",
+      "reference_scope": "Ball geometry only",
+      "reference_note": "Replace factual ball geometry with reference data and keep the same event-path renderer. Other scene fields are not replaced by complete GT."
     },
     {
       "panel_id": "smith5",
@@ -110,9 +122,11 @@
       ],
       "takeaway": "The predicted graph does not improve surprise judgments.",
       "limit": "Signed r is negative. Clean direct/full-code controls are unavailable; five examples do not establish general behavior.",
-      "comparison_ids": ["video", "fixed_8b_direct_code", "full_code", "scene_graph"],
-      "comparison_labels": ["Video only / clean", "8B-Instruct direct / clean", "Full code / clean", "Image-state graph"],
-      "comparison_note": "R² hides correlation direction. Here the graph's signed r is -0.1690."
+      "comparison_ids": ["video", "fixed_8b_direct_code", "full_code", "scene_graph", "partial_oracle_graph"],
+      "comparison_labels": ["Video only / clean", "8B-Instruct direct / clean", "Full code / clean", "Image-state graph", "Visible GT/reference + graph"],
+      "comparison_note": "R² hides correlation direction. Here the graph's signed r is -0.1690.",
+      "reference_scope": "Visible states only",
+      "reference_note": "Recovered visible-reference observations use the same image-graph method. Hidden motion, physical identity and latent properties are not fully certified."
     },
     {
       "panel_id": "stephan8",
@@ -126,9 +140,11 @@
       ],
       "takeaway": "Geometry calculations help the graph baseline, but remain below direct code.",
       "limit": "Eight question variants use only two diagrams. Segment intersection alone is not physical difficulty.",
-      "comparison_ids": ["video", "saved_direct_code", "predictedtask", "predicted_certificate"],
-      "comparison_labels": ["Video only", "8B-Instruct direct code", "Graph only", "Graph + geometry"],
-      "comparison_note": "The paired graph improvement does not establish superiority over direct code."
+      "comparison_ids": ["video", "saved_direct_code", "predictedtask", "predicted_certificate", "reference_corrected_certificate"],
+      "comparison_labels": ["Video only", "8B-Instruct direct code", "Graph only", "Graph + geometry", "Corrected reference + geometry"],
+      "comparison_note": "The paired graph improvement does not establish superiority over direct code.",
+      "reference_scope": "Source-corrected geometry",
+      "reference_note": "Source-corrected reference geometry uses the same segment-intersection operator. Two diagrams underlie eight variants; this is not complete physical-action GT."
     }
   ]
 }

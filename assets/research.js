@@ -90,9 +90,12 @@
       const row = panel.results.find(result => result.id === id);
       const defined = Number.isFinite(row.r2_percent);
       const missing = row.comparability === "not_run" ? "Not run" : row.status === "unavailable_clean_control" ? "Unavailable" : "Undefined";
-      return `<div class="result-bar-row ${id === panel.headline.candidate_id ? "is-candidate" : ""}"><span class="result-bar-label">${escape(story.comparison_labels[index])}</span><div class="result-track ${defined ? "" : "no-score"}" aria-hidden="true">${defined ? `<span style="width:${row.r2_percent}%"></span>` : "No score"}</div><strong>${defined ? `${number(row.r2_percent)}%` : missing}</strong></div>`;
+      const reference = id === panel.headline.reference_id;
+      const historical = reference && row.comparability === "historical_reference_presentation";
+      return `<div class="result-bar-row ${id === panel.headline.candidate_id ? "is-candidate" : ""} ${reference ? "is-reference" : ""} ${historical ? "is-historical" : ""}"><span class="result-bar-label">${escape(story.comparison_labels[index])}${reference ? `<small>${escape(story.reference_scope)}</small>` : ""}</span><div class="result-track ${defined ? "" : "no-score"}" aria-hidden="true">${defined ? `<span style="width:${row.r2_percent}%"></span>` : "No score"}</div><strong>${defined ? `${number(row.r2_percent)}%` : missing}</strong></div>`;
     }).join("");
     $("study-bar-note").textContent = story.comparison_note;
+    $("study-reference-note").textContent = story.reference_note;
     const index = data.panels.indexOf(panel);
     for (const [element, offset] of [["previous-study", -1], ["next-study", 1]]) {
       const other = data.panels[(index + offset + data.panels.length) % data.panels.length];
@@ -251,7 +254,11 @@
     $("study-tabs").innerHTML = data.panels.map(panel => `<button role="tab" id="study-tab-${panel.id}" aria-selected="false" aria-controls="study-panel" tabindex="-1" data-study="${panel.id}">${escape(label(panel))}</button>`).join("");
     $("development-table").innerHTML = data.panels.map(panel => {
       const candidate = panel.results.find(row => row.id === panel.headline.candidate_id);
-      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a><small>${escape(panel.title)}</small></th><td>${panel.question_count}</td><td>${escape(panel.method.name)}</td><td><b>${number(candidate.r2_percent)}</b>${panel.id === "bass42" ? "<small>Slider only: 44.28</small>" : ""}</td><td>${escape(verdicts[panel.id][0])}</td></tr>`;
+      const reference = panel.results.find(row => row.id === panel.headline.reference_id);
+      const story = storyData.stories.find(row => row.panel_id === panel.id);
+      const slider = panel.id === "bass42" ? panel.diagnostics.find(item => item.id === "slider40") : null;
+      const sliderNote = id => slider ? `<small>Slider only: ${number(slider.results.find(row => row.id === id).r2_percent)}</small>` : "";
+      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a><small>${escape(panel.title)}</small></th><td>${panel.question_count}</td><td>${escape(panel.method.name)}</td><td><b>${number(candidate.r2_percent)}</b>${sliderNote(candidate.id)}</td><td class="reference-score"><b>${number(reference.r2_percent)}</b><small>${escape(story.reference_scope)}</small>${sliderNote(reference.id)}</td><td>${escape(verdicts[panel.id][0])}</td></tr>`;
     }).join("");
     $("study-tabs").querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectStudy(button.dataset.study, true)));
     keyboardTabs($("study-tabs"), button => selectStudy(button.dataset.study, true));
@@ -292,7 +299,7 @@
       const mediaResponse = await fetch("data/study-media.json?v=20261105-stimuli");
       if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
       studyMedia = await mediaResponse.json();
-      const storyResponse = await fetch("data/study-story.json");
+      const storyResponse = await fetch("data/study-story.json?v=20261105-gt-subsets");
       if (!storyResponse.ok) throw new Error(`Study story: ${storyResponse.status}`);
       storyData = await storyResponse.json();
       renderProgress();
