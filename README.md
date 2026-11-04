@@ -1,44 +1,88 @@
 # Unified and Adaptive Visual Parser for CogGym Reasoning
 
-Static GitHub Pages project for the CCVL research demo.
+Static research site redesigned around methods, study-level results, limitations
+and source-linked evidence. Plain HTML, CSS and JavaScript; no build step,
+backend or GPU inference is needed to preview the saved results.
 
 ## Local preview
 
+Run from the repository root:
+
 ```bash
-cd /Users/always/Desktop/ccvl-intern.github.io
-python3 -m http.server 8796 --bind 127.0.0.1
+python3 -m http.server 8797 --bind 127.0.0.1
 ```
 
-Open <http://127.0.0.1:8796/>.
+Open [the local preview](http://127.0.0.1:8797/). Use HTTP rather than opening
+the HTML directly, because the page fetches local JSON and example records.
 
-## Data provenance
+## Research scope
 
-The section wording, architecture names, and presentation figures follow `ccvl-0819.pptx`. Slide-derived figures are packaged under `assets/slides/` so the deployed page has no external presentation dependency.
+- **Eight development panels:** heterogeneous, previously exposed methods,
+  prompts and controls. They are not one unified benchmark run and have no
+  combined development score.
+- **Frozen full cohort:** 13 studies and 490 questions. All five strict
+  fixed-22-primary-experiment aggregates remain undefined. Missing outputs,
+  constant predictions and insufficient type-level samples are not zero-filled.
+- **Matched diagnostic:** 410 questions across 15 common complete-and-defined
+  experiments. This is not the full-cohort score or evidence of overall success.
 
-The web tables are packaged in `data/results.json` and `data/reasoning_results.json`. Structured experiment artifacts take precedence where a slide contains an older or incomplete number. The example in `data/hamrick_code.json` is an exact projection of accepted code `code_a7e49b129d726046e570`; no evaluation target is included. Its t = 0, 1, 2 values index sampled records; `timestamp_sec` gives elapsed time.
+The main metric equally averages response-type squared Pearson correlations
+within each experiment, then equally averages experiments. Local completeness,
+minimum-three-point and nonzero-variance rules are disclosed. The official
+released evaluator uses normalized pooled correlation, a different estimator
+and denominator; these results are not an official ten-run replication.
+Signed r and nRMSE accompany R2 because negative correlation can yield high R2.
 
-All 12 animated media files in `assets/demos/` are byte-identical to GIFs embedded in `ccvl-0819.pptx`. Each contains the original video at left and the bbox-only reconstruction at right. They are presentation assets, not model inputs.
+`data/research-20261105.json` is a dated, non-live snapshot. Its 50-question
+unification entry records preparation and native-input verification, with
+inference pending and no new reasoning result at the snapshot time.
 
-Component variants explicitly list the modules used inside the shared pipeline; they are not standalone model evaluations. The saved report evaluates temporal 2D Center RPE on 130 samples with released temporal center ground truth. mIoU uses 280 samples; MotionCrafter excludes 34 static images. The report's sample SD is not random-seed variation.
+## Page contents
 
-Reasoning R-squared is mean squared Pearson correlation with human item means across valid experiments. The uncertainty comparison charts use paired valid experiments. Full and abstracted code are different reasoning inputs; parsing scores in the parsing view are measured before evidence selection.
+The five numbered tables are:
 
-The separate Video only view (`#video-only`) uses `data/video_only_results.json`, transcribed without numeric changes from `physics_280_video_only_vlm_matrix_20260826_r3/coggym_model_summary.csv`. Its 14 rows are archived video-and-question-only results from August 26, not corrected reruns. They use each model's valid experiments and must not be treated as a matched comparison with the parsed-code views.
+1. Development results at a glance.
+2. Frozen full-cohort results by study.
+3. Matched complete-and-defined diagnostic.
+4. Archived parsing comparison.
+5. Computational cost, with distinct work units and timing scopes.
 
-Table 7 in Per-study (`#panel-studies`) uses `data/study_reasoning_results.json`, exported by `scripts/build_reasoning_comparisons.py --report <September-6-report> --video-report <August-26-results>`. Video-only, full-code and abstracted-code R2 use the same finite experiments within each study, with matching experiment IDs and evaluated item counts. Undefined experiments are excluded from all three conditions; studies with no remaining comparisons are omitted, never zero-filled. Ratios match Table 1: Instruct 0.7, Thinking 0.9, and GLM 0.7. Experiment values and source-report hashes remain in the downloadable JSON. These are archived results, not the corrected ten-round rerun; no inference was performed for this website update. The visible explanatory footnotes were removed at the user's request. The two change columns show abstraction minus full code (`delta`) and abstraction minus video-only (`delta_vs_video_only`), calculated from unrounded scores and displayed in percentage points.
+Parsing error bars report population SD across samples (`ddof=0`), not sample
+SD or seed uncertainty. The 84.14% mIoU is an accepted-box merge; the 7.26%
+temporal RPE comes from a separate Qwen3-VL-8B-Thinking condition. The 0.3250
+sampled images/s/GPU throughput uses Qwen3-VL-8B-Instruct. These are not jointly
+measured accuracy and runtime results from one configuration.
 
-Table 4 uses `data/parsing_throughput.json`, produced by `scripts/build_parsing_throughput.py --timing-dir <archived-timing-directory>`. The August 4 run used Qwen3-VL-8B-Instruct + SAM3.1 + VGGT-Omega + SpatialTrackerV2: 4,439 sampled frame instances across 280 samples / 13,657.10791680077 summed single-GPU worker seconds = 0.3250322123 images/s/GPU. All four workers had one RTX A5000 each. This includes loading and the end-to-end pipeline, not only neural inference or all source-video frames. The previous display added four stage averages with different sample denominators; it was not a measured end-to-end latency and is no longer displayed. Original slide timing values remain in the archived `data/results.json`, separate from the throughput measurement.
+Study tabs include methods, controls, limitations and source records. Real
+archived study GIFs show source imagery at left and box reconstruction at right;
+they do not visualize new reasoning outputs. The saved-run viewer contains
+archived 8B/9B examples, not outputs from the newer 27B development experiments.
 
-## Interface
+## Files and provenance
 
-- Static HTML, CSS, and JavaScript, with no build step or third-party runtime requests.
-- Reasoning, video-only, parsing, per-study, and efficiency views; condition and RPE interval selectors.
-- Stable result labels: Tables 1-6 cover parsed-code reasoning, video-only reasoning, parsing quality, efficiency, PhysBench, and the abstraction pilot; Table 7 adds before/after reasoning by study with a model selector. Figures 1-3 cover question-type comparisons, per-study accuracy, and qualitative examples.
-- Slide GIF gallery, scene filters, figure enlargement, animation pause, and reduced-motion support.
-- Original numerical JSON and slide/GIF files are unchanged by the September 8 design update.
-- Icons are vendored from lucide-static 0.468.0; license is in `assets/icons/LICENSE`.
-- Search-engine exclusion metadata and `robots.txt` remain in place. They discourage indexing, but do not make GitHub Pages private.
+- `index.html`, `assets/research.css`, `assets/research.js`: redesigned page and
+  research views; `assets/examples.js` renders saved examples.
+- `data/research-20261105.json`: scoped results, metric definitions, snapshot
+  status and provenance hashes; `data/research-sources/` contains sanitized
+  source-report extracts.
+- `data/run_examples.json`, `data/examples/`, `assets/examples/`: saved example
+  metadata, code records and original videos.
+- `assets/demos/`, `assets/figures/`, `assets/slides/`: archived study GIFs and
+  presentation figures. Earlier result JSON, site assets and archived records
+  are retained, not regenerated or silently replaced.
 
-## Publication
+## Checks and publication
 
-The intended GitHub Pages repository is `ccvl-intern/ccvl-intern.github.io`. GitHub Pages serves the default branch at <https://ccvl-intern.github.io/>.
+Run the site checks with Node.js:
+
+```bash
+node --test scripts/test_research_site.mjs
+```
+
+The client-side password screen is a **presentation gate, not security**.
+Published HTML, JavaScript, data and media remain publicly accessible.
+Search-engine exclusion metadata and `robots.txt` do not provide access control.
+Do not publish secrets or private research artifacts.
+
+`output/` and `.playwright-cli/` are intentional local QA directories. Retain
+them locally, but exclude them from the published site.

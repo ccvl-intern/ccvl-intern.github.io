@@ -1,0 +1,3981 @@
+{
+  "schema_version": "1.0.0",
+  "snapshot": {
+    "as_of": "2026-11-05T04:22:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "live": false,
+    "phase": "pre_unification",
+    "goal_status": "blocked_unachieved",
+    "scope": "Frozen full-cohort comparison and eight separately exposed development panels. No unified reasoning result is included."
+  },
+  "model": {
+    "reasoner": "Qwen3.5-27B",
+    "precision": "FP16",
+    "decoding": "Native non-thinking greedy decoding",
+    "training": "No task-specific training in these comparisons",
+    "direct_parser_note": "Full490, Bass and Stephan use saved Qwen3-VL-8B-Instruct code, not code freshly parsed by the 27B reasoner. Older panels disclose their own saved-8B provenance. Gerstenberg2021 and Wu also include completed same-Qwen3.5-27B direct-parser controls."
+  },
+  "metric_contract": {
+    "r2_definition": "Squared Pearson correlation, not accuracy, explained-variance regression R-squared, or the square of an average signed correlation.",
+    "numeric_units": {
+      "r2_percent": "percentage points, 0 to 100",
+      "signed_r": "-1 to 1",
+      "nrmse": "RMSE normalized by the native answer-domain width"
+    },
+    "null_policy": "Undefined correlations, incomplete strict aggregates and unavailable clean controls remain null. Never replace them with zero or silently drop their cases.",
+    "full_cohort_aggregation": "Average squared Pearson r equally over native response-type/scale groups within an experiment, then equally over experiments. Study rows summarize fixed study membership; studies are not the primary weighting unit.",
+    "signed_r_aggregation": "Full-cohort and Bass signed_r is the same equal-type/equal-experiment mean, not a pooled correlation. Wu reports the experiment mean; its nrmse is explicitly pooled across eight scalar answers.",
+    "local_policy": {
+      "n_runs": 1,
+      "min_scalar_items_per_type": 3,
+      "constant_rule": "Exact zero centered sum of squares",
+      "strict_null": true,
+      "ten_run_replication": false,
+      "human_split_half_estimate": false,
+      "complete_official_evaluation": false
+    },
+    "aggregation_caveats": [
+      "Response type is defined by native schema regime and numeric bounds, not a study label or question tag.",
+      "Categorical outputs become option-level one-hot scalars; their R2 is not classification accuracy.",
+      "Squared correlation loses direction; always inspect signed r and normalized error.",
+      "The development panels use different interventions, scopes and controls. They must not be pooled or substituted into the frozen full490 table.",
+      "No held-out, statistical-significance, full physical-oracle, or robust whole-cohort success claim is supported."
+    ]
+  },
+  "condition_labels": {
+    "video": "Video only",
+    "saved_direct_code": "Saved direct-parsed code",
+    "full_code": "Full Parse Anything code",
+    "predictedtask": "Task-conditioned evidence",
+    "partialoracle": "Partial-reference evidence"
+  },
+  "full_cohort": {
+    "source_ids": [
+      "full-cohort",
+      "coverage"
+    ],
+    "counts": {
+      "questions": 490,
+      "declared_sources": 188,
+      "studies": 13,
+      "experiments": 24,
+      "scalar_items_per_condition": 1280,
+      "conditions": 5,
+      "condition_question_records": 2450
+    },
+    "status_counts": {
+      "complete": 2432,
+      "execution_failed": 2,
+      "invalid": 4,
+      "overlength": 12
+    },
+    "per_condition": [
+      {
+        "id": "video",
+        "missing_or_failed_questions": 0,
+        "questions": 490,
+        "scalar_items": 1280,
+        "sources": 188,
+        "status_counts": {
+          "complete": 490
+        },
+        "valid_questions": 490,
+        "valid_scalar_items": 1280
+      },
+      {
+        "id": "saved_direct_code",
+        "missing_or_failed_questions": 2,
+        "questions": 490,
+        "scalar_items": 1280,
+        "sources": 188,
+        "status_counts": {
+          "complete": 488,
+          "execution_failed": 2
+        },
+        "valid_questions": 488,
+        "valid_scalar_items": 1264
+      },
+      {
+        "id": "full_code",
+        "missing_or_failed_questions": 14,
+        "questions": 490,
+        "scalar_items": 1280,
+        "sources": 188,
+        "status_counts": {
+          "complete": 476,
+          "invalid": 2,
+          "overlength": 12
+        },
+        "valid_questions": 476,
+        "valid_scalar_items": 1238
+      },
+      {
+        "id": "predictedtask",
+        "missing_or_failed_questions": 1,
+        "questions": 490,
+        "scalar_items": 1280,
+        "sources": 188,
+        "status_counts": {
+          "complete": 489,
+          "invalid": 1
+        },
+        "valid_questions": 489,
+        "valid_scalar_items": 1265
+      },
+      {
+        "id": "partialoracle",
+        "missing_or_failed_questions": 1,
+        "questions": 490,
+        "scalar_items": 1280,
+        "sources": 188,
+        "status_counts": {
+          "complete": 489,
+          "invalid": 1
+        },
+        "valid_questions": 489,
+        "valid_scalar_items": 1265
+      }
+    ],
+    "primary_membership": {
+      "questions": 487,
+      "scalar_items": 1277,
+      "experiments": [
+        "Bass2022Partial/exp1",
+        "Beller2020Language/exp1",
+        "Gerstenberg2021A_Counterfactual/exp1",
+        "Gerstenberg2021A_Counterfactual/exp2",
+        "Gerstenberg2021A_Counterfactual/exp3",
+        "Gerstenberg2022What/exp1",
+        "Gerstenberg2022What/exp2",
+        "Hamrick2016Inferring/exp1",
+        "Hamrick2016Inferring/exp2",
+        "Smith2019Modeling/exp1",
+        "Sosa2021Moral/exp2",
+        "Sosa2021Moral/exp3",
+        "Sosa2025Blending/exp1",
+        "Sosa2025Blending/exp2",
+        "Stephan2021Counterfactual/exp1",
+        "Stephan2021Counterfactual/exp3",
+        "Ullman2018Learning/exp1",
+        "Wu2022That/exp2",
+        "Wu2022That/exp3",
+        "Zhou2023Mental/exp1",
+        "Zhou2023Mental/exp2",
+        "Zhou2023Mental/exp3"
+      ],
+      "type_groups": 31
+    },
+    "diagnostic_membership": {
+      "questions": 3,
+      "scalar_items": 3,
+      "experiments": [
+        "Beller2025Multimodal/exp1",
+        "Stephan2021Counterfactual/exp2"
+      ],
+      "reason": "Beller2025 exp1 has one scalar; Stephan2021 exp2 has two. They remain visible but are outside the fixed22 primary aggregate."
+    },
+    "strict_primary": [
+      {
+        "id": "video",
+        "r2_percent": null,
+        "signed_r": null,
+        "nrmse": 0.4639344912753364,
+        "nrmse_scalar": 0.4869163014975898,
+        "defined_experiments": 21,
+        "expected_experiments": 22,
+        "defined_types": 29,
+        "expected_types": 31,
+        "undefined_experiments": [
+          "Zhou2023Mental/exp1"
+        ]
+      },
+      {
+        "id": "saved_direct_code",
+        "r2_percent": null,
+        "signed_r": null,
+        "nrmse": null,
+        "nrmse_scalar": null,
+        "defined_experiments": 18,
+        "expected_experiments": 22,
+        "defined_types": 26,
+        "expected_types": 31,
+        "undefined_experiments": [
+          "Gerstenberg2021A_Counterfactual/exp1",
+          "Gerstenberg2022What/exp1",
+          "Zhou2023Mental/exp1",
+          "Zhou2023Mental/exp2"
+        ]
+      },
+      {
+        "id": "full_code",
+        "r2_percent": null,
+        "signed_r": null,
+        "nrmse": null,
+        "nrmse_scalar": null,
+        "defined_experiments": 17,
+        "expected_experiments": 22,
+        "defined_types": 25,
+        "expected_types": 31,
+        "undefined_experiments": [
+          "Hamrick2016Inferring/exp1",
+          "Hamrick2016Inferring/exp2",
+          "Wu2022That/exp2",
+          "Zhou2023Mental/exp1",
+          "Zhou2023Mental/exp2"
+        ]
+      },
+      {
+        "id": "predictedtask",
+        "r2_percent": null,
+        "signed_r": null,
+        "nrmse": null,
+        "nrmse_scalar": null,
+        "defined_experiments": 19,
+        "expected_experiments": 22,
+        "defined_types": 27,
+        "expected_types": 31,
+        "undefined_experiments": [
+          "Hamrick2016Inferring/exp2",
+          "Zhou2023Mental/exp1",
+          "Zhou2023Mental/exp2"
+        ]
+      },
+      {
+        "id": "partialoracle",
+        "r2_percent": null,
+        "signed_r": null,
+        "nrmse": null,
+        "nrmse_scalar": null,
+        "defined_experiments": 19,
+        "expected_experiments": 22,
+        "defined_types": 27,
+        "expected_types": 31,
+        "undefined_experiments": [
+          "Hamrick2016Inferring/exp2",
+          "Zhou2023Mental/exp1",
+          "Zhou2023Mental/exp2"
+        ]
+      }
+    ],
+    "structural_undefined": {
+      "experiment_id": "Zhou2023Mental/exp1",
+      "affected_types": [
+        {
+          "id": "slider|0|6",
+          "scalar_items": 1
+        },
+        {
+          "id": "slider|0|8",
+          "scalar_items": 2
+        }
+      ],
+      "explanation": "Under the unchanged local min3 rule these groups are undefined even for perfect item predictions. This coverage check is not a human reliability ceiling or a physical oracle.",
+      "source_ids": [
+        "coverage"
+      ]
+    },
+    "matched15": {
+      "membership": "shared complete-and-defined diagnostic; not primary",
+      "experiment_count": 15,
+      "question_count": 410,
+      "scalar_count": 1067,
+      "type_groups": 17,
+      "experiments": [
+        "Bass2022Partial/exp1",
+        "Beller2020Language/exp1",
+        "Gerstenberg2021A_Counterfactual/exp2",
+        "Gerstenberg2021A_Counterfactual/exp3",
+        "Gerstenberg2022What/exp2",
+        "Smith2019Modeling/exp1",
+        "Sosa2021Moral/exp2",
+        "Sosa2021Moral/exp3",
+        "Sosa2025Blending/exp1",
+        "Sosa2025Blending/exp2",
+        "Stephan2021Counterfactual/exp1",
+        "Stephan2021Counterfactual/exp3",
+        "Ullman2018Learning/exp1",
+        "Wu2022That/exp3",
+        "Zhou2023Mental/exp3"
+      ],
+      "excluded_experiments": [
+        "Gerstenberg2021A_Counterfactual/exp1",
+        "Gerstenberg2022What/exp1",
+        "Hamrick2016Inferring/exp1",
+        "Hamrick2016Inferring/exp2",
+        "Wu2022That/exp2",
+        "Zhou2023Mental/exp1",
+        "Zhou2023Mental/exp2"
+      ],
+      "results": [
+        {
+          "id": "video",
+          "r2_percent": 18.100957172834878,
+          "signed_r": 0.11409436624754456,
+          "nrmse": 0.48722104150343176,
+          "nrmse_scalar": 0.5021322582100993,
+          "defined_experiments": 15,
+          "expected_experiments": 15,
+          "defined_types": 17,
+          "expected_types": 17,
+          "undefined_experiments": []
+        },
+        {
+          "id": "saved_direct_code",
+          "r2_percent": 22.575893530386974,
+          "signed_r": 0.36269880285902795,
+          "nrmse": 0.43314611346845927,
+          "nrmse_scalar": 0.44707561073621205,
+          "defined_experiments": 15,
+          "expected_experiments": 15,
+          "defined_types": 17,
+          "expected_types": 17,
+          "undefined_experiments": []
+        },
+        {
+          "id": "full_code",
+          "r2_percent": 21.51479385244778,
+          "signed_r": 0.31153617085225493,
+          "nrmse": 0.4402439630012303,
+          "nrmse_scalar": 0.45391581476514964,
+          "defined_experiments": 15,
+          "expected_experiments": 15,
+          "defined_types": 17,
+          "expected_types": 17,
+          "undefined_experiments": []
+        },
+        {
+          "id": "predictedtask",
+          "r2_percent": 27.015200447462224,
+          "signed_r": 0.2871250077551662,
+          "nrmse": 0.4110660297574069,
+          "nrmse_scalar": 0.425237543322755,
+          "defined_experiments": 15,
+          "expected_experiments": 15,
+          "defined_types": 17,
+          "expected_types": 17,
+          "undefined_experiments": []
+        },
+        {
+          "id": "partialoracle",
+          "r2_percent": 13.531938964887805,
+          "signed_r": 0.24889922084577257,
+          "nrmse": 0.4730097687403053,
+          "nrmse_scalar": 0.4868505868888791,
+          "defined_experiments": 15,
+          "expected_experiments": 15,
+          "defined_types": 17,
+          "expected_types": 17,
+          "undefined_experiments": []
+        }
+      ],
+      "interpretation": "Task evidence has higher squared correlation and lower normalized error on this shared subset, but lower mean signed r than direct/full code. This does not establish whole-cohort superiority."
+    },
+    "studies": [
+      {
+        "id": "Bass2022Partial",
+        "label": "Bass 2022",
+        "question_count": 42,
+        "source_count": 20,
+        "scalar_count": 44,
+        "primary_experiments": [
+          "Bass2022Partial/exp1"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 50.26762055627514,
+              "signed_r": 0.5365800872248233,
+              "nrmse": 0.24514487673675292,
+              "nrmse_scalar": 0.467472937827432,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 50.26762055627514,
+              "signed_r": 0.5365800872248233,
+              "nrmse": 0.24514487673675292,
+              "nrmse_scalar": 0.467472937827432,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 42
+            },
+            "valid_questions": 42
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 51.50455064142054,
+              "signed_r": 0.5867338065987115,
+              "nrmse": 0.23019803559170043,
+              "nrmse_scalar": 0.4389704301090234,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 51.50455064142054,
+              "signed_r": 0.5867338065987115,
+              "nrmse": 0.23019803559170043,
+              "nrmse_scalar": 0.4389704301090234,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 42
+            },
+            "valid_questions": 42
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 52.47205634873383,
+              "signed_r": 0.6111768039820769,
+              "nrmse": 0.22069815870764406,
+              "nrmse_scalar": 0.42085487568624996,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 52.47205634873383,
+              "signed_r": 0.6111768039820769,
+              "nrmse": 0.22069815870764406,
+              "nrmse_scalar": 0.42085487568624996,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 42
+            },
+            "valid_questions": 42
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 50.355617803273134,
+              "signed_r": 0.5421673928096777,
+              "nrmse": 0.22863801941849282,
+              "nrmse_scalar": 0.4359955959894804,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 50.355617803273134,
+              "signed_r": 0.5421673928096777,
+              "nrmse": 0.22863801941849282,
+              "nrmse_scalar": 0.4359955959894804,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 42
+            },
+            "valid_questions": 42
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 50.33839161083663,
+              "signed_r": 0.45886658226960547,
+              "nrmse": 0.227805953076175,
+              "nrmse_scalar": 0.43440890773113944,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 50.33839161083663,
+              "signed_r": 0.45886658226960547,
+              "nrmse": 0.227805953076175,
+              "nrmse_scalar": 0.43440890773113944,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 42
+            },
+            "valid_questions": 42
+          }
+        ]
+      },
+      {
+        "id": "Beller2020Language",
+        "label": "Beller 2020",
+        "question_count": 20,
+        "source_count": 20,
+        "scalar_count": 80,
+        "primary_experiments": [
+          "Beller2020Language/exp1"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 4.483154464483818,
+              "signed_r": 0.21173460899162938,
+              "nrmse": 0.46470788165320853,
+              "nrmse_scalar": 0.46470788165320853,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 4.483154464483818,
+              "signed_r": 0.21173460899162938,
+              "nrmse": 0.46470788165320853,
+              "nrmse_scalar": 0.46470788165320853,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 9.22034779642978,
+              "signed_r": 0.30365025599247863,
+              "nrmse": 0.43974173132716493,
+              "nrmse_scalar": 0.43974173132716493,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 9.22034779642978,
+              "signed_r": 0.30365025599247863,
+              "nrmse": 0.43974173132716493,
+              "nrmse_scalar": 0.43974173132716493,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 7.603647368603375,
+              "signed_r": 0.2757471190892731,
+              "nrmse": 0.44746806061507055,
+              "nrmse_scalar": 0.44746806061507055,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 7.603647368603375,
+              "signed_r": 0.2757471190892731,
+              "nrmse": 0.44746806061507055,
+              "nrmse_scalar": 0.44746806061507055,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 0.03879428387187297,
+              "signed_r": 0.01969626458795499,
+              "nrmse": 0.5129628303011949,
+              "nrmse_scalar": 0.5129628303011949,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.03879428387187297,
+              "signed_r": 0.01969626458795499,
+              "nrmse": 0.5129628303011949,
+              "nrmse_scalar": 0.5129628303011949,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 2.2309348374680553,
+              "signed_r": 0.14936314262454628,
+              "nrmse": 0.48091165017143483,
+              "nrmse_scalar": 0.48091165017143483,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 2.2309348374680553,
+              "signed_r": 0.14936314262454628,
+              "nrmse": 0.48091165017143483,
+              "nrmse_scalar": 0.48091165017143483,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          }
+        ]
+      },
+      {
+        "id": "Beller2025Multimodal",
+        "label": "Beller 2025",
+        "question_count": 1,
+        "source_count": 1,
+        "scalar_count": 1,
+        "primary_experiments": [],
+        "diagnostic_experiments": [
+          "Beller2025Multimodal/exp1"
+        ],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.171395,
+              "nrmse_scalar": 0.171395,
+              "undefined_experiments": [
+                "Beller2025Multimodal/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 1
+            },
+            "valid_questions": 1
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.22860500000000003,
+              "nrmse_scalar": 0.22860500000000003,
+              "undefined_experiments": [
+                "Beller2025Multimodal/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 1
+            },
+            "valid_questions": 1
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.12860500000000002,
+              "nrmse_scalar": 0.12860500000000002,
+              "undefined_experiments": [
+                "Beller2025Multimodal/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 1
+            },
+            "valid_questions": 1
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.12139499999999998,
+              "nrmse_scalar": 0.12139499999999998,
+              "undefined_experiments": [
+                "Beller2025Multimodal/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 1
+            },
+            "valid_questions": 1
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.02860500000000002,
+              "nrmse_scalar": 0.02860500000000002,
+              "undefined_experiments": [
+                "Beller2025Multimodal/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 1
+            },
+            "valid_questions": 1
+          }
+        ]
+      },
+      {
+        "id": "Gerstenberg2021A_Counterfactual",
+        "label": "Gerstenberg 2021",
+        "question_count": 48,
+        "source_count": 20,
+        "scalar_count": 48,
+        "primary_experiments": [
+          "Gerstenberg2021A_Counterfactual/exp1",
+          "Gerstenberg2021A_Counterfactual/exp2",
+          "Gerstenberg2021A_Counterfactual/exp3"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 16.2235444285211,
+              "signed_r": -0.06160296110084044,
+              "nrmse": 0.5688171176465235,
+              "nrmse_scalar": 0.5717985602227795,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 16.2235444285211,
+              "signed_r": -0.06160296110084044,
+              "nrmse": 0.5688171176465235,
+              "nrmse_scalar": 0.5717985602227795,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 48
+            },
+            "valid_questions": 48
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Gerstenberg2021A_Counterfactual/exp1"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Gerstenberg2021A_Counterfactual/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 47,
+              "execution_failed": 1
+            },
+            "valid_questions": 47
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 9.44020675928123,
+              "signed_r": 0.022141493709658178,
+              "nrmse": 0.5148616609470432,
+              "nrmse_scalar": 0.5165048262146003,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 9.44020675928123,
+              "signed_r": 0.022141493709658178,
+              "nrmse": 0.5148616609470432,
+              "nrmse_scalar": 0.5165048262146003,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 48
+            },
+            "valid_questions": 48
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 24.776981327333647,
+              "signed_r": 0.0010877108907533055,
+              "nrmse": 0.46924341867586866,
+              "nrmse_scalar": 0.4724587257654121,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 24.776981327333647,
+              "signed_r": 0.0010877108907533055,
+              "nrmse": 0.46924341867586866,
+              "nrmse_scalar": 0.4724587257654121,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 48
+            },
+            "valid_questions": 48
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 8.966717242057918,
+              "signed_r": 0.021786956608611487,
+              "nrmse": 0.49748322773171444,
+              "nrmse_scalar": 0.503986291345874,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 8.966717242057918,
+              "signed_r": 0.021786956608611487,
+              "nrmse": 0.49748322773171444,
+              "nrmse_scalar": 0.503986291345874,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 48
+            },
+            "valid_questions": 48
+          }
+        ]
+      },
+      {
+        "id": "Gerstenberg2022What",
+        "label": "Gerstenberg 2022",
+        "question_count": 16,
+        "source_count": 16,
+        "scalar_count": 16,
+        "primary_experiments": [
+          "Gerstenberg2022What/exp1",
+          "Gerstenberg2022What/exp2"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 31.542459090871983,
+              "signed_r": -0.49549071413798934,
+              "nrmse": 0.49075383527362937,
+              "nrmse_scalar": 0.49075383527362937,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 31.542459090871983,
+              "signed_r": -0.49549071413798934,
+              "nrmse": 0.49075383527362937,
+              "nrmse_scalar": 0.49075383527362937,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 16
+            },
+            "valid_questions": 16
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.4769117560306112,
+              "nrmse_scalar": 0.4769117560306112,
+              "undefined_experiments": [
+                "Gerstenberg2022What/exp1"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.4769117560306112,
+              "nrmse_scalar": 0.4769117560306112,
+              "undefined_experiments": [
+                "Gerstenberg2022What/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 16
+            },
+            "valid_questions": 16
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 14.328141846753557,
+              "signed_r": -0.3749079905564182,
+              "nrmse": 0.5636551894073322,
+              "nrmse_scalar": 0.5636551894073322,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 14.328141846753557,
+              "signed_r": -0.3749079905564182,
+              "nrmse": 0.5636551894073322,
+              "nrmse_scalar": 0.5636551894073322,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 16
+            },
+            "valid_questions": 16
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 13.56459018303879,
+              "signed_r": -0.3626086345585311,
+              "nrmse": 0.516256811047363,
+              "nrmse_scalar": 0.516256811047363,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 13.56459018303879,
+              "signed_r": -0.3626086345585311,
+              "nrmse": 0.516256811047363,
+              "nrmse_scalar": 0.516256811047363,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 16
+            },
+            "valid_questions": 16
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 7.592235911502816,
+              "signed_r": 0.19937388819098079,
+              "nrmse": 0.4574312115139954,
+              "nrmse_scalar": 0.4574312115139954,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 7.592235911502816,
+              "signed_r": 0.19937388819098079,
+              "nrmse": 0.4574312115139954,
+              "nrmse_scalar": 0.4574312115139954,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 16
+            },
+            "valid_questions": 16
+          }
+        ]
+      },
+      {
+        "id": "Hamrick2016Inferring",
+        "label": "Hamrick 2016",
+        "question_count": 12,
+        "source_count": 6,
+        "scalar_count": 12,
+        "primary_experiments": [
+          "Hamrick2016Inferring/exp1",
+          "Hamrick2016Inferring/exp2"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 12.869623131853828,
+              "signed_r": 0.023706548027463914,
+              "nrmse": 0.30625739338226177,
+              "nrmse_scalar": 0.30625739338226177,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 12.869623131853828,
+              "signed_r": 0.023706548027463914,
+              "nrmse": 0.30625739338226177,
+              "nrmse_scalar": 0.30625739338226177,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 12
+            },
+            "valid_questions": 12
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 41.14604835868887,
+              "signed_r": 0.25453644429427114,
+              "nrmse": 0.32361287707838465,
+              "nrmse_scalar": 0.32361287707838465,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 41.14604835868887,
+              "signed_r": 0.25453644429427114,
+              "nrmse": 0.32361287707838465,
+              "nrmse_scalar": 0.32361287707838465,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 12
+            },
+            "valid_questions": 12
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Hamrick2016Inferring/exp1",
+                "Hamrick2016Inferring/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Hamrick2016Inferring/exp1",
+                "Hamrick2016Inferring/exp2"
+              ]
+            },
+            "status_counts": {
+              "overlength": 12
+            },
+            "valid_questions": 0
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.26078039396895847,
+              "nrmse_scalar": 0.26078039396895847,
+              "undefined_experiments": [
+                "Hamrick2016Inferring/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.26078039396895847,
+              "nrmse_scalar": 0.26078039396895847,
+              "undefined_experiments": [
+                "Hamrick2016Inferring/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 12
+            },
+            "valid_questions": 12
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.30636326164155603,
+              "nrmse_scalar": 0.30636326164155603,
+              "undefined_experiments": [
+                "Hamrick2016Inferring/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.30636326164155603,
+              "nrmse_scalar": 0.30636326164155603,
+              "undefined_experiments": [
+                "Hamrick2016Inferring/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 12
+            },
+            "valid_questions": 12
+          }
+        ]
+      },
+      {
+        "id": "Smith2019Modeling",
+        "label": "Smith 2019",
+        "question_count": 20,
+        "source_count": 20,
+        "scalar_count": 20,
+        "primary_experiments": [
+          "Smith2019Modeling/exp1"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 11.780555168027355,
+              "signed_r": 0.34322813357921805,
+              "nrmse": 0.36172779833601615,
+              "nrmse_scalar": 0.36172779833601615,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 11.780555168027355,
+              "signed_r": 0.34322813357921805,
+              "nrmse": 0.36172779833601615,
+              "nrmse_scalar": 0.36172779833601615,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 0.12450339916250008,
+              "signed_r": -0.035285039203960096,
+              "nrmse": 0.41423571350020216,
+              "nrmse_scalar": 0.41423571350020216,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.12450339916250008,
+              "signed_r": -0.035285039203960096,
+              "nrmse": 0.41423571350020216,
+              "nrmse_scalar": 0.41423571350020216,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 5.215078609164135,
+              "signed_r": 0.22836546606621885,
+              "nrmse": 0.38971693873761964,
+              "nrmse_scalar": 0.38971693873761964,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 5.215078609164135,
+              "signed_r": 0.22836546606621885,
+              "nrmse": 0.38971693873761964,
+              "nrmse_scalar": 0.38971693873761964,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 0.0011830498543921293,
+              "signed_r": 0.003439549177424462,
+              "nrmse": 0.4122513745144115,
+              "nrmse_scalar": 0.4122513745144115,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.0011830498543921293,
+              "signed_r": 0.003439549177424462,
+              "nrmse": 0.4122513745144115,
+              "nrmse_scalar": 0.4122513745144115,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 5.5302492231231986,
+              "signed_r": 0.23516481928900843,
+              "nrmse": 0.37605143117534007,
+              "nrmse_scalar": 0.37605143117534007,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 5.5302492231231986,
+              "signed_r": 0.23516481928900843,
+              "nrmse": 0.37605143117534007,
+              "nrmse_scalar": 0.37605143117534007,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 20
+            },
+            "valid_questions": 20
+          }
+        ]
+      },
+      {
+        "id": "Sosa2021Moral",
+        "label": "Sosa 2021",
+        "question_count": 38,
+        "source_count": 12,
+        "scalar_count": 38,
+        "primary_experiments": [
+          "Sosa2021Moral/exp2",
+          "Sosa2021Moral/exp3"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 0.034736814791470984,
+              "signed_r": 0.015208559998658926,
+              "nrmse": 0.644742846950151,
+              "nrmse_scalar": 0.644742846950151,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.034736814791470984,
+              "signed_r": 0.015208559998658926,
+              "nrmse": 0.644742846950151,
+              "nrmse_scalar": 0.644742846950151,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 38
+            },
+            "valid_questions": 38
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 14.512480308617596,
+              "signed_r": 0.2687612885818297,
+              "nrmse": 0.56152324785011,
+              "nrmse_scalar": 0.56152324785011,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 14.512480308617596,
+              "signed_r": 0.2687612885818297,
+              "nrmse": 0.56152324785011,
+              "nrmse_scalar": 0.56152324785011,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 38
+            },
+            "valid_questions": 38
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 54.14629236459053,
+              "signed_r": 0.6996462632499525,
+              "nrmse": 0.3638893606276082,
+              "nrmse_scalar": 0.3638893606276082,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 54.14629236459053,
+              "signed_r": 0.6996462632499525,
+              "nrmse": 0.3638893606276082,
+              "nrmse_scalar": 0.3638893606276082,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 38
+            },
+            "valid_questions": 38
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 49.3852572270867,
+              "signed_r": 0.02116245367429198,
+              "nrmse": 0.366066389503394,
+              "nrmse_scalar": 0.366066389503394,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 49.3852572270867,
+              "signed_r": 0.02116245367429198,
+              "nrmse": 0.366066389503394,
+              "nrmse_scalar": 0.366066389503394,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 38
+            },
+            "valid_questions": 38
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 5.579663449205629,
+              "signed_r": 0.2005995824139219,
+              "nrmse": 0.570295631021329,
+              "nrmse_scalar": 0.570295631021329,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 5.579663449205629,
+              "signed_r": 0.2005995824139219,
+              "nrmse": 0.570295631021329,
+              "nrmse_scalar": 0.570295631021329,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 38
+            },
+            "valid_questions": 38
+          }
+        ]
+      },
+      {
+        "id": "Sosa2025Blending",
+        "label": "Sosa 2025",
+        "question_count": 32,
+        "source_count": 20,
+        "scalar_count": 64,
+        "primary_experiments": [
+          "Sosa2025Blending/exp1",
+          "Sosa2025Blending/exp2"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 26.56294099179429,
+              "signed_r": 0.4879408570650143,
+              "nrmse": 0.45377573457669307,
+              "nrmse_scalar": 0.45377573457669307,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 26.56294099179429,
+              "signed_r": 0.4879408570650143,
+              "nrmse": 0.45377573457669307,
+              "nrmse_scalar": 0.45377573457669307,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 32
+            },
+            "valid_questions": 32
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 50.68922983176585,
+              "signed_r": 0.6873822906962048,
+              "nrmse": 0.35271284965115945,
+              "nrmse_scalar": 0.35271284965115945,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 50.68922983176585,
+              "signed_r": 0.6873822906962048,
+              "nrmse": 0.35271284965115945,
+              "nrmse_scalar": 0.35271284965115945,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 32
+            },
+            "valid_questions": 32
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 19.034004732892097,
+              "signed_r": 0.4241481377107519,
+              "nrmse": 0.48305104951270994,
+              "nrmse_scalar": 0.48305104951270994,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 19.034004732892097,
+              "signed_r": 0.4241481377107519,
+              "nrmse": 0.48305104951270994,
+              "nrmse_scalar": 0.48305104951270994,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 32
+            },
+            "valid_questions": 32
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 20.417746244667843,
+              "signed_r": 0.43717779582435246,
+              "nrmse": 0.4774290634026297,
+              "nrmse_scalar": 0.4774290634026297,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 20.417746244667843,
+              "signed_r": 0.43717779582435246,
+              "nrmse": 0.4774290634026297,
+              "nrmse_scalar": 0.4774290634026297,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 32
+            },
+            "valid_questions": 32
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 3.996575485904086,
+              "signed_r": 0.15884593443286615,
+              "nrmse": 0.5789511889617416,
+              "nrmse_scalar": 0.5789511889617416,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 3.996575485904086,
+              "signed_r": 0.15884593443286615,
+              "nrmse": 0.5789511889617416,
+              "nrmse_scalar": 0.5789511889617416,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 32
+            },
+            "valid_questions": 32
+          }
+        ]
+      },
+      {
+        "id": "Stephan2021Counterfactual",
+        "label": "Stephan 2021",
+        "question_count": 30,
+        "source_count": 10,
+        "scalar_count": 30,
+        "primary_experiments": [
+          "Stephan2021Counterfactual/exp1",
+          "Stephan2021Counterfactual/exp3"
+        ],
+        "diagnostic_experiments": [
+          "Stephan2021Counterfactual/exp2"
+        ],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 14.48987903499242,
+              "signed_r": 0.07585188006857407,
+              "nrmse": 0.4719639008350288,
+              "nrmse_scalar": 0.4719639008350288,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.592827178713956,
+              "nrmse_scalar": 0.592827178713956,
+              "undefined_experiments": [
+                "Stephan2021Counterfactual/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 30
+            },
+            "valid_questions": 30
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 32.97567097417453,
+              "signed_r": 0.5551337082661767,
+              "nrmse": 0.348529618029969,
+              "nrmse_scalar": 0.348529618029969,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.2715726487512638,
+              "nrmse_scalar": 0.2715726487512638,
+              "undefined_experiments": [
+                "Stephan2021Counterfactual/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 30
+            },
+            "valid_questions": 30
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 21.44664195833213,
+              "signed_r": 0.1977070808150888,
+              "nrmse": 0.467673864700791,
+              "nrmse_scalar": 0.467673864700791,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.5236115357937855,
+              "nrmse_scalar": 0.5236115357937855,
+              "undefined_experiments": [
+                "Stephan2021Counterfactual/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 30
+            },
+            "valid_questions": 30
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 9.383825320996834,
+              "signed_r": 0.289629109745154,
+              "nrmse": 0.47878503817937146,
+              "nrmse_scalar": 0.47878503817937146,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.5310189847795059,
+              "nrmse_scalar": 0.5310189847795059,
+              "undefined_experiments": [
+                "Stephan2021Counterfactual/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 30
+            },
+            "valid_questions": 30
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 11.622302503086503,
+              "signed_r": 0.2989006844381385,
+              "nrmse": 0.40631360499469404,
+              "nrmse_scalar": 0.40631360499469404,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.482704695989721,
+              "nrmse_scalar": 0.482704695989721,
+              "undefined_experiments": [
+                "Stephan2021Counterfactual/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 30
+            },
+            "valid_questions": 30
+          }
+        ]
+      },
+      {
+        "id": "Ullman2018Learning",
+        "label": "Ullman 2018",
+        "question_count": 181,
+        "source_count": 20,
+        "scalar_count": 744,
+        "primary_experiments": [
+          "Ullman2018Learning/exp1"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 0.01502003265117664,
+              "signed_r": 0.012255624280784982,
+              "nrmse": 0.49801090568898315,
+              "nrmse_scalar": 0.49801090568898315,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.01502003265117664,
+              "signed_r": 0.012255624280784982,
+              "nrmse": 0.49801090568898315,
+              "nrmse_scalar": 0.49801090568898315,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 181
+            },
+            "valid_questions": 181
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 0.8592461677293453,
+              "signed_r": 0.09269553213231721,
+              "nrmse": 0.4797877323349773,
+              "nrmse_scalar": 0.4797877323349773,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.8592461677293453,
+              "signed_r": 0.09269553213231721,
+              "nrmse": 0.4797877323349773,
+              "nrmse_scalar": 0.4797877323349773,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 181
+            },
+            "valid_questions": 181
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": 1.7058522750881286,
+              "signed_r": 0.13060827979451106,
+              "nrmse": 0.47095440369233654,
+              "nrmse_scalar": 0.47095440369233654,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 1.7058522750881286,
+              "signed_r": 0.13060827979451106,
+              "nrmse": 0.47095440369233654,
+              "nrmse_scalar": 0.47095440369233654,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 181
+            },
+            "valid_questions": 181
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 0.2851294387627716,
+              "signed_r": 0.05339751293485227,
+              "nrmse": 0.4887753506141211,
+              "nrmse_scalar": 0.4887753506141211,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.2851294387627716,
+              "signed_r": 0.05339751293485227,
+              "nrmse": 0.4887753506141211,
+              "nrmse_scalar": 0.4887753506141211,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 181
+            },
+            "valid_questions": 181
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 0.3883507532138153,
+              "signed_r": 0.06231779466683776,
+              "nrmse": 0.4867498052776698,
+              "nrmse_scalar": 0.4867498052776698,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 0.3883507532138153,
+              "signed_r": 0.06231779466683776,
+              "nrmse": 0.4867498052776698,
+              "nrmse_scalar": 0.4867498052776698,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 181
+            },
+            "valid_questions": 181
+          }
+        ]
+      },
+      {
+        "id": "Wu2022That",
+        "label": "Wu 2022",
+        "question_count": 8,
+        "source_count": 8,
+        "scalar_count": 8,
+        "primary_experiments": [
+          "Wu2022That/exp2",
+          "Wu2022That/exp3"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": 20.0197560900355,
+              "signed_r": 0.4389533861131807,
+              "nrmse": 0.5286825553507304,
+              "nrmse_scalar": 0.5286825553507304,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 20.0197560900355,
+              "signed_r": 0.4389533861131807,
+              "nrmse": 0.5286825553507304,
+              "nrmse_scalar": 0.5286825553507304,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 8
+            },
+            "valid_questions": 8
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": 21.1992078850968,
+              "signed_r": -0.19761695151663455,
+              "nrmse": 0.6062419102260652,
+              "nrmse_scalar": 0.6062419102260652,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 21.1992078850968,
+              "signed_r": -0.19761695151663455,
+              "nrmse": 0.6062419102260652,
+              "nrmse_scalar": 0.6062419102260652,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 8
+            },
+            "valid_questions": 8
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.5559661234348675,
+              "nrmse_scalar": 0.5559661234348675,
+              "undefined_experiments": [
+                "Wu2022That/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.5559661234348675,
+              "nrmse_scalar": 0.5559661234348675,
+              "undefined_experiments": [
+                "Wu2022That/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 8
+            },
+            "valid_questions": 8
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": 71.07569683044127,
+              "signed_r": 0.826690945974941,
+              "nrmse": 0.26966503336859887,
+              "nrmse_scalar": 0.26966503336859887,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 71.07569683044127,
+              "signed_r": 0.826690945974941,
+              "nrmse": 0.26966503336859887,
+              "nrmse_scalar": 0.26966503336859887,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 8
+            },
+            "valid_questions": 8
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": 22.303555234908536,
+              "signed_r": 0.46883569866272756,
+              "nrmse": 0.577099491594145,
+              "nrmse_scalar": 0.577099491594145,
+              "undefined_experiments": []
+            },
+            "all_experiments": {
+              "r2_percent": 22.303555234908536,
+              "signed_r": 0.46883569866272756,
+              "nrmse": 0.577099491594145,
+              "nrmse_scalar": 0.577099491594145,
+              "undefined_experiments": []
+            },
+            "status_counts": {
+              "complete": 8
+            },
+            "valid_questions": 8
+          }
+        ]
+      },
+      {
+        "id": "Zhou2023Mental",
+        "label": "Zhou 2023",
+        "question_count": 42,
+        "source_count": 15,
+        "scalar_count": 175,
+        "primary_experiments": [
+          "Zhou2023Mental/exp1",
+          "Zhou2023Mental/exp2",
+          "Zhou2023Mental/exp3"
+        ],
+        "diagnostic_experiments": [],
+        "results": [
+          {
+            "id": "video",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.379387819988627,
+              "nrmse_scalar": 0.4708302986786696,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.379387819988627,
+              "nrmse_scalar": 0.4708302986786696,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1"
+              ]
+            },
+            "status_counts": {
+              "complete": 42
+            },
+            "valid_questions": 42
+          },
+          {
+            "id": "saved_direct_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 41,
+              "execution_failed": 1
+            },
+            "valid_questions": 41
+          },
+          {
+            "id": "full_code",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 40,
+              "invalid": 2
+            },
+            "valid_questions": 40
+          },
+          {
+            "id": "predictedtask",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 41,
+              "invalid": 1
+            },
+            "valid_questions": 41
+          },
+          {
+            "id": "partialoracle",
+            "primary": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "all_experiments": {
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": null,
+              "nrmse_scalar": null,
+              "undefined_experiments": [
+                "Zhou2023Mental/exp1",
+                "Zhou2023Mental/exp2"
+              ]
+            },
+            "status_counts": {
+              "complete": 41,
+              "invalid": 1
+            },
+            "valid_questions": 41
+          }
+        ]
+      }
+    ],
+    "coverage_caveat": "The original catalog contained 280 quality-ranked sources, not an unselected representative corpus. The frozen490 are a narrower historical comparison, not all available visual questions.",
+    "method": {
+      "name": "Question-conditioned evidence from saved parsing",
+      "process": [
+        "Bind the original question and sampled visual input to saved Parse Anything code.",
+        "Retrieve task-relevant objects, states, relations and supported measurements; use task computations only where defined.",
+        "Serialize the evidence with the unchanged native question, response domain and decoding contract.",
+        "Generate the final judgment with Qwen3.5-27B; freeze predictions before human-reference scoring."
+      ],
+      "reference_limit": "Partial-reference inputs may omit temporal evidence, capabilities or task-critical fields. Their score is not a complete physical-oracle upper bound."
+    }
+  },
+  "panels": [
+    {
+      "id": "bass42",
+      "title": "Bass: explicit event semantics",
+      "study_id": "Bass2022Partial",
+      "question_count": 42,
+      "source_count": 20,
+      "scalar_count": 44,
+      "task": "Physical probability, conjunction and intervention judgments; 40 slider questions and two categorical checks.",
+      "method": {
+        "name": "Explicit event-semantic handoff",
+        "summary": "Disambiguate already computed model events without changing their physical facts. Separate event occurrence from a named collision relation, world, objects, time and ordering.",
+        "process": [
+          "Reuse the frozen modeled factual/intervention episodes and their source bindings.",
+          "Represent positive sensor events separately from absence of a named collision within the horizon.",
+          "Preserve world identity, participants, intervals, order, finite-horizon limits and unresolved endpoints.",
+          "Render the same facts explicitly; retain the original video, question, header, schema and native decoder.",
+          "Use the unchanged 27B reasoner for the probability judgment; human targets enter scoring only."
+        ]
+      },
+      "metric_context": "All42 is the equal-weight mean of categorical and slider R2. The displayed nrmse is equal-type; nrmse_scalar is also retained.",
+      "results": [
+        {
+          "id": "video",
+          "label": "Video only",
+          "role": "control",
+          "r2_percent": 50.26762055627514,
+          "signed_r": 0.5365800872248233,
+          "nrmse": 0.24514487673675292,
+          "nrmse_scalar": 0.467472937827432,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "saved_direct_code",
+          "label": "Saved 8B-Instruct direct code",
+          "role": "control",
+          "r2_percent": 51.50455064142054,
+          "signed_r": 0.5867338065987117,
+          "nrmse": 0.23019803559170043,
+          "nrmse_scalar": 0.4389704301090234,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "full_code",
+          "label": "Full Parse Anything code",
+          "role": "control",
+          "r2_percent": 52.47205634873383,
+          "signed_r": 0.611176803982077,
+          "nrmse": 0.22069815870764406,
+          "nrmse_scalar": 0.42085487568624996,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "predictedtask",
+          "label": "Previous task evidence",
+          "role": "control",
+          "r2_percent": 50.355617803273134,
+          "signed_r": 0.5421673928096777,
+          "nrmse": 0.22863801941849282,
+          "nrmse_scalar": 0.4359955959894804,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "partialoracle",
+          "label": "Previous partial-reference evidence",
+          "role": "control",
+          "r2_percent": 50.33839161083663,
+          "signed_r": 0.4588665822696055,
+          "nrmse": 0.227805953076175,
+          "nrmse_scalar": 0.43440890773113944,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "predicted_factual",
+          "label": "Predicted factual events",
+          "role": "prior_method",
+          "r2_percent": 63.148573156675006,
+          "signed_r": 0.7564037163993046,
+          "nrmse": 0.20688676997400723,
+          "nrmse_scalar": 0.3945175907601484,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "predicted_conditional",
+          "label": "Predicted conditional events",
+          "role": "prior_method",
+          "r2_percent": 63.271625672182275,
+          "signed_r": 0.7576007149852488,
+          "nrmse": 0.20781439577247235,
+          "nrmse_scalar": 0.3962865037514595,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "reference_factual",
+          "label": "Reference factual events",
+          "role": "prior_method",
+          "r2_percent": 54.65414260935435,
+          "signed_r": 0.6525474124551831,
+          "nrmse": 0.22806493539547998,
+          "nrmse_scalar": 0.4349027676366061,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "partial_reference_not_upper_bound",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "reference_conditional",
+          "label": "Reference conditional events",
+          "role": "prior_method",
+          "r2_percent": 54.443126988406036,
+          "signed_r": 0.6490491024529506,
+          "nrmse": 0.22985586554101925,
+          "nrmse_scalar": 0.43831793742405384,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "partial_reference_not_upper_bound",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "predicted_event_semantics",
+          "label": "Predicted explicit event semantics",
+          "role": "candidate",
+          "r2_percent": 72.14112428085626,
+          "signed_r": 0.832724542834281,
+          "nrmse": 0.16952989585992725,
+          "nrmse_scalar": 0.3232808269222837,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "bass"
+          ]
+        },
+        {
+          "id": "reference_event_semantics",
+          "label": "Reference explicit event semantics",
+          "role": "partial_reference",
+          "r2_percent": 66.9571147182888,
+          "signed_r": 0.791179624272448,
+          "nrmse": 0.18772955438683003,
+          "nrmse_scalar": 0.35798621400717645,
+          "undefined_experiments": [],
+          "status": "complete",
+          "comparability": "partial_reference_not_upper_bound",
+          "source_ids": [
+            "bass"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "predicted_event_semantics",
+        "reference_id": "reference_event_semantics",
+        "control_ids": [
+          "video",
+          "saved_direct_code",
+          "full_code"
+        ]
+      },
+      "gate": {
+        "status": "passed_local_paired_gate",
+        "description": "Each semantic arm exceeds its matched factual arm by at least 5 percentage points, with positive slider r and no nRMSE regression. This is not a whole-cohort or transfer gate.",
+        "comparisons": {
+          "predicted_event_semantics": {
+            "baseline": "predicted_factual",
+            "r2_gain": 0.08992551124181258,
+            "slider_r": 0.665449085668562,
+            "passed": true
+          },
+          "reference_event_semantics": {
+            "baseline": "reference_factual",
+            "r2_gain": 0.12302972108934451,
+            "slider_r": 0.5823592485448962,
+            "passed": true
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "id": "slider40",
+          "title": "All 40 slider questions",
+          "question_count": 40,
+          "role": "fixed diagnostic, not a replacement primary",
+          "results": [
+            {
+              "id": "video",
+              "r2_percent": 0.5352411125502728,
+              "signed_r": 0.07316017444964663,
+              "nrmse": 0.49028975347350584,
+              "nrmse_scalar": 0.49028975347350584,
+              "undefined_experiments": []
+            },
+            {
+              "id": "saved_direct_code",
+              "r2_percent": 3.0091012828410846,
+              "signed_r": 0.17346761319742324,
+              "nrmse": 0.46039607118340087,
+              "nrmse_scalar": 0.46039607118340087,
+              "undefined_experiments": []
+            },
+            {
+              "id": "full_code",
+              "r2_percent": 4.944112697467664,
+              "signed_r": 0.22235360796415388,
+              "nrmse": 0.4413963174152881,
+              "nrmse_scalar": 0.4413963174152881,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predictedtask",
+              "r2_percent": 0.7112356065462636,
+              "signed_r": 0.08433478561935541,
+              "nrmse": 0.45727603883698564,
+              "nrmse_scalar": 0.45727603883698564,
+              "undefined_experiments": []
+            },
+            {
+              "id": "partialoracle",
+              "r2_percent": 0.6767832216732531,
+              "signed_r": -0.082266835460789,
+              "nrmse": 0.45561190615235,
+              "nrmse_scalar": 0.45561190615235,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_factual",
+              "r2_percent": 26.297146313350005,
+              "signed_r": 0.5128074327986092,
+              "nrmse": 0.41377353994801447,
+              "nrmse_scalar": 0.41377353994801447,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_conditional",
+              "r2_percent": 26.54325134436456,
+              "signed_r": 0.5152014299704977,
+              "nrmse": 0.4156287915449447,
+              "nrmse_scalar": 0.4156287915449447,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_factual",
+              "r2_percent": 9.308285218708695,
+              "signed_r": 0.3050948249103661,
+              "nrmse": 0.45612987079095996,
+              "nrmse_scalar": 0.45612987079095996,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_conditional",
+              "r2_percent": 8.886253976812064,
+              "signed_r": 0.29809820490590117,
+              "nrmse": 0.4597117310820385,
+              "nrmse_scalar": 0.4597117310820385,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_event_semantics",
+              "r2_percent": 44.282248561712514,
+              "signed_r": 0.665449085668562,
+              "nrmse": 0.3390597917198545,
+              "nrmse_scalar": 0.3390597917198545,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_event_semantics",
+              "r2_percent": 33.914229436577614,
+              "signed_r": 0.5823592485448962,
+              "nrmse": 0.37545910877366007,
+              "nrmse_scalar": 0.37545910877366007,
+              "undefined_experiments": []
+            }
+          ]
+        },
+        {
+          "id": "main37",
+          "title": "Original 37 main-study slider questions",
+          "question_count": 37,
+          "role": "fixed diagnostic, not a replacement primary",
+          "results": [
+            {
+              "id": "video",
+              "r2_percent": 0.11438703524770538,
+              "signed_r": 0.033821152441586816,
+              "nrmse": 0.48228486778427304,
+              "nrmse_scalar": 0.48228486778427304,
+              "undefined_experiments": []
+            },
+            {
+              "id": "saved_direct_code",
+              "r2_percent": 0.06928489274735802,
+              "signed_r": 0.026322023620413006,
+              "nrmse": 0.47837972591045513,
+              "nrmse_scalar": 0.47837972591045513,
+              "undefined_experiments": []
+            },
+            {
+              "id": "full_code",
+              "r2_percent": 0.06800664679998435,
+              "signed_r": 0.026078084055387266,
+              "nrmse": 0.4588136385886485,
+              "nrmse_scalar": 0.4588136385886485,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predictedtask",
+              "r2_percent": 0.5677795391866828,
+              "signed_r": 0.0753511472498384,
+              "nrmse": 0.44936576927331107,
+              "nrmse_scalar": 0.44936576927331107,
+              "undefined_experiments": []
+            },
+            {
+              "id": "partialoracle",
+              "r2_percent": 0.8199067356910377,
+              "signed_r": -0.09054870157495566,
+              "nrmse": 0.4397996575018434,
+              "nrmse_scalar": 0.4397996575018434,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_factual",
+              "r2_percent": 38.99852060716874,
+              "signed_r": 0.6244879551053707,
+              "nrmse": 0.3976382415854531,
+              "nrmse_scalar": 0.3976382415854531,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_conditional",
+              "r2_percent": 40.470751407152875,
+              "signed_r": 0.6361662629152294,
+              "nrmse": 0.39972451098811124,
+              "nrmse_scalar": 0.39972451098811124,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_factual",
+              "r2_percent": 14.600327226193913,
+              "signed_r": 0.3821037454173135,
+              "nrmse": 0.44484033981635246,
+              "nrmse_scalar": 0.44484033981635246,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_conditional",
+              "r2_percent": 13.138499225909356,
+              "signed_r": 0.36247067779214026,
+              "nrmse": 0.4488087836978286,
+              "nrmse_scalar": 0.4488087836978286,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_event_semantics",
+              "r2_percent": 42.39481372781766,
+              "signed_r": 0.651112998855173,
+              "nrmse": 0.35234932246996736,
+              "nrmse_scalar": 0.35234932246996736,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_event_semantics",
+              "r2_percent": 29.621481196564257,
+              "signed_r": 0.5442562006680701,
+              "nrmse": 0.39029597223894835,
+              "nrmse_scalar": 0.39029597223894835,
+              "undefined_experiments": []
+            }
+          ]
+        },
+        {
+          "id": "conditional9",
+          "title": "Nine hit-conditioned questions",
+          "question_count": 9,
+          "role": "fixed diagnostic, not a replacement primary",
+          "results": [
+            {
+              "id": "video",
+              "r2_percent": 78.9112740027236,
+              "signed_r": 0.8883201787797214,
+              "nrmse": 0.34899163384503523,
+              "nrmse_scalar": 0.34899163384503523,
+              "undefined_experiments": []
+            },
+            {
+              "id": "saved_direct_code",
+              "r2_percent": 76.94266113642192,
+              "signed_r": 0.877169659395615,
+              "nrmse": 0.34740409459053817,
+              "nrmse_scalar": 0.34740409459053817,
+              "undefined_experiments": []
+            },
+            {
+              "id": "full_code",
+              "r2_percent": 76.94266113642189,
+              "signed_r": 0.8771696593956149,
+              "nrmse": 0.34630693586349165,
+              "nrmse_scalar": 0.34630693586349165,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predictedtask",
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.4675772597412758,
+              "nrmse_scalar": 0.4675772597412758,
+              "undefined_experiments": [
+                "Bass2022Partial/exp1"
+              ]
+            },
+            {
+              "id": "partialoracle",
+              "r2_percent": 42.99001090769804,
+              "signed_r": 0.6556676818915055,
+              "nrmse": 0.3580667914795979,
+              "nrmse_scalar": 0.3580667914795979,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_factual",
+              "r2_percent": 48.64747150787295,
+              "signed_r": 0.6974773939553378,
+              "nrmse": 0.38246371570014387,
+              "nrmse_scalar": 0.38246371570014387,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_conditional",
+              "r2_percent": 76.94266113642188,
+              "signed_r": 0.8771696593956148,
+              "nrmse": 0.3913021629330068,
+              "nrmse_scalar": 0.3913021629330068,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_factual",
+              "r2_percent": 79.04665685511662,
+              "signed_r": 0.8890818683063817,
+              "nrmse": 0.37808089146877966,
+              "nrmse_scalar": 0.37808089146877966,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_conditional",
+              "r2_percent": 46.267940043356326,
+              "signed_r": 0.6802054104706631,
+              "nrmse": 0.3968939280506277,
+              "nrmse_scalar": 0.3968939280506277,
+              "undefined_experiments": []
+            },
+            {
+              "id": "predicted_event_semantics",
+              "r2_percent": 52.721843094899754,
+              "signed_r": 0.7260980863140996,
+              "nrmse": 0.3281445781931051,
+              "nrmse_scalar": 0.3281445781931051,
+              "undefined_experiments": []
+            },
+            {
+              "id": "reference_event_semantics",
+              "r2_percent": 48.54377325718448,
+              "signed_r": 0.6967336166511882,
+              "nrmse": 0.35493970971259925,
+              "nrmse_scalar": 0.35493970971259925,
+              "undefined_experiments": []
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Two categorical checks contribute four perfect one-hot items in every arm. All42 R2 = (1 + slider40 R2)/2, so 72.14% is neither accuracy nor slider-only performance.",
+        "Predicted slider40 R2 is 44.28%, signed r +0.6654, nRMSE 0.3391. Conditional9 R2 is 52.72%, below video 78.91%; conditional reasoning is not solved.",
+        "The explicit handoff changes interpretation, not parsing, simulation or physical facts in this contrast.",
+        "Reference evidence is partial; differing source headers and content prevent an isolated parser-quality or oracle ranking claim.",
+        "All 42 questions were exposed development data. No source-cluster uncertainty or held-out gain is established."
+      ],
+      "source_ids": [
+        "bass"
+      ]
+    },
+    {
+      "id": "ger2021_8",
+      "title": "Gerstenberg 2021: conditional trajectory",
+      "study_id": "Gerstenberg2021A_Counterfactual",
+      "question_count": 8,
+      "source_count": 8,
+      "scalar_count": 8,
+      "task": "Experiment 1 counterfactual subset: whether B would exit if A were removed.",
+      "method": {
+        "name": "Bounded static-arena numerical timeline",
+        "summary": "Compute a conditional trajectory from unchanged observed boxes and source-supplied wall mechanics, then ask the VLM for the continuous judgment.",
+        "process": [
+          "Select the first supported visible motion anchors for B, retaining times and provenance.",
+          "Remove A as the question stipulates; retain wall geometry and shared static elastic-wall assumptions.",
+          "Derive the gate corridor and execute supported contacts, velocity changes and whole-body exit checks.",
+          "Stop at the recorded horizon or unsupported geometry; do not invent completion.",
+          "Present the numerical timeline with the original visual input, question and common mechanisms to the reasoner."
+        ]
+      },
+      "metric_context": "Single slider response type on eight fixed questions; R2 is squared Pearson r.",
+      "results": [
+        {
+          "id": "video_rules",
+          "label": "Video + shared mechanisms",
+          "role": "control",
+          "r2_percent": 6.335859880375611,
+          "signed_r": -0.2517113402367007,
+          "nrmse": 0.5221367996033224,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2021"
+          ]
+        },
+        {
+          "id": "saved_8b_direct_rules",
+          "label": "Saved 8B direct code + mechanisms",
+          "role": "control",
+          "r2_percent": 3.275306662627622,
+          "signed_r": -0.18097808327605922,
+          "nrmse": 0.5264936728014877,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2021"
+          ]
+        },
+        {
+          "id": "own_27b_direct_code",
+          "label": "Same-27B direct code + mechanisms",
+          "role": "control",
+          "r2_percent": 1.627454971612418,
+          "signed_r": 0.12757174340787297,
+          "nrmse": 0.49941774848317116,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2021"
+          ]
+        },
+        {
+          "id": "full_code_rules",
+          "label": "Full code + mechanisms",
+          "role": "control",
+          "r2_percent": 4.826208988181927,
+          "signed_r": 0.2196863443225802,
+          "nrmse": 0.49019061343522274,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2021"
+          ]
+        },
+        {
+          "id": "predicted_chain",
+          "label": "Predicted numerical timeline",
+          "role": "candidate",
+          "r2_percent": 74.55093243861474,
+          "signed_r": 0.8634288183667183,
+          "nrmse": 0.2618574755472908,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2021"
+          ]
+        },
+        {
+          "id": "reference_chain",
+          "label": "Partial-reference numerical timeline",
+          "role": "partial_reference",
+          "r2_percent": 81.49537697052092,
+          "signed_r": 0.9027478993081121,
+          "nrmse": 0.24205750866271428,
+          "status": "complete",
+          "comparability": "partial_reference_not_upper_bound",
+          "source_ids": [
+            "ger2021"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "predicted_chain",
+        "reference_id": "reference_chain",
+        "control_ids": [
+          "video_rules",
+          "own_27b_direct_code",
+          "full_code_rules"
+        ]
+      },
+      "gate": {
+        "status": "passed_local_numerical_gate",
+        "description": "Both timelines have positive r, higher R2 and no worse nRMSE than video, full code, saved8B direct and the completed same27B direct control. Explanation faithfulness remains incomplete."
+      },
+      "limitations": [
+        "Only eight exposed counterfactual questions, not all 48 Gerstenberg2021 questions or an untouched holdout.",
+        "Adds physical computation and source-supplied mechanics; it is not a format-only ablation or unaided video baseline.",
+        "Box approximation differs from the source circular-body engine. Unsupported corner/contact states remain.",
+        "Some explanations turn unresolved stops into definite success or failure; high R2 does not establish faithful uncertainty handling.",
+        "Partial-reference geometry and historical source-identity caveats do not constitute a complete oracle."
+      ],
+      "source_ids": [
+        "ger2021"
+      ]
+    },
+    {
+      "id": "ger2022_8",
+      "title": "Gerstenberg 2022: common-schema timeline",
+      "study_id": "Gerstenberg2022What",
+      "question_count": 8,
+      "source_count": 8,
+      "scalar_count": 8,
+      "task": "Experiment 2: conditional gate passage under the original intervention.",
+      "method": {
+        "name": "Conditional contact-by-contact numerical execution",
+        "summary": "Instantiate the intervened scene from parsed geometry and motion, update velocity after supported contacts, and hand the bounded timeline to the VLM.",
+        "process": [
+          "Retain source geometry, clocks, intervention and shared source-derived mechanism assumptions.",
+          "Search for supported contacts in the intervened scene and compute their velocity consequences.",
+          "Record the resulting event sequence, crossing predicates, stop reasons and unsupported dependencies.",
+          "Use one source-independent explanation-first answer schema for every arm.",
+          "Ask the reasoner for the original continuous rating, not a program-assigned probability."
+        ]
+      },
+      "metric_context": "Single slider response type; the common-schema comparison is distinct from earlier schema-dependent results.",
+      "results": [
+        {
+          "id": "video_rules",
+          "label": "Video + shared mechanisms",
+          "role": "control",
+          "r2_percent": 9.27506318849324,
+          "signed_r": -0.30454988406652267,
+          "nrmse": 0.60285399098326,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2022"
+          ]
+        },
+        {
+          "id": "saved_8b_direct_rules",
+          "label": "Saved 8B-Thinking direct code + mechanisms",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": 0.5948963644572427,
+          "status": "undefined_correlation",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2022"
+          ]
+        },
+        {
+          "id": "full_code_rules",
+          "label": "Full code + mechanisms",
+          "role": "control",
+          "r2_percent": 7.766454583581253,
+          "signed_r": 0.2786835944863144,
+          "nrmse": 0.4924678681001544,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2022"
+          ]
+        },
+        {
+          "id": "predicted_chain",
+          "label": "Predicted numerical timeline",
+          "role": "candidate",
+          "r2_percent": 93.4629495560259,
+          "signed_r": 0.9667623780227792,
+          "nrmse": 0.21445866216541074,
+          "status": "complete",
+          "comparability": "matched_common_mechanisms",
+          "source_ids": [
+            "ger2022"
+          ]
+        },
+        {
+          "id": "reference_chain",
+          "label": "Factual-reference numerical timeline",
+          "role": "partial_reference",
+          "r2_percent": 61.147593885368515,
+          "signed_r": 0.7819692697630036,
+          "nrmse": 0.3104915744070647,
+          "status": "complete",
+          "comparability": "partial_reference_not_upper_bound",
+          "source_ids": [
+            "ger2022"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "predicted_chain",
+        "reference_id": "reference_chain",
+        "control_ids": [
+          "video_rules",
+          "saved_8b_direct_rules",
+          "full_code_rules"
+        ]
+      },
+      "gate": {
+        "status": "inconclusive_undefined_control",
+        "description": "The direct-code answers are constant, so its correlation is undefined. Both timelines beat the defined controls and reduce error, but the strict all-control R2 gate does not pass."
+      },
+      "limitations": [
+        "Eight exposed cases, not held-out validation or the full study.",
+        "Direct parsing is saved8B, not the 27B reasoner. Video receives the shared mechanism rules.",
+        "The reference result is 61.15% in this matched schema; an older 95.27% result uses a different schema and cannot replace it.",
+        "A reference explanation correctly describes no crossing within the horizon but emits a high supporting rating; explanation/answer polarity and calibration remain unresolved.",
+        "Event-order agreement and good anchor geometry do not imply identical judgments or a complete oracle."
+      ],
+      "source_ids": [
+        "ger2022"
+      ]
+    },
+    {
+      "id": "wu8",
+      "title": "Wu: executable action routes",
+      "study_id": "Wu2022That",
+      "question_count": 8,
+      "source_count": 8,
+      "scalar_count": 8,
+      "task": "Five counterfactual questions in experiment 2 and three causal judgments in experiment 3.",
+      "method": {
+        "name": "Semantic action graph with conditional routes",
+        "summary": "Combine frozen pixel-derived grid/actor/door observations with parsed identities, then compute legal transitions and route bounds under unknown future door states.",
+        "process": [
+          "Bind source clocks, actors, grid geometry, OCR and door observations to the parsed scene.",
+          "Build an explicit action-state graph without filling unknown future states.",
+          "Compute legal transitions, feasible paths and bounds for the stated intervention.",
+          "Compare graph-only and graph-plus-calculation inputs with identical factual evidence.",
+          "Have the unchanged VLM supply the original human-judgment rating."
+        ]
+      },
+      "metric_context": "R2 and signed_r are equal-experiment means over the 5-question and 3-question experiments. nrmse is pooled across all eight scalars, not the mean of experiment RMSEs.",
+      "results": [
+        {
+          "id": "video",
+          "label": "Video, cached",
+          "role": "control",
+          "r2_percent": 11.264036822397753,
+          "signed_r": -0.22369319614784228,
+          "nrmse": 0.5640235180933512,
+          "status": "complete",
+          "comparability": "observation_coverage_differs",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 0.07027888792090237,
+              "signed_r": 0.02651016558245202,
+              "nrmse": 0.5646488700286572
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 22.457794756874602,
+              "signed_r": -0.47389655787813656,
+              "nrmse": 0.562979721238107
+            }
+          }
+        },
+        {
+          "id": "own_27b_direct_code",
+          "label": "Same-27B direct code",
+          "role": "control",
+          "r2_percent": 22.303555234908533,
+          "signed_r": 0.4688356986627275,
+          "nrmse": 0.5166943145733276,
+          "status": "complete",
+          "comparability": "observation_coverage_differs",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 16.975601063441026,
+              "signed_r": 0.41201457575480294,
+              "nrmse": 0.5649930297133225
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 27.631509406376036,
+              "signed_r": 0.5256568215706521,
+              "nrmse": 0.42414561162255354
+            }
+          }
+        },
+        {
+          "id": "full_code",
+          "label": "Full code, cached",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": 0.5686510842224789,
+          "status": "undefined_correlation",
+          "comparability": "observation_coverage_differs",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 2.024055332131504,
+              "signed_r": 0.14226929859008597,
+              "nrmse": 0.5579487333300788
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": null,
+              "signed_r": null,
+              "nrmse": 0.5860541782622747
+            }
+          }
+        },
+        {
+          "id": "predicted_semantic_graph",
+          "label": "Predicted semantic graph",
+          "role": "matched_ablation",
+          "r2_percent": 70.42373115558507,
+          "signed_r": 0.8197504562309696,
+          "nrmse": 0.21862294730288678,
+          "status": "complete",
+          "comparability": "matched_facts_component_contrast",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 99.86475857389554,
+              "signed_r": 0.9993235640867053,
+              "nrmse": 0.11406949208547953
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 40.98270373727458,
+              "signed_r": 0.6401773483752341,
+              "nrmse": 0.3252223339891292
+            }
+          }
+        },
+        {
+          "id": "predicted_semantic_graph_certificate",
+          "label": "Predicted graph + route calculations",
+          "role": "candidate",
+          "r2_percent": 88.54677471329722,
+          "signed_r": 0.939167359617928,
+          "nrmse": 0.16257735762522654,
+          "status": "complete",
+          "comparability": "matched_facts_component_contrast",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 99.55134418346904,
+              "signed_r": 0.9977541991065186,
+              "nrmse": 0.12531366894572707
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 77.54220524312541,
+              "signed_r": 0.8805805201293372,
+              "nrmse": 0.21050225618427465
+            }
+          }
+        },
+        {
+          "id": "source_state_json",
+          "label": "Source-state reference JSON",
+          "role": "partial_reference",
+          "r2_percent": 61.142974706907694,
+          "signed_r": 0.7365184808550271,
+          "nrmse": 0.2632990642072258,
+          "status": "complete",
+          "comparability": "historical_reference_presentation",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 99.82815465694081,
+              "signed_r": 0.9991404038319179,
+              "nrmse": 0.1058466609045334
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 22.457794756874588,
+              "signed_r": 0.4738965578781364,
+              "nrmse": 0.40767372557639364
+            }
+          }
+        },
+        {
+          "id": "source_state_text",
+          "label": "Source-state reference prose",
+          "role": "partial_reference",
+          "r2_percent": 61.23710488550862,
+          "signed_r": 0.7379024117557599,
+          "nrmse": 0.25849785775205336,
+          "status": "complete",
+          "comparability": "historical_reference_presentation",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 99.68488804450686,
+              "signed_r": 0.9984231970687923,
+              "nrmse": 0.07762813938668939
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 22.789321726510376,
+              "signed_r": 0.4773816264427274,
+              "nrmse": 0.4100562967756216
+            }
+          }
+        },
+        {
+          "id": "source_state_json_temporal_route",
+          "label": "Earlier reference JSON + route calculations",
+          "role": "partial_reference",
+          "r2_percent": 93.88503064142718,
+          "signed_r": 0.9685011968358235,
+          "nrmse": 0.13251942201956962,
+          "status": "complete",
+          "comparability": "historical_reference_presentation",
+          "source_ids": [
+            "wu"
+          ],
+          "per_experiment": {
+            "Wu2022That/exp2": {
+              "question_count": 5,
+              "r2_percent": 99.55134418346904,
+              "signed_r": 0.9977541991065186,
+              "nrmse": 0.12531366894572707
+            },
+            "Wu2022That/exp3": {
+              "question_count": 3,
+              "r2_percent": 88.21871709938532,
+              "signed_r": 0.9392481945651283,
+              "nrmse": 0.1437284471680421
+            }
+          }
+        }
+      ],
+      "headline": {
+        "candidate_id": "predicted_semantic_graph_certificate",
+        "reference_id": "source_state_json_temporal_route",
+        "control_ids": [
+          "video",
+          "own_27b_direct_code",
+          "full_code"
+        ]
+      },
+      "gate": {
+        "status": "passed_component_and_own_direct_gates",
+        "description": "The route candidate improves its matched graph by 18.12 percentage points and beats the completed own27B direct control. This is not an all-control strict pass: full-code correlation is undefined."
+      },
+      "limitations": [
+        "Full-code causal answers are constant; strict two-experiment R2 is null, not zero.",
+        "The gain comes primarily from three causal questions; counterfactual R2 slightly decreases.",
+        "Predicted graphs contain 79 observed action states versus 74 in older controls. Only the graph-versus-route contrast holds evidence fixed.",
+        "Same-method reference requests are native-input aliases of predicted requests, not independent oracle replications. The 93.89% reference row is an older, differently presented diagnostic.",
+        "No held-out cross-study transfer or whole-cohort claim follows from this panel."
+      ],
+      "source_ids": [
+        "wu"
+      ]
+    },
+    {
+      "id": "sosa22",
+      "title": "Sosa: complete-scene prospective evidence",
+      "study_id": "Sosa2025Blending",
+      "question_count": 22,
+      "source_count": 10,
+      "scalar_count": 44,
+      "task": "Experiment 2 binary judgments about future contact after disappearance.",
+      "method": {
+        "name": "Complete-scene graph with prospective clarification",
+        "summary": "Preserve all scene objects and spatial relations, and clarify that the question concerns continuation rather than contact already seen.",
+        "process": [
+          "Read the unchanged saved object graph, source timestamps and original image-plane coordinates.",
+          "Include context objects and complete scene relations rather than only target-pair measurements.",
+          "Render scene evidence with an explicit prospective task clarification.",
+          "Retain the original video, question and Yes/No answer domain.",
+          "Freeze model choices before comparing their one-hot scalars with human response proportions."
+        ]
+      },
+      "metric_context": "22 binary choices yield 44 one-hot scalar items. Their R2 is not 86% classification accuracy.",
+      "results": [
+        {
+          "id": "video",
+          "label": "Video, original wording",
+          "role": "control",
+          "r2_percent": 3.054180260548432,
+          "signed_r": 0.17476213149731357,
+          "nrmse": 0.5712347227212219,
+          "status": "complete",
+          "comparability": "unmatched_clarification",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "fixed_8b_direct_code",
+          "label": "Saved 8B-Instruct direct code, original wording",
+          "role": "control",
+          "r2_percent": 86.13570611121617,
+          "signed_r": 0.9280932394496588,
+          "nrmse": 0.20547067759532558,
+          "status": "complete",
+          "comparability": "unmatched_clarification",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "full_code",
+          "label": "Full code, original wording",
+          "role": "control",
+          "r2_percent": 76.18653038305115,
+          "signed_r": 0.8728489581998202,
+          "nrmse": 0.2511006425416223,
+          "status": "complete",
+          "comparability": "unmatched_clarification",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "motion_frame_graph",
+          "label": "Pair graph, original wording",
+          "role": "prior_method",
+          "r2_percent": 3.054180260548432,
+          "signed_r": 0.17476213149731357,
+          "nrmse": 0.5712347227212219,
+          "status": "complete",
+          "comparability": "unmatched_clarification",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "video_prospective",
+          "label": "Video + matched clarification",
+          "role": "control",
+          "r2_percent": 42.758793971025476,
+          "signed_r": 0.6539020872502662,
+          "nrmse": 0.3816008791184884,
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "pair_prospective",
+          "label": "Pair graph + matched clarification",
+          "role": "matched_ablation",
+          "r2_percent": 31.75349032971176,
+          "signed_r": 0.5635023542959848,
+          "nrmse": 0.42392232783248424,
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "scene_graph",
+          "label": "Complete-scene graph + clarification",
+          "role": "candidate",
+          "r2_percent": 86.13570611121617,
+          "signed_r": 0.9280932394496588,
+          "nrmse": 0.20547067759532558,
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "partial_oracle_scene_graph",
+          "label": "Partial-reference complete scene + clarification",
+          "role": "partial_reference",
+          "r2_percent": 69.3341492359917,
+          "signed_r": 0.8326712991090284,
+          "nrmse": 0.2796480785493273,
+          "status": "complete",
+          "comparability": "partial_reference_not_upper_bound",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "direct_prospective_unmeasured",
+          "label": "Direct code + matched clarification: unmeasured",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": null,
+          "status": "unavailable_clean_control",
+          "comparability": "not_run",
+          "source_ids": [
+            "sosa"
+          ]
+        },
+        {
+          "id": "full_prospective_unmeasured",
+          "label": "Full code + matched clarification: unmeasured",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": null,
+          "status": "unavailable_clean_control",
+          "comparability": "not_run",
+          "source_ids": [
+            "sosa"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "scene_graph",
+        "reference_id": "partial_oracle_scene_graph",
+        "control_ids": [
+          "video_prospective",
+          "direct_prospective_unmeasured",
+          "full_prospective_unmeasured"
+        ]
+      },
+      "gate": {
+        "status": "failed_strict_superiority_tie",
+        "description": "The candidate exactly matches the historical direct-code answers and attains the same 86.135706% hard-choice ceiling. It does not beat direct code; equally clarified direct/full controls are unmeasured."
+      },
+      "diagnostics": [
+        {
+          "id": "hard_choice_ceiling",
+          "role": "reference_aware_answer_format_bound_not_model_result",
+          "question_count": 22,
+          "scalar_count": 44,
+          "r2_percent": 86.13570611121617,
+          "signed_r": 0.9280932394496588,
+          "nrmse": 0.20547067759532558,
+          "description": "Maximum positive correlation for deterministic Yes/No one-hot choices on this fixed panel. Not a human reliability ceiling, physical oracle or model input."
+        }
+      ],
+      "limitations": [
+        "Clarification and complete-scene representation initially changed together. Clarified video and pair-graph controls help separate wording effects, but there is no complete-scene/no-clarification cell or matched clarified direct/full comparison.",
+        "Ten underlying sources support 22 question records; exact-input aliases are not independent scenes.",
+        "Partial-reference dynamic coverage is initial-only, not a temporal or physical upper bound.",
+        "The full490 task experiment later scores 30.41% on this same exp2, despite identical canonical graph, visual frames and question/schema. Delivery, ordering, added measurements and runtime source differ, so the regression has no isolated causal explanation.",
+        "No further improvement beyond this hard-choice ceiling can be claimed without changing the question/answer protocol; the current primary is not changed."
+      ],
+      "source_ids": [
+        "sosa"
+      ]
+    },
+    {
+      "id": "beller20",
+      "title": "Beller: event-local temporal paths",
+      "study_id": "Beller2020Language",
+      "question_count": 20,
+      "source_count": 20,
+      "scalar_count": 80,
+      "task": "Choose among four causal-language descriptions of interactions.",
+      "method": {
+        "name": "Chronological event paths with position anchors",
+        "summary": "Augment parsed observations with source-pixel event measurements, then expose time-respecting paths and event-local positions without supplying a causal category.",
+        "process": [
+          "Use parsed identities and coarse motion to select event windows in original video pixels.",
+          "Measure circles in those windows; retain missing/ambiguous observations rather than asserting absence.",
+          "Build near-contact events and before/after motion, with source time and measured geometry.",
+          "Connect only temporally supported paths and attach event-local position anchors; retain unknown counterfactual consequences.",
+          "Let the reasoner choose the original causal-language response. No removed-world outcome or human label is inserted."
+        ]
+      },
+      "metric_context": "20 categorical responses yield 80 option-level scalars. These are not 80 independent videos.",
+      "results": [
+        {
+          "id": "video",
+          "label": "Video",
+          "role": "control",
+          "r2_percent": 0.31143259985201194,
+          "signed_r": 0.0558061466016076,
+          "nrmse": 0.5042418717942933,
+          "status": "complete",
+          "comparability": "added_observation_coverage_in_candidate",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "saved_8b_direct",
+          "label": "Saved 8B-Thinking direct code",
+          "role": "control",
+          "r2_percent": 2.0862652325693394,
+          "signed_r": 0.1444390955582781,
+          "nrmse": 0.48216769932318415,
+          "status": "complete",
+          "comparability": "added_observation_coverage_in_candidate",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "full_code",
+          "label": "Full code",
+          "role": "control",
+          "r2_percent": 0.3300185523109811,
+          "signed_r": -0.05744724121408974,
+          "nrmse": 0.5311143617627117,
+          "status": "complete",
+          "comparability": "added_observation_coverage_in_candidate",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "observation_graph",
+          "label": "Previous full observation graph",
+          "role": "prior_method",
+          "r2_percent": 3.0270215804941136,
+          "signed_r": 0.1739833779558873,
+          "nrmse": 0.4745815422776285,
+          "status": "complete",
+          "comparability": "within_development_sequence",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "interaction_ledger",
+          "label": "Previous interaction ledger",
+          "role": "prior_method",
+          "r2_percent": 4.837415448011048,
+          "signed_r": 0.21994125233823345,
+          "nrmse": 0.4625335828570856,
+          "status": "complete",
+          "comparability": "within_development_sequence",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "dense_event_notes",
+          "label": "Dense event notes",
+          "role": "matched_ablation",
+          "r2_percent": 15.908028772631939,
+          "signed_r": 0.3988487028013497,
+          "nrmse": 0.4122932091007715,
+          "status": "complete",
+          "comparability": "within_development_sequence",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "relation_graph",
+          "label": "Connected relations",
+          "role": "prior_method",
+          "r2_percent": 13.517605922818534,
+          "signed_r": 0.3676629696178082,
+          "nrmse": 0.42148189791569046,
+          "status": "complete",
+          "comparability": "within_development_sequence",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "event_paths",
+          "label": "Chronological paths",
+          "role": "matched_ablation",
+          "r2_percent": 15.647246411955015,
+          "signed_r": 0.3955660047571709,
+          "nrmse": 0.41327005731193794,
+          "status": "complete",
+          "comparability": "within_development_sequence",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "anchored_paths",
+          "label": "Paths + event-local positions",
+          "role": "candidate",
+          "r2_percent": 25.391041666657255,
+          "signed_r": 0.5038952437427571,
+          "nrmse": 0.37970941556750015,
+          "status": "complete",
+          "comparability": "within_development_sequence",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "partial_reference_graph",
+          "label": "Initial-only reference graph",
+          "role": "partial_reference",
+          "r2_percent": 1.1382322150323545,
+          "signed_r": 0.10668796628637901,
+          "nrmse": 0.4916908482681089,
+          "status": "complete",
+          "comparability": "different_partial_reference_coverage",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "ball_oracle_anchored",
+          "label": "Same renderer, partial ball-only reference",
+          "role": "partial_reference",
+          "r2_percent": 32.62588810834159,
+          "signed_r": 0.5711907571761083,
+          "nrmse": 0.3572771547001186,
+          "status": "complete",
+          "comparability": "same_renderer_ball_geometry_intervention",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "relation_plot",
+          "label": "Later relation plots",
+          "role": "negative_followup",
+          "r2_percent": 16.039228160954096,
+          "signed_r": 0.4004900518234391,
+          "nrmse": 0.41180391604574684,
+          "status": "complete",
+          "comparability": "additional_visual_pages_and_legend",
+          "source_ids": [
+            "beller"
+          ]
+        },
+        {
+          "id": "relation_table",
+          "label": "Later same-fact raster tables",
+          "role": "negative_followup",
+          "r2_percent": 19.785289110587513,
+          "signed_r": 0.4448065771836958,
+          "nrmse": 0.39836586860650164,
+          "status": "complete",
+          "comparability": "matched_plot_table_facts",
+          "source_ids": [
+            "beller"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "anchored_paths",
+        "reference_id": "ball_oracle_anchored",
+        "control_ids": [
+          "video",
+          "saved_8b_direct",
+          "full_code"
+        ]
+      },
+      "gate": {
+        "status": "failed_frozen_10pp_threshold",
+        "description": "Anchored paths improve the three historical baselines but gain only 9.48 percentage points over dense notes, below the frozen 10pp threshold. Four of five gates pass; expansion is not supported.",
+        "checks": {
+          "above_matched_controls": true,
+          "nonconstant_choices": true,
+          "nrmse_no_worse": true,
+          "positive_r": true,
+          "ten_pp_over_dense": false
+        }
+      },
+      "limitations": [
+        "The candidate extends perception with a study-specific circle observer; it is not unchanged Parse Anything or only a text reformat.",
+        "Near-contact windows and observed causal paths do not prove necessity or the removed-A outcome.",
+        "The 32.63% ball-only reference diagnostic changes only factual ball geometry, not all scene fields; it is not a complete physical oracle.",
+        "Later plots and tables regress to 16.04% and 19.79%, respectively; they are retained rather than selecting only the higher result.",
+        "Saved direct parsing is 8B, not same27B. Twenty exposed sources do not establish transfer."
+      ],
+      "source_ids": [
+        "beller"
+      ]
+    },
+    {
+      "id": "smith5",
+      "title": "Smith: source-aligned visible evidence",
+      "study_id": "Smith2019Modeling",
+      "question_count": 5,
+      "source_count": 5,
+      "scalar_count": 5,
+      "task": "Physical-event expectation/surprise judgments on five exposed examples.",
+      "method": {
+        "name": "Image-coordinate observation graph",
+        "summary": "Deliver complete source-aligned visible object states and relations under the frozen answer-only protocol, keeping predicted and recovered visible-reference inputs distinct.",
+        "process": [
+          "Bind original sampled frames and timestamps to all saved object observations.",
+          "Use image-plane centers/boxes, visible identities and explicit unknowns; retain every source state and pair.",
+          "Render predicted observations and recovered visible-reference observations with the same graph method.",
+          "Keep the original video, task, answer-only schema and native decoding.",
+          "Score the frozen ratings without inventing explanations for answer-only outputs."
+        ]
+      },
+      "metric_context": "One scalar rating per question. A high squared correlation with negative signed r is not correct-direction success.",
+      "results": [
+        {
+          "id": "video",
+          "label": "Video, clean cached control",
+          "role": "control",
+          "r2_percent": 12.28063529789121,
+          "signed_r": 0.3504373738329177,
+          "nrmse": 0.633564033873133,
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "smith"
+          ]
+        },
+        {
+          "id": "fixed_8b_direct_code",
+          "label": "Clean direct-code control unavailable",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": null,
+          "status": "unavailable_clean_control",
+          "comparability": "administrative_condition_labels_leak",
+          "source_ids": [
+            "smith"
+          ],
+          "historical_only": {
+            "r2_percent": 95.24023527370477,
+            "signed_r": 0.9759110373067044,
+            "nrmse": 0.19124791715884484,
+            "label": "Unblinded historical control; excluded from fair superiority claims"
+          }
+        },
+        {
+          "id": "full_code",
+          "label": "Clean full-code control unavailable",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": null,
+          "status": "unavailable_clean_control",
+          "comparability": "administrative_condition_labels_leak",
+          "source_ids": [
+            "smith"
+          ],
+          "historical_only": {
+            "r2_percent": 46.353057178928005,
+            "signed_r": 0.6808307952709542,
+            "nrmse": 0.3435536319377171,
+            "label": "Unblinded historical control; excluded from fair superiority claims"
+          }
+        },
+        {
+          "id": "scene_graph",
+          "label": "Predicted image graph",
+          "role": "candidate",
+          "r2_percent": 2.8565758762532836,
+          "signed_r": -0.16901407859268067,
+          "nrmse": 0.441338388107806,
+          "status": "complete",
+          "comparability": "matched_input_contract",
+          "source_ids": [
+            "smith"
+          ]
+        },
+        {
+          "id": "partial_oracle_graph",
+          "label": "Original visible-reference graph",
+          "role": "partial_reference",
+          "r2_percent": 52.68020644351351,
+          "signed_r": 0.7258113146232532,
+          "nrmse": 0.3310640177029156,
+          "status": "complete",
+          "comparability": "visible_reference_not_physical_oracle",
+          "source_ids": [
+            "smith"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "scene_graph",
+        "reference_id": "partial_oracle_graph",
+        "control_ids": [
+          "video",
+          "fixed_8b_direct_code",
+          "full_code"
+        ]
+      },
+      "gate": {
+        "status": "failed_negative_candidate_correlation",
+        "description": "Predicted graph r is negative and R2 is below clean video. Clean code-control superiority is unavailable because cached direct/full prompts contain condition-bearing administrative names."
+      },
+      "limitations": [
+        "All ten cached code-control prompts are contaminated. Their historical metrics are preserved separately, not displayed as clean comparison scores.",
+        "Five questions are only a subset of the 20-question study; not held out.",
+        "Visible-reference evidence improves the local result but does not certify physical identity, hidden state or a complete oracle.",
+        "Answer-only outputs support no invented rationale. Improved geometry does not isolate the cause of remaining judgment errors."
+      ],
+      "source_ids": [
+        "smith"
+      ]
+    },
+    {
+      "id": "stephan8",
+      "title": "Stephan: goal-conditioned geometry",
+      "study_id": "Stephan2021Counterfactual",
+      "question_count": 8,
+      "source_count": 2,
+      "scalar_count": 8,
+      "task": "Eight experiment-3 difficulty questions/order variants over two static diagrams; original slider [-50,50].",
+      "method": {
+        "name": "Straight-segment obstacle certificates",
+        "summary": "Compute whether each actor-to-target center segment intersects a declared obstacle box. Independently source-correct the reference barrier through the geometry evaluator/exporter.",
+        "process": [
+          "Keep the two original diagrams, source variants, questions, scale and original participant instructions.",
+          "Validate the reference barrier against source pixels and source rendering parameters; preserve historical reference results separately.",
+          "Compute center-segment/obstacle-box intersections from predicted or source-corrected geometry.",
+          "Append geometric predicates and unresolved finite-body/action qualifications to the matched base evidence.",
+          "Ask the unchanged reasoner for comparative difficulty; supply no simulated action, outcome or calibrated rating."
+        ]
+      },
+      "metric_context": "One slider type. Eight question variants are only two physical scene clusters. QA-ID nuisance differences remain in evidence prompts.",
+      "results": [
+        {
+          "id": "video",
+          "label": "Video, cached",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": 0.6310303751163858,
+          "nrmse_scalar": 0.6310303751163858,
+          "status": "undefined_correlation",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "saved_direct_code",
+          "label": "Saved 8B-Instruct direct code, cached",
+          "role": "control",
+          "r2_percent": 98.46508084868972,
+          "signed_r": 0.9922957263270347,
+          "nrmse": 0.1284796739847161,
+          "nrmse_scalar": 0.1284796739847161,
+          "status": "complete",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "full_code",
+          "label": "Full code, cached",
+          "role": "control",
+          "r2_percent": null,
+          "signed_r": null,
+          "nrmse": 0.6310303751163858,
+          "nrmse_scalar": 0.6310303751163858,
+          "status": "undefined_correlation",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "predictedtask",
+          "label": "Predicted task graph, cached",
+          "role": "matched_ablation",
+          "r2_percent": 20.60234854162603,
+          "signed_r": 0.4538981002562803,
+          "nrmse": 0.5108931730993541,
+          "nrmse_scalar": 0.5108931730993541,
+          "status": "complete",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "partialoracle",
+          "label": "Historical partial-reference graph",
+          "role": "historical_reference",
+          "r2_percent": 53.556617231216855,
+          "signed_r": 0.731823867000912,
+          "nrmse": 0.5103282387273935,
+          "nrmse_scalar": 0.5103282387273935,
+          "status": "complete",
+          "comparability": "not_the_corrected_reference_baseline",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "predicted_certificate",
+          "label": "Predicted graph + certificates",
+          "role": "candidate",
+          "r2_percent": 34.33499068080684,
+          "signed_r": 0.5859606700181066,
+          "nrmse": 0.45332882836548016,
+          "nrmse_scalar": 0.45332882836548016,
+          "status": "complete",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "reference_corrected",
+          "label": "Source-corrected reference graph",
+          "role": "matched_ablation",
+          "r2_percent": 18.39806680639834,
+          "signed_r": 0.4289296772945227,
+          "nrmse": 0.5898600776816512,
+          "nrmse_scalar": 0.5898600776816512,
+          "status": "complete",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        },
+        {
+          "id": "reference_corrected_certificate",
+          "label": "Source-corrected reference + certificates",
+          "role": "partial_reference",
+          "r2_percent": 98.46508084868972,
+          "signed_r": 0.9922957263270347,
+          "nrmse": 0.14520313255622969,
+          "nrmse_scalar": 0.14520313255622969,
+          "status": "complete",
+          "comparability": "matched_question_media_schema",
+          "source_ids": [
+            "stephan"
+          ]
+        }
+      ],
+      "headline": {
+        "candidate_id": "predicted_certificate",
+        "reference_id": "reference_corrected_certificate",
+        "control_ids": [
+          "video",
+          "saved_direct_code",
+          "full_code"
+        ]
+      },
+      "gate": {
+        "status": "passed_paired_gate_not_overall_superiority",
+        "description": "Both certificate arms pass their own matched-base gates. Predicted 34.33% remains below direct 98.47%; corrected-reference certificates tie direct R2 with worse nRMSE."
+      },
+      "limitations": [
+        "Video/full answers are constant, so their correlation is undefined, not zero.",
+        "Only two diagrams underlie eight variants. Same-image video/direct/full inputs form two native classes, while evidence inputs retain administrative QA-ID differences.",
+        "Segment intersection is not finite-body clearance, a feasible physical action, success probability or subjective difficulty.",
+        "Two predicted certificate outputs contradict their own verbal direction when mapping to the signed response scale.",
+        "The original barrier-location instruction tension is preserved. Source-corrected reference geometry is not a complete physical oracle.",
+        "Identical reference-certificate and direct R2 follows from a positive affine relation between their two-group outputs, not identical calibration."
+      ],
+      "source_ids": [
+        "stephan"
+      ]
+    }
+  ],
+  "development_policy": {
+    "selection": "Eight named, historically exposed development panels, not an exhaustive trial inventory or untouched validation set.",
+    "aggregate_r2_percent": null,
+    "aggregate_reason": "Heterogeneous methods, prompts, control provenance, scalarizations and dependent inputs prohibit a cherry-picked combined score.",
+    "full_cohort_replacement": false,
+    "shared_process": [
+      "Original media and question",
+      "Source-linked observations with explicit uncertainty",
+      "Task-valid measurement or physical operation where supported",
+      "Evidence delivered to the same reasoner",
+      "Native answer freeze, then human-reference scoring"
+    ]
+  },
+  "unification": {
+    "as_of": "2026-11-05T04:22:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "live": false,
+    "status": "prepared_pending_no_new_results",
+    "question_count": 50,
+    "panel_ids": [
+      "bass42",
+      "ger2021_8"
+    ],
+    "comparison_rows": 200,
+    "planned_fresh_calls": 74,
+    "completed_fresh_calls": 0,
+    "cached_rows": 126,
+    "native_profiles_verified": 74,
+    "new_r2_percent": null,
+    "description": "The shared representation was prepared and native-input checked. Inference was pending at this snapshot; preparation is not an improved reasoning result.",
+    "source_ids": [
+      "unification"
+    ]
+  },
+  "sources": [
+    {
+      "id": "full-cohort",
+      "title": "Frozen full490 typed comparison",
+      "url": "data/research-sources/full-cohort.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "results_frozen / results.json",
+          "sha256": "39f2baf8b5217701c9455b548a6a05feeb14c0306788a6e7a73838933146fabf"
+        },
+        {
+          "document": "results_frozen / inventory.json",
+          "sha256": "8f901be77bda73a0e773d2cb720292fe7f8c62423c12bd54a92f9f4b7d5582bc"
+        },
+        {
+          "document": "results_frozen / REPORT.md",
+          "sha256": "d12350a877c5e0c047c560e7587e954c49002fb9875eb15db77513575a6803b2"
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "title": "Population and metric coverage",
+      "url": "data/research-sources/coverage-and-metrics.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_original_scope_20261104_v1 / REPORT.md",
+          "sha256": "752526208df2869fa1d4c70262afa7fe42c82963af68a4ca9222dfabe5a08b94"
+        },
+        {
+          "document": "coggym_event_semantics_20261104_v1 / GOAL_EVIDENCE.md",
+          "sha256": "bc09475785f150432dda946916fb4e20abfde712f03b3525add88c7cb3c9c85d"
+        }
+      ]
+    },
+    {
+      "id": "bass",
+      "title": "Bass explicit event-semantic handoff",
+      "url": "data/research-sources/bass-event-semantics.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "result_evidence / summary.json",
+          "sha256": "f3f4603a29fd71ec03dee427ec8cf8d7379cc613f107fc2ac91ba12f4f2446c8"
+        },
+        {
+          "document": "coggym_event_semantics_20261104_v1 / REPORT.md",
+          "sha256": "e96ecf68b2e09b31bfb9b347e785af1b62166adbe9f463a0e34aaa5bcfb4b3f0"
+        }
+      ]
+    },
+    {
+      "id": "ger2021",
+      "title": "Gerstenberg2021 numerical timelines and same-model control",
+      "url": "data/research-sources/gerstenberg-2021.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_static_gate_own_direct_20261029_v1 / summary.json",
+          "sha256": "fcf722298c77a94bab44008f6d76185c2cc8993cbc45188d8e72c3df76236fd0"
+        },
+        {
+          "document": "docs / COGGYM_STATIC_GATE_OWN_DIRECT_2026-10-29.md",
+          "sha256": "2cd2b66526521c1524d9d89f0d25dde7430b631b621476176caed39fc9d6cda0"
+        }
+      ]
+    },
+    {
+      "id": "ger2022",
+      "title": "Gerstenberg2022 common-schema comparison",
+      "url": "data/research-sources/gerstenberg-2022.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_clean_chain_controls_20261029_v1 / summary.json",
+          "sha256": "6a58647dab9e58f788309b71555c461689f7b7cd23dc2d6c7104b702a13e7f0b"
+        },
+        {
+          "document": "docs / COGGYM_CLEAN_CHAIN_CONTROLS_2026-10-29.md",
+          "sha256": "c8c3e47c548537d8bc5226b67d75b716c9a819a70cc43957bfdb16dabda0477c"
+        }
+      ]
+    },
+    {
+      "id": "wu",
+      "title": "Wu routes and completed same-model control",
+      "url": "data/research-sources/wu-routes.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_wu_missing_case_20261031_v2 / scored_summary.json",
+          "sha256": "2dfbe2384433f7d492b0de95b23acd67fadd085302ca47a927ffab2630b39e66"
+        },
+        {
+          "document": "docs / COGGYM_PREDICTED_ACTION_VQA_RESULT_2026-10-31.md",
+          "sha256": "a1d80ea6b7ea71b7ce37d9d7e14f656ff368ca267c090248e4d3cdd615110185"
+        }
+      ]
+    },
+    {
+      "id": "sosa",
+      "title": "Sosa complete scene, matched clarification and answer ceiling",
+      "url": "data/research-sources/sosa-complete-scene.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_sosa_scene_vqa_20261025_v2 / summary.json",
+          "sha256": "16d965e3c57762bf6507955049c6cd66c0f395192b140a69eafe69f2b7f4acc2"
+        },
+        {
+          "document": "coggym_sosa_readout_controls_20261025_v1 / summary.json",
+          "sha256": "f28d455d90fe2deff5f9af7169f3e717223fdbbb96808a316d4f7fda679d23e4"
+        },
+        {
+          "document": "coggym_sosa_scene_vqa_20261025_v2 / binary_ceiling.json",
+          "sha256": "4fae17e061b569bf2e5109b87dbb12e43ef92497ade59d36276fd3eb1dc0cd03"
+        },
+        {
+          "document": "docs / COGGYM_SOSA_GRAPH_TRANSFER_2026-10-25.md",
+          "sha256": "3d61d7c7a6d26e649741b3d4bfb0edaea8c793df9699fb38c13f99db01e2b055"
+        },
+        {
+          "document": "coggym_sosa_handoff_audit_20261103_v1 / REPORT.md",
+          "sha256": "305d410e5f9a4b276def84cb08456420fa42b6f885bf9a1b2184de6c267c7062"
+        }
+      ]
+    },
+    {
+      "id": "beller",
+      "title": "Beller temporal paths, content diagnostic and negative follow-up",
+      "url": "data/research-sources/beller-event-paths.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_relation_canvas_vqa_20261030_v1 / summary.json",
+          "sha256": "d319a68ff0a1ffe18aca430ffa4f56d5961f9bb86524503abc164e98cba6a063"
+        },
+        {
+          "document": "coggym_event_path_screen_20261029_v1 / summary.json",
+          "sha256": "476bf3dce1524fbc14923a02fa32c6a3ab4bbba41bdf830c762b33c6d704f365"
+        },
+        {
+          "document": "coggym_ball_oracle_event_screen_20261029_v1 / summary.json",
+          "sha256": "da7a89db01d65b4989c53357f1c7aa1b08c74cc9dc853bc9ff6873f448f05d4b"
+        },
+        {
+          "document": "docs / COGGYM_TEMPORAL_PATH_RESULT_2026-10-30.md",
+          "sha256": "e67444e0871d51e322d5e632e5c6d084efc1abdc38807473e0edf4b82e8f39aa"
+        },
+        {
+          "document": "docs / COGGYM_RELATION_CANVAS_VQA_RESULT_2026-10-30.md",
+          "sha256": "e529d212275492096c7dd884ffa75a4ef92034a3e20dda71680aeb54564a372f"
+        },
+        {
+          "document": "docs / COGGYM_BALL_ORACLE_RESULT_2026-10-30.md",
+          "sha256": "889cf5260fce1f609c379571b46e58ef01f3f86d4ac7b00cf99273899d7ee7f5"
+        }
+      ]
+    },
+    {
+      "id": "smith",
+      "title": "Smith visible evidence and contaminated controls",
+      "url": "data/research-sources/smith-visible-evidence.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "verified / summary.json",
+          "sha256": "f2fd902d4e7d547f2a4e1d16ba3d6baa08977579b41dc341c2999402a02636d6"
+        },
+        {
+          "document": "docs / COGGYM_SMITH_IMAGE_ANSWER_2026-10-28.md",
+          "sha256": "27b840032ecd4d61b7ca96d93b5abab7a7d5dd575cd56fe8314cee85a0a449ac"
+        }
+      ]
+    },
+    {
+      "id": "stephan",
+      "title": "Stephan goal-conditioned geometry diagnostic",
+      "url": "data/research-sources/stephan-goal-geometry.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "result_evidence / summary.json",
+          "sha256": "69b0bee37d02e30c7647a0787004353a54b818d4b7479f8ae549d90c9bbc63c2"
+        },
+        {
+          "document": "coggym_goal_geometry_recovery_20261104_v1 / REPORT.md",
+          "sha256": "f5db9a8be751092c5076ac32f825d2bcbcbf4504930c692410a87652158cfe3a"
+        }
+      ]
+    },
+    {
+      "id": "unification",
+      "title": "Dated unified-panel preparation snapshot",
+      "url": "data/research-sources/unification-snapshot.md",
+      "kind": "sanitized_local_report_extract",
+      "provenance": [
+        {
+          "document": "coggym_unified_success_panel_20261104_v1 / REPORT.md",
+          "sha256": "06a8439920708c8a247fc58db57fc925dddf6fcd8e7e4643b5682b8791a8d107"
+        },
+        {
+          "document": "native_cpu / protocol.json",
+          "sha256": "024d6fc1ac35b929fcfce4a5e33e1bf04095551eecd87e57c84b2141d7fdf5cd"
+        },
+        {
+          "document": "native_cpu / CPU_COMPLETE.json",
+          "sha256": "0211b5d2d7b2b502333e51390049685ba9553cdde6007c46d8ed8345abea1911"
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "scope": "Read-only extraction and consistency checks of saved local results and reports; no inference, rescoring, answer edits, training or jobs.",
+    "publication": "Hand-authored sanitized extracts only; no private paths, usernames, scheduling records, authors or affiliations.",
+    "status": "passed",
+    "independent_consistency_checks": 1216,
+    "original_document_hashes_verified": 31,
+    "new_inference_calls": 0,
+    "input_manifest_verified": {
+      "results_json": true,
+      "inventory_json": true,
+      "full_report": true
+    },
+    "source_count": 11
+  }
+}
