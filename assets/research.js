@@ -8,7 +8,7 @@
     bass42: ["Local improvement", "passed"], ger2021_8: ["Local comparison passed", "passed"],
     ger2022_8: ["Undefined direct-code control", "caution"], wu8: ["Component gain; full-code control undefined", "caution"],
     sosa22: ["Ties historical direct-code ceiling", "caution"], beller20: ["Below preset improvement threshold", "caution"],
-    smith5: ["No improvement", "failed"], stephan8: ["Below direct code", "caution"]
+    smith5: ["No improvement", "failed"], stephan8: ["Component gain; below direct code", "caution"]
   };
   const handoffs = {
     bass42: ["Event ledger", "Probability / category"],
@@ -32,6 +32,7 @@
   let data;
   let methodData;
   let studyMedia;
+  let storyData;
   let activePanel = "bass42";
   let paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -73,6 +74,51 @@
     $("postparse-explanation").textContent = example.explanation;
     $("postparse-example-source").textContent = `Source: ${example.source_document}`;
     $("postparse-boundary").textContent = method.boundary;
+  }
+
+  function renderStory(panel) {
+    const story = storyData.stories.find(row => row.panel_id === panel.id);
+    const method = methodData.methods.find(row => row.panel_id === panel.id);
+    $("study-question").textContent = method.example.question;
+    $("study-recipe").innerHTML = story.recipe.map((text, index) => `<li><span>${["Input", "Program / operator", "Evidence output"][index]}</span><strong>${escape(text)}</strong></li>`).join("");
+    $("evidence-highlight-label").textContent = method.example.kind === "schematic" ? "Illustrated evidence / schematic, not a saved input" : "Illustrated evidence / paraphrased from saved input";
+    $("evidence-highlights").innerHTML = story.evidence.map(item => `<div><dt>${escape(item.kind)}</dt><dd>${escape(item.text)}</dd></div>`).join("");
+    $("study-takeaway").textContent = story.takeaway;
+    $("study-visible-limit").textContent = story.limit;
+    $("study-takeaway").closest(".study-conclusion").dataset.group = story.group;
+    $("study-result-bars").innerHTML = `<div class="result-axis" aria-hidden="true"><span>0</span><span>50</span><span>100%</span></div>` + story.comparison_ids.map((id, index) => {
+      const row = panel.results.find(result => result.id === id);
+      const defined = Number.isFinite(row.r2_percent);
+      const missing = row.comparability === "not_run" ? "Not run" : row.status === "unavailable_clean_control" ? "Unavailable" : "Undefined";
+      return `<div class="result-bar-row ${id === panel.headline.candidate_id ? "is-candidate" : ""}"><span class="result-bar-label">${escape(story.comparison_labels[index])}</span><div class="result-track ${defined ? "" : "no-score"}" aria-hidden="true">${defined ? `<span style="width:${row.r2_percent}%"></span>` : "No score"}</div><strong>${defined ? `${number(row.r2_percent)}%` : missing}</strong></div>`;
+    }).join("");
+    $("study-bar-note").textContent = story.comparison_note;
+    const index = data.panels.indexOf(panel);
+    for (const [element, offset] of [["previous-study", -1], ["next-study", 1]]) {
+      const other = data.panels[(index + offset + data.panels.length) % data.panels.length];
+      const link = $(element);
+      link.href = `#study-${other.id}`;
+      link.dataset.studyLink = other.id;
+      link.querySelector("span").textContent = `${offset < 0 ? "Previous" : "Next"}: ${label(other)}`;
+      link.onclick = jumpToStudy;
+    }
+  }
+
+  function renderProgress() {
+    const snapshotDate = new Date(data.snapshot.as_of);
+    $("progress-date").dateTime = data.snapshot.as_of;
+    $("progress-date").textContent = new Intl.DateTimeFormat("en-GB", {dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Shanghai"}).format(snapshotDate) + " CST (UTC+8)";
+    $("progress-cohort-count").textContent = `${data.full_cohort.studies.reduce((total, study) => total + study.question_count, 0)} questions`;
+    $("progress-method-count").textContent = `${data.panels.length} study panels`;
+    $("progress-unified-count").textContent = `${data.unification.question_count} questions`;
+    $("study-status-map").innerHTML = data.panels.map(panel => {
+      const story = storyData.stories.find(row => row.panel_id === panel.id);
+      const candidate = panel.results.find(row => row.id === panel.headline.candidate_id);
+      const media = studyMedia.records.find(row => row.panel_id === panel.id);
+      return `<a href="#study-${panel.id}" data-study-link="${panel.id}" data-group="${story.group}" class="study-status-item"><div class="motion-frame" style="aspect-ratio:${media.width}/${media.height}"><img class="motion-image" alt="${escape(story.short_name)} scene and parsed boxes" loading="lazy" data-study-media="${panel.id}"></div><div><span class="status-category">${escape(verdicts[panel.id][0])}</span><h4>${escape(story.short_name)}</h4><p>${escape(story.task_name)}</p></div><strong>${number(candidate.r2_percent)}<small>% R&sup2;<br>${panel.question_count} questions</small></strong></a>`;
+    }).join("");
+    $("study-status-map").querySelectorAll("a").forEach(link => link.addEventListener("click", jumpToStudy));
+    $("study-status-map").querySelectorAll("img").forEach(img => setMedia(img, studyMedia.records.find(row => row.panel_id === img.dataset.studyMedia).url));
   }
 
   function jumpToStudy(event) {
@@ -146,7 +192,7 @@
       button.tabIndex = selected ? 0 : -1;
     });
     $("study-panel").setAttribute("aria-labelledby", `study-tab-${id}`);
-    $("study-scope").textContent = `${panel.question_count} questions / ${panel.source_count} sources / exposed development panel`;
+    $("study-scope").textContent = `${panel.question_count} questions / ${panel.source_count} sources / development subset`;
     $("study-title").textContent = label(panel);
     $("study-verdict").textContent = verdicts[id][0];
     $("study-verdict").dataset.kind = verdicts[id][1];
@@ -155,6 +201,7 @@
     $("study-method-title").textContent = panel.method.name;
     $("study-description").textContent = panel.method.summary;
     renderMethod(panel);
+    renderStory(panel);
     $("study-finding").textContent = panel.gate.description;
     $("study-limitations").innerHTML = panel.limitations.map(item => `<li>${escape(item)}</li>`).join("");
     $("study-metric-note").textContent = panel.metric_context;
@@ -245,6 +292,10 @@
       const mediaResponse = await fetch("data/study-media.json?v=20261105-stimuli");
       if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
       studyMedia = await mediaResponse.json();
+      const storyResponse = await fetch("data/study-story.json");
+      if (!storyResponse.ok) throw new Error(`Study story: ${storyResponse.status}`);
+      storyData = await storyResponse.json();
+      renderProgress();
       renderMethodMap();
       renderDevelopment();
       renderCohort();

@@ -8,6 +8,7 @@ const read = path => readFile(new URL(path, root), 'utf8');
 const data = JSON.parse(await read('data/research-20261105.json'));
 const methods = JSON.parse(await read('data/post-parsing-methods.json'));
 const media = JSON.parse(await read('data/study-media.json'));
+const stories = JSON.parse(await read('data/study-story.json'));
 const html = await read('index.html');
 const conditionIds = ['video', 'saved_direct_code', 'full_code', 'predictedtask', 'partialoracle'];
 
@@ -103,6 +104,31 @@ test('each study has a distinct diagram, complete post-parsing route and sourced
   assert.doesNotMatch(html, /<img[^>]+adaptive-abstraction/);
 });
 
+test('visual walkthroughs keep every study, comparison and visible limitation grounded', () => {
+  assert.deepEqual(stories.stories.map(row => row.panel_id), data.panels.map(row => row.id));
+  assert.deepEqual(['local', 'partial', 'open'].map(group => stories.stories.filter(row => row.group === group).length), [2, 3, 3]);
+  for (const story of stories.stories) {
+    const panel = data.panels.find(row => row.id === story.panel_id);
+    assert.equal(story.recipe.length, 3);
+    assert.equal(story.evidence.length, 2);
+    assert.ok(story.limit.length > 40);
+    assert.equal(story.comparison_ids.length, story.comparison_labels.length);
+    assert.ok(story.comparison_ids.includes(panel.headline.candidate_id));
+    for (const id of story.comparison_ids) assert.ok(panel.results.some(row => row.id === id));
+    assert.ok(story.comparison_note.length > 40);
+    assert.equal(Object.hasOwn(story, 'r2_percent'), false, 'Charts must read audited scores, not copy editorial numbers');
+  }
+  assert.match(stories.stories.find(row => row.panel_id === 'wu8').comparison_note, /same facts/);
+  assert.match(stories.stories.find(row => row.panel_id === 'sosa22').limit, /not run/);
+  assert.match(stories.stories.find(row => row.panel_id === 'smith5').limit, /negative/);
+  assert.match(html, /not one matched end-to-end trial/);
+  assert.match(html, /Human answers are used for evaluation, never as evidence/);
+  assert.match(html, /Undefined is not zero/);
+  for (const id of ['study-question', 'study-recipe', 'evidence-highlights', 'study-takeaway', 'study-visible-limit', 'study-result-bars', 'study-status-map']) {
+    assert.ok(html.includes(`id="${id}"`));
+  }
+});
+
 test('all eight paired illustrations are source-bound and byte-verified', async () => {
   assert.deepEqual(media.records.map(row => row.panel_id), data.panels.map(row => row.id));
   for (const record of media.records) {
@@ -135,6 +161,7 @@ test('all public audit records exist and omit private operational details', asyn
   assert.doesNotMatch(JSON.stringify(data), privateContent);
   assert.doesNotMatch(JSON.stringify(methods), privateContent);
   assert.doesNotMatch(JSON.stringify(media), privateContent);
+  assert.doesNotMatch(JSON.stringify(stories), privateContent);
   assert.doesNotMatch(html, /Johns Hopkins|Stanford University|Jieneng Chen|Alan.{0,5}Yuille|class="authors?"/i);
 });
 

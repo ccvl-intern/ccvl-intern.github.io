@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "purpose": "Editorial explanations of recorded development methods, not new evidence or model outputs. Scores are read only from research-20261105.json.",
+  "stories": [
+    {
+      "panel_id": "bass42",
+      "group": "local",
+      "short_name": "Bass",
+      "task_name": "What happens if an object is removed?",
+      "recipe": ["Factual + removal events", "Separate occurrence from relation", "World-labeled event ledger"],
+      "evidence": [
+        {"kind": "Modeled", "text": "With gray removed, the pink hole-sensor event occurs at 1.43-1.44 s."},
+        {"kind": "Unknown", "text": "Sensor entry does not establish that pink eventually stays in the hole."}
+      ],
+      "takeaway": "Explicit event meaning improves the local comparison.",
+      "limit": "The 72.14% score includes two perfect categorical checks; the 40 slider questions alone score 44.28%.",
+      "comparison_ids": ["video", "saved_direct_code", "full_code", "predicted_factual", "predicted_event_semantics"],
+      "comparison_labels": ["Video only", "8B-Instruct direct code", "Full code", "Factual events / matched base", "Explicit event meaning"],
+      "comparison_note": "Factual events versus explicit event meaning isolates the semantic change. All answers use the 27B reasoner."
+    },
+    {
+      "panel_id": "ger2021_8",
+      "group": "local",
+      "short_name": "Gerstenberg 2021",
+      "task_name": "Would B exit without A?",
+      "recipe": ["B motion + wall geometry", "Recompute each supported contact", "Conditional event timeline"],
+      "evidence": [
+        {"kind": "Modeled", "text": "In the illustrated saved case, computation stops at 6.43271 s at an unsupported contact."},
+        {"kind": "Unknown", "text": "No complete exit is established; this does not prove B would never exit."}
+      ],
+      "takeaway": "Contact-by-contact timelines outperform all recorded local code controls.",
+      "limit": "Only eight questions. The intervention starts from assumed observed motion; explanation faithfulness is still incomplete.",
+      "comparison_ids": ["video_rules", "own_27b_direct_code", "full_code_rules", "predicted_chain"],
+      "comparison_labels": ["Video + rules", "27B direct code + rules", "Full code + rules", "Conditional timeline"],
+      "comparison_note": "All four conditions share the same source-derived mechanism rules."
+    },
+    {
+      "panel_id": "ger2022_8",
+      "group": "partial",
+      "short_name": "Gerstenberg 2022",
+      "task_name": "Would B pass the gate after removing A?",
+      "recipe": ["B, walls + retained block", "Update motion after contact", "Gate-crossing evidence"],
+      "evidence": [
+        {"kind": "Modeled", "text": "A is removed. The computed path reaches a fitting gate crossing at 6.0664 s."},
+        {"kind": "Assumption", "text": "Observed B motion initializes the model; factual block motion is retained."}
+      ],
+      "takeaway": "The timeline improves over video and full code; the direct-code comparison is unresolved.",
+      "limit": "Direct-code answers are constant, making its R² undefined. The crossing is modeled, not observed ground truth.",
+      "comparison_ids": ["video_rules", "saved_8b_direct_rules", "full_code_rules", "predicted_chain"],
+      "comparison_labels": ["Video + rules", "8B-Thinking direct code + rules", "Full code + rules", "Conditional timeline"],
+      "comparison_note": "Shared source rules. Undefined correlation is missing, not a zero-length score."
+    },
+    {
+      "panel_id": "wu8",
+      "group": "partial",
+      "short_name": "Wu",
+      "task_name": "Could a different path reach the goal?",
+      "recipe": ["Grid + timed door states", "Search legal move/wait states", "Route witness + arrival bounds"],
+      "evidence": [
+        {"kind": "Computed", "text": "For the saved blue-path case, the goal is reachable at action 7 even with unknown future door states closed; recorded states stay unchanged."},
+        {"kind": "Assumption", "text": "Door timing is assumed unaffected by the player's choice. A feasible route is not a predicted choice."}
+      ],
+      "takeaway": "Route calculations add value beyond the same observed-state graph.",
+      "limit": "Older video/code controls have less observation coverage; full-code R² is undefined. This is not a clean all-control win.",
+      "comparison_ids": ["own_27b_direct_code", "full_code", "predicted_semantic_graph", "predicted_semantic_graph_certificate"],
+      "comparison_labels": ["27B direct code / less coverage", "Full code / less coverage", "Graph only / matched facts", "Graph + routes / matched facts"],
+      "comparison_note": "Only graph-only versus graph-plus-routes isolates the calculation on the same facts."
+    },
+    {
+      "panel_id": "sosa22",
+      "group": "partial",
+      "short_name": "Sosa 2025",
+      "task_name": "Will contact occur after the scene disappears?",
+      "recipe": ["All visible scene objects", "Bind context + future-time question", "Complete-scene evidence"],
+      "evidence": [
+        {"kind": "Schematic", "text": "Describe ball, goal, slide and container, with time-bound relative positions."},
+        {"kind": "Unknown", "text": "The graph ends at disappearance. Future contact remains for the VLM to judge."}
+      ],
+      "takeaway": "Complete-scene evidence improves over the clarified video control, but ties historical direct code.",
+      "limit": "Equally clarified direct-code and full-code controls were not run. The graph does not simulate the future.",
+      "comparison_ids": ["video_prospective", "fixed_8b_direct_code", "full_prospective_unmeasured", "scene_graph"],
+      "comparison_labels": ["Video + clarification", "8B-Instruct direct / old wording", "Full code + clarification", "Scene graph + clarification"],
+      "comparison_note": "Historical direct code uses different wording; unmeasured controls cannot establish superiority."
+    },
+    {
+      "panel_id": "beller20",
+      "group": "open",
+      "short_name": "Beller",
+      "task_name": "How did A contribute to B's exit?",
+      "recipe": ["Parsed IDs + extra pixel measurements", "Order near-contact events", "Interaction paths + positions"],
+      "evidence": [
+        {"kind": "Measured", "text": "Before event E1 at 2.44 s: A=(394.50, 219.50), B=(438.50, 305.50), in image pixels."},
+        {"kind": "Limit", "text": "These are actual observations, not a scene with A removed or proof of causation."}
+      ],
+      "takeaway": "Event-local positions improve the result, but not enough to pass the preset gate.",
+      "limit": "The gain over dense notes is 9.48 pp, below the frozen 10 pp requirement. Added pixel measurements also change perception coverage.",
+      "comparison_ids": ["video", "saved_8b_direct", "dense_event_notes", "anchored_paths"],
+      "comparison_labels": ["Video / less coverage", "8B-Thinking direct / less coverage", "Dense event notes", "Paths + positions"],
+      "comparison_note": "Development sequence, not a representation-only comparison. Full code and remaining conditions are in the table below."
+    },
+    {
+      "panel_id": "smith5",
+      "group": "open",
+      "short_name": "Smith",
+      "task_name": "How surprising is the physical event?",
+      "recipe": ["Image boxes + visible states", "Bind identities across observed times", "Observed states + explicit gaps"],
+      "evidence": [
+        {"kind": "Observed", "text": "At 2.88 s, the pair-center observation becomes unavailable."},
+        {"kind": "Unknown", "text": "The target's before/after velocities are unknown; missing detection is not physical disappearance."}
+      ],
+      "takeaway": "The predicted graph does not improve surprise judgments.",
+      "limit": "Signed r is negative. Clean direct/full-code controls are unavailable; five examples do not establish general behavior.",
+      "comparison_ids": ["video", "fixed_8b_direct_code", "full_code", "scene_graph"],
+      "comparison_labels": ["Video only / clean", "8B-Instruct direct / clean", "Full code / clean", "Image-state graph"],
+      "comparison_note": "R² hides correlation direction. Here the graph's signed r is -0.1690."
+    },
+    {
+      "panel_id": "stephan8",
+      "group": "open",
+      "short_name": "Stephan",
+      "task_name": "Who faces the harder shot toward the gate?",
+      "recipe": ["Player, marble + barrier boxes", "Test center-segment intersections", "Geometry evidence + limits"],
+      "evidence": [
+        {"kind": "Computed", "text": "The hypothetical blue-to-marble center segment intersects the supplied barrier box."},
+        {"kind": "Unknown", "text": "Finite-body access and reaching the gate are not established by this test."}
+      ],
+      "takeaway": "Geometry calculations help the graph baseline, but remain below direct code.",
+      "limit": "Eight question variants use only two diagrams. Segment intersection alone is not physical difficulty.",
+      "comparison_ids": ["video", "saved_direct_code", "predictedtask", "predicted_certificate"],
+      "comparison_labels": ["Video only", "8B-Instruct direct code", "Graph only", "Graph + geometry"],
+      "comparison_note": "The paired graph improvement does not establish superiority over direct code."
+    }
+  ]
+}
