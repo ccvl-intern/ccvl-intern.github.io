@@ -1,4 +1,4 @@
-name: Recover stalled Pages deployment
+name: Inspect Pages deployment recovery
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  actions: write
+  pages: read
+  actions: read
 
 concurrency:
   group: pages-recovery-20261105
@@ -19,14 +19,13 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Republish the original frozen artifact with identical site content
+      - name: Read Pages state without starting or cancelling deployments
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           node --input-type=module <<'JS'
           const repo = process.env.GITHUB_REPOSITORY;
           const stale = 'de6c3962c168a12a992f079ca42ca294cbe5da9a';
-          const expectedMain = 'd56cf154e1f6efbc6efc09991878c857da2a51b3';
           if (repo !== 'ccvl-intern/ccvl-intern.github.io') throw new Error('Unexpected repository');
 
           async function api(path, method = 'GET', accepted = [200], body) {
@@ -47,19 +46,11 @@ jobs:
             return {status: response.status, data: text ? JSON.parse(text) : null};
           }
 
-          const main = (await api('branches/main')).data;
-          const run = (await api('actions/runs/41931272054')).data;
-          const job = (await api('actions/jobs/126928569590')).data;
-          const originalCommit = (await api(`git/commits/${stale}`)).data;
-          const currentCommit = (await api(`git/commits/${expectedMain}`)).data;
-          if (main.commit.sha !== expectedMain || run.head_sha !== stale ||
-              run.head_branch !== 'main' || run.conclusion !== 'failure' ||
-              originalCommit.tree.sha !== currentCommit.tree.sha ||
-              job.run_id !== run.id || job.name !== 'deploy' || job.conclusion !== 'failure') {
-            throw new Error('Frozen recovery target changed; refusing to cancel or retry another deployment');
+          const site = (await api('pages')).data;
+          console.log(`::notice::Pages configuration: ${JSON.stringify({status:site.status,build_type:site.build_type,source:site.source,html_url:site.html_url})}`);
+          for (const path of [`pages/deployments/${stale}`, 'pages/builds/latest']) {
+            const response = await api(path, 'GET', [200,404]);
+            const data = response.data;
+            console.log(`::notice::${path}: ${JSON.stringify({http:response.status,status:data?.status,commit:data?.commit,error:data?.error,updated_at:data?.updated_at})}`);
           }
-
-          console.log(`::notice::Original and current commits have identical tree ${originalCommit.tree.sha}`);
-          await api('actions/jobs/126928569590/rerun', 'POST', [201]);
-          console.log('::notice::Retry accepted for the original artifact; no source or build changes');
           JS
