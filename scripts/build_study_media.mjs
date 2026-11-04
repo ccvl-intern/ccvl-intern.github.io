@@ -4,8 +4,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const archive = process.argv[2];
-const artifacts = process.argv[3];
-if (!archive || !artifacts) throw new Error('Usage: node scripts/build_study_media.mjs <parsing-delivery-directory> <research-artifacts-directory>');
+const originalsDirectory = process.argv[3];
+if (!archive || !originalsDirectory) throw new Error('Usage: node scripts/build_study_media.mjs <parsing-delivery-directory> <original-stimuli-directory>');
 const root = fileURLToPath(new URL('../', import.meta.url));
 const manifestBytes = await readFile(resolve(archive, 'MANIFEST.json'));
 const manifest = JSON.parse(manifestBytes);
@@ -20,11 +20,6 @@ const selection = [
   ['smith5', 'smith2019_modeling', 18, 'Matches the source of the saved observation excerpt. No hidden state or surprise judgment is rendered.'],
   ['stephan8', 'stephan2021_counterfactual', 15, 'Static barrier_bottom task diagram, not the introductory video. Hypothetical segment predicates are explained separately.']
 ];
-const originals = {
-  wu8: ['coggym_wu_task_state_oracle_20261031_v1/source/code/python/experiment/trials/11/full.gif', 'gif'],
-  beller20: ['coggym_task_full_20261102_v5/event_pixel_check/clip14.mp4', 'mp4'],
-  stephan8: ['coggym_goal_geometry_20261104_v1/review/barrier_bottom.png', 'png']
-};
 await mkdir(resolve(root, 'assets/studies'), { recursive: true });
 const records = [];
 for (const [panelId, study, index, note] of selection) {
@@ -36,15 +31,12 @@ for (const [panelId, study, index, note] of selection) {
   const bytes = await readFile(source);
   const url = `assets/studies/${panelId}-parsing.gif`;
   await copyFile(source, resolve(root, url));
-  let original = null;
-  if (originals[panelId]) {
-    const [path, format] = originals[panelId];
-    const originalSource = resolve(artifacts, path);
-    const originalBytes = await readFile(originalSource);
-    const originalUrl = `assets/studies/${panelId}-original.${format}`;
-    await copyFile(originalSource, resolve(root, originalUrl));
-    original = {url: originalUrl, format, sha256: hash(originalBytes)};
-  }
+  const format = panelId === 'wu8' ? 'gif' : panelId === 'stephan8' ? 'png' : 'mp4';
+  const originalSource = resolve(originalsDirectory, `${panelId}.${format}`);
+  const originalBytes = await readFile(originalSource);
+  const originalUrl = `assets/studies/${panelId}-original.${format}`;
+  await copyFile(originalSource, resolve(root, originalUrl));
+  const original = {url: originalUrl, format, sha256: hash(originalBytes)};
   records.push({panel_id: panelId, source_id: record.sample_id, url,
     sha256: hash(bytes), code_sha256: codeHash, frame_count: record.bbox_comparison_frame_count,
     width: bytes.readUInt16LE(6), height: bytes.readUInt16LE(8), original,
@@ -52,6 +44,6 @@ for (const [panelId, study, index, note] of selection) {
     relation_to_method: note});
 }
 await writeFile(resolve(root, 'data/study-media.json'), JSON.stringify({schema_version: 1,
-  scope: 'Archived source/prediction pairs from the parsing delivery. Animation timing is presentation timing, not original video speed. They illustrate observations, not later conditional computations or VLM answers. Exact original stimulus files are additionally included for Wu, Beller and Stephan; other panels show sampled source frames, not full original video files.',
+  scope: 'Archived source/prediction pairs from the parsing delivery, with exact original stimuli for all eight examples. Paired animation timing is presentation timing, not original video speed. The reconstructions illustrate observations, not later conditional computations or VLM answers. Wu uses an original GIF and Stephan a static PNG; the other six use MP4 videos.',
   manifest_sha256: hash(manifestBytes), records}, null, 2) + '\n');
 console.log(`Copied and verified ${records.length} paired source/parsing illustrations.`);

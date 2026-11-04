@@ -10,6 +10,16 @@
     sosa22: ["Ties historical direct-code ceiling", "caution"], beller20: ["Below preset improvement threshold", "caution"],
     smith5: ["No improvement", "failed"], stephan8: ["Below direct code", "caution"]
   };
+  const handoffs = {
+    bass42: ["Event ledger", "Probability / category"],
+    ger2021_8: ["Conditional timeline", "0-100 likelihood"],
+    ger2022_8: ["Conditional timeline", "0-100 agreement"],
+    wu8: ["Action graph + routes", "Original task judgment"],
+    sosa22: ["Complete-scene graph", "Yes / No"],
+    beller20: ["Interaction paths", "Causal-language choice"],
+    smith5: ["Visible-state graph", "Surprise rating"],
+    stephan8: ["Geometry certificate", "-50 to +50 difficulty"]
+  };
   const comparabilityLabels = {
     observation_coverage_differs: "Observation coverage differs from the candidate",
     added_observation_coverage_in_candidate: "Candidate adds observed evidence",
@@ -46,12 +56,14 @@
   function renderMethod(panel) {
     const method = methodData.methods.find(row => row.panel_id === panel.id);
     const actors = {program: "Program", vlm: "VLM", contract: "Input contract"};
+    $("handoff-evidence").textContent = handoffs[panel.id][0];
+    $("handoff-domain").textContent = handoffs[panel.id][1];
     $("study-representation-diagram").replaceChildren($("diagram-" + panel.id).content.cloneNode(true));
     $("postparse-family").textContent = method.family;
     $("postparse-change").textContent = method.change_summary;
     $("postparse-flow").innerHTML = method.stages.map((stage, index) => `<li data-actor="${escape(stage.actor)}"><div class="stage-heading"><span class="stage-number">${index + 1}</span><span class="stage-actor">${actors[stage.actor]}</span></div><h5>${escape(stage.title)}</h5><dl><div><dt>Input</dt><dd>${escape(stage.input)}</dd></div><div><dt>Operation</dt><dd>${escape(stage.operation)}</dd></div><div><dt>Output</dt><dd>${escape(stage.output)}</dd></div></dl></li>`).join("");
     const letter = String.fromCharCode(97 + data.panels.indexOf(panel));
-    $("postparse-caption").textContent = `Figure 2${letter}. ${label(panel)}: conceptual view of its completed method. Diagram positions and symbolic times do not encode measured geometry or timings. Programs build the evidence; the VLM supplies the final judgment.`;
+    $("postparse-caption").textContent = `Figure 2${letter}. ${label(panel)} method schematic. Positions and symbolic times are illustrative, not measured.`;
     $("postparse-inputs").innerHTML = method.input_fields.map(field => `<li>${escape(field)}</li>`).join("");
     $("postparse-representation").innerHTML = [["Entities / states", method.representation.entities], ["Relations / events", method.representation.relations], ["Unknowns / limits", method.representation.unknowns]].map(([title, items]) => `<div><dt>${title}</dt><dd><ul>${items.map(item => `<li>${escape(item)}</li>`).join("")}</ul></dd></div>`).join("");
     const example = method.example;
@@ -73,7 +85,7 @@
   function renderMethodMap() {
     $("method-map").innerHTML = data.panels.map(panel => {
       const method = methodData.methods.find(row => row.panel_id === panel.id);
-      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a></th><td>${escape(method.family)}</td><td>${escape(method.change_summary)}</td></tr>`;
+      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a></th><td>${escape(method.family)}</td></tr>`;
     }).join("");
     $("method-map").querySelectorAll("a").forEach(link => link.addEventListener("click", jumpToStudy));
     const developed = new Set(data.panels.map(panel => panel.study_id));
@@ -151,14 +163,14 @@
     const illustration = studyMedia.records.find(row => row.panel_id === id);
     $("study-image").closest(".motion-frame").style.aspectRatio = `${illustration.width} / ${illustration.height}`;
     $("study-image").alt = `${label(panel)}: ${illustration.source_id}, original at left and archived parsed boxes at right`;
-    $("study-media-caption").textContent = `${illustration.kind === "static_diagram" ? "Static original diagram" : "Sampled original frames; animation is not original video speed"} at left; same-source, prediction-only box reconstruction at right. ${illustration.relation_to_method}`;
+    $("study-media-caption").textContent = illustration.kind === "static_diagram" ? "Original task diagram and same-source parsed boxes. Not a physical simulation." : "Same-source sampled frames and archived parsed boxes. Animation is not original video speed; not a physical simulation.";
     setMedia($("study-image"), illustration.url);
     $("study-original").replaceChildren();
     if (illustration.original) {
       const original = illustration.original;
       const format = original.format === "mp4" ? "video" : original.format === "gif" ? "animated stimulus" : "static diagram";
       const player = original.format === "mp4" ? `<video controls playsinline preload="metadata" src="${escape(original.url)}" aria-label="Original ${escape(label(panel))} stimulus"></video>` : original.format === "gif" ? `<div class="motion-frame"><img class="motion-image" alt="Original ${escape(label(panel))} animated stimulus"></div>` : `<img src="${escape(original.url)}" loading="lazy" alt="Original ${escape(label(panel))} stimulus">`;
-      $("study-original").innerHTML = `<details class="paper-details original-stimulus"><summary>Original ${format} at source resolution</summary>${player}<p class="caption">${escape(illustration.source_id)}</p></details>`;
+      $("study-original").innerHTML = `<details class="paper-details original-stimulus"><summary>Original ${format} at source resolution</summary>${player}<p class="caption">${escape(illustration.source_id)}</p><p class="caption">${escape(illustration.relation_to_method)}</p></details>`;
       if (original.format === "gif") setMedia($("study-original").querySelector(".motion-image"), original.url);
     }
     studyRows(panel);
@@ -230,7 +242,7 @@
       const methodsResponse = await fetch("data/post-parsing-methods.json");
       if (!methodsResponse.ok) throw new Error(`Method data: ${methodsResponse.status}`);
       methodData = await methodsResponse.json();
-      const mediaResponse = await fetch("data/study-media.json");
+      const mediaResponse = await fetch("data/study-media.json?v=20261105-stimuli");
       if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
       studyMedia = await mediaResponse.json();
       renderMethodMap();

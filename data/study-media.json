@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Archived source/prediction pairs from the parsing delivery. Animation timing is presentation timing, not original video speed. They illustrate observations, not later conditional computations or VLM answers. Exact original stimulus files are additionally included for Wu, Beller and Stephan; other panels show sampled source frames, not full original video files.",
+  "scope": "Archived source/prediction pairs from the parsing delivery, with exact original stimuli for all eight examples. Paired animation timing is presentation timing, not original video speed. The reconstructions illustrate observations, not later conditional computations or VLM answers. Wu uses an original GIF and Stephan a static PNG; the other six use MP4 videos.",
   "manifest_sha256": "ac7e00bb147d402ea77e867c93a1c18d462d1ef51ed83f11fd2974590abde316",
   "records": [
     {
@@ -12,7 +12,11 @@
       "frame_count": 16,
       "width": 1292,
       "height": 382,
-      "original": null,
+      "original": {
+        "url": "assets/studies/bass42-original.mp4",
+        "format": "mp4",
+        "sha256": "13fbc33dc103b0f2f8c35fca017ae8f174a63fbb5b911a20e71340150a296c27"
+      },
       "kind": "sampled_video",
       "relation_to_method": "Matches the source of the saved event excerpt; the callbacks are modeled, not visible events in this reconstruction."
     },
@@ -25,7 +29,11 @@
       "frame_count": 16,
       "width": 1292,
       "height": 536,
-      "original": null,
+      "original": {
+        "url": "assets/studies/ger2021_8-original.mp4",
+        "format": "mp4",
+        "sha256": "f4c2902d5f7fb8229935deea2f92860a8ce96e83e14a24f67ac13b7b9af2c88e"
+      },
       "kind": "sampled_video",
       "relation_to_method": "Experiment-1 source of the saved timeline excerpt. The reconstruction is observed-state geometry, not the intervened trajectory."
     },
@@ -38,7 +46,11 @@
       "frame_count": 16,
       "width": 1292,
       "height": 536,
-      "original": null,
+      "original": {
+        "url": "assets/studies/ger2022_8-original.mp4",
+        "format": "mp4",
+        "sha256": "f0414f305a6cde92230be57667e5e24980d22aa60fde78eeb9bdd65a60822540"
+      },
       "kind": "sampled_video",
       "relation_to_method": "Source of the saved conditional-chain excerpt. The counterfactual computation is not part of this archived reconstruction."
     },
@@ -68,7 +80,11 @@
       "frame_count": 16,
       "width": 844,
       "height": 576,
-      "original": null,
+      "original": {
+        "url": "assets/studies/sosa22-original.mp4",
+        "format": "mp4",
+        "sha256": "501e97054b4951572f6e38783987fead857d8b1dba790777ebaf153d91996828"
+      },
       "kind": "sampled_video",
       "relation_to_method": "Audited scene_1_11 example. The text example is schematic; no future continuation is depicted."
     },
@@ -98,7 +114,11 @@
       "frame_count": 24,
       "width": 1292,
       "height": 483,
-      "original": null,
+      "original": {
+        "url": "assets/studies/smith5-original.mp4",
+        "format": "mp4",
+        "sha256": "8e7e6cab0ad7b01ad05d5c2fee602abe607fe9cf65d1664175ff6da65c082c70"
+      },
       "kind": "sampled_video",
       "relation_to_method": "Matches the source of the saved observation excerpt. No hidden state or surprise judgment is rendered."
     },

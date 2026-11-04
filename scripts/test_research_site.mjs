@@ -120,7 +120,8 @@ test('all eight paired illustrations are source-bound and byte-verified', async 
   assert.match(media.records.find(row => row.panel_id === 'ger2021_8').source_id, /_exp1_/);
   assert.match(media.records.find(row => row.panel_id === 'wu8').source_id, /_exp2_/);
   assert.equal(media.records.find(row => row.panel_id === 'stephan8').kind, 'static_diagram');
-  assert.deepEqual(media.records.filter(row => row.original).map(row => row.panel_id), ['wu8', 'beller20', 'stephan8']);
+  assert.ok(media.records.every(row => row.original));
+  assert.equal(media.records.filter(row => row.original.format === 'mp4').length, 6);
 });
 
 test('all public audit records exist and omit private operational details', async () => {

@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/research.css?v=20261105-interface">
-  <script src="assets/research.js?v=20261105-interface" defer></script>
+  <link rel="stylesheet" href="assets/research.css?v=20261105-study-figures">
+  <script src="assets/research.js?v=20261105-study-figures" defer></script>
   <script src="assets/examples.js?v=20261105" defer></script>
   <script src="assets/access.js?v=20261105" defer></script>
 </head>
@@ -60,12 +60,12 @@
           <p>The research question is what happens next: how do object states and relations become evidence that a VLM can align with the video and use for a physical judgment?</p>
         </div>
         <div class="interface-principles">
-          <article><h3>Bind before reasoning</h3><p>Object IDs, timestamps, coordinate systems and interventions must refer to the same entities and world. A graph is an internal structure; it does not prescribe what the VLM sees.</p></article>
-          <article><h3>Compute what can be checked</h3><p>Programs calculate supported measurements, event timelines or paths. Some methods add physical assumptions or source-pixel observations: they are not merely a different serialization.</p></article>
-          <article><h3>Make evidence usable</h3><p>The final input states what was observed, derived or modeled and what remains unknown. The VLM still makes the requested rating or categorical judgment, without human targets.</p></article>
+          <article><h3>Bind</h3><p>Objects, coordinates, time and the question refer to the same scene.</p></article>
+          <article><h3>Compute</h3><p>Programs derive supported measurements, events or paths, with explicit assumptions.</p></article>
+          <article><h3>Communicate</h3><p>The VLM receives evidence and unknowns, never human target answers.</p></article>
         </div>
         <div class="method-map-heading"><h3>What changes after parsing?</h3><a class="text-link" href="data/post-parsing-methods.json" download>Method records <img src="assets/icons/download.svg" alt=""></a></div>
-        <div class="table-scroll" role="region" aria-label="Study-specific post-parsing method map" tabindex="0"><table class="result-table method-map-table"><thead><tr><th scope="col">Study</th><th scope="col">Representation / operation</th><th scope="col">The specific change</th></tr></thead><tbody id="method-map"></tbody></table></div>
+        <div class="table-scroll" role="region" aria-label="Study-specific post-parsing method map" tabindex="0"><table class="result-table method-map-table"><thead><tr><th scope="col">Study</th><th scope="col">Representation / operation</th></tr></thead><tbody id="method-map"></tbody></table></div>
         <p class="caption" id="other-study-methods"></p>
         <details class="paper-details"><summary>Earlier shared method in the 490-question comparison</summary><ol id="earlier-method-steps" class="prose"></ol><p class="caption">This earlier question-conditioned method is not the combination of the eight later development methods below.</p></details>
         <details class="paper-details">
@@ -84,8 +84,7 @@
             <article id="study-panel" role="tabpanel" tabindex="0">
               <div class="study-heading"><div><p id="study-scope" class="small-label"></p><h3 id="study-title"></h3></div><span id="study-verdict" class="verdict"></span></div>
               <div class="study-scoreline" id="study-scoreline"></div>
-              <div class="study-method"><p id="postparse-family" class="small-label"></p><h4 id="study-method-title"></h4><p id="study-description"></p></div>
-              <p class="method-change" id="postparse-change"></p>
+              <div class="study-method"><p id="postparse-family" class="small-label"></p><h4 id="study-method-title"></h4></div>
               <figure class="study-media">
                 <div class="media-heading"><h4>01 / Original input &amp; parsed visualization</h4><button class="icon-button" data-motion-toggle title="Pause animations" aria-label="Pause animations"><img src="assets/icons/pause.svg" alt=""></button></div>
                 <div class="media-labels"><span>Original visual input</span><span>Reconstructed from parsed boxes</span></div>
@@ -94,17 +93,21 @@
                 <div id="study-original"></div>
               </figure>
               <figure class="study-schematic"><div class="media-heading"><h4>02 / The post-parsing representation</h4><span class="small-label">Conceptual diagram, not measured scene geometry</span></div><div id="study-representation-diagram"></div><figcaption id="postparse-caption"></figcaption></figure>
-              <details class="paper-details stage-details"><summary>Exact steps: inputs, program operations and VLM responsibilities</summary><ol id="postparse-flow" class="postparse-flow"></ol></details>
-              <div class="evidence-explainer">
-                <div class="evidence-structure"><h4>What the representation contains</h4><dl id="postparse-representation"></dl><details class="paper-details"><summary>Input fields used by this method</summary><ul id="postparse-inputs"></ul></details></div>
-                <div class="evidence-readout"><p id="postparse-example-kind" class="small-label"></p><h4>03 / Evidence supplied to the VLM</h4><p id="postparse-question" class="method-question"></p><blockquote id="postparse-evidence"></blockquote><p id="postparse-explanation"></p><p id="postparse-example-source" class="caption"></p></div>
-              </div>
-              <aside class="method-boundary"><strong>What this does not establish</strong><p id="postparse-boundary"></p></aside>
+              <figure class="reasoning-figure"><h4>03 / VLM reasoning</h4><div class="reasoning-handoff"><div class="vlm-input-stack"><span>Original visual input</span><span>Original question</span><strong id="handoff-evidence"></strong></div><img class="flow-arrow" src="assets/icons/arrow-up-right.svg" alt="input to"><div class="vlm-node"><strong>Qwen3.5-27B</strong><span>Frozen reasoner</span></div><img class="flow-arrow" src="assets/icons/arrow-up-right.svg" alt="outputs"><div class="prediction-node"><strong>VLM judgment</strong><span id="handoff-domain"></span></div></div></figure>
+              <details class="paper-details method-details"><summary>Method details &amp; recorded VLM input</summary>
+                <p id="study-description" class="method-change"></p><p class="method-change" id="postparse-change"></p>
+                <ol id="postparse-flow" class="postparse-flow"></ol>
+                <div class="evidence-explainer">
+                  <div class="evidence-structure"><h4>Representation</h4><dl id="postparse-representation"></dl><h4 class="input-fields-title">Input fields</h4><ul id="postparse-inputs"></ul></div>
+                  <div class="evidence-readout"><p id="postparse-example-kind" class="small-label"></p><h4>Evidence supplied to the VLM</h4><p id="postparse-question" class="method-question"></p><blockquote id="postparse-evidence"></blockquote><p id="postparse-explanation"></p><p id="postparse-example-source" class="caption"></p></div>
+                </div>
+                <aside class="method-boundary"><strong>What this does not establish</strong><p id="postparse-boundary"></p></aside>
+              </details>
               <div class="study-result-heading"><h4>04 / Recorded reasoning results</h4><label class="check-label"><input id="all-study-conditions" type="checkbox"> All recorded conditions</label></div>
               <div class="table-scroll" role="region" aria-label="Selected study comparison" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Condition</th><th scope="col">R&sup2; (%)</th><th scope="col">Signed r</th><th scope="col">nRMSE</th></tr></thead><tbody id="study-comparison"></tbody></table></div>
               <p id="study-metric-note" class="caption"></p>
               <div id="study-diagnostic" class="research-note" hidden></div>
-              <div class="study-findings"><div><h4>What changed</h4><p id="study-finding"></p></div><div><h4>What remains unresolved</h4><ul id="study-limitations"></ul></div></div>
+              <details class="paper-details"><summary>Interpretation &amp; remaining limitations</summary><div class="study-findings"><div><h4>What changed</h4><p id="study-finding"></p></div><div><h4>What remains unresolved</h4><ul id="study-limitations"></ul></div></div></details>
               <div class="study-provenance"><span id="study-model"></span><a id="study-source" class="text-link">Experiment record <img src="assets/icons/arrow-up-right.svg" alt=""></a></div>
             </article>
 

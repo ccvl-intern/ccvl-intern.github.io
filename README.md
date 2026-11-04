@@ -73,6 +73,11 @@ conceptual event, action-state, observation or geometry diagrams. Expand each
 method's exact steps for its actor (input contract, program or final VLM),
 inputs, operation and output. Adaptive Abstraction is not the current method;
 its old figure is no longer displayed.
+
+The default study view is figure-first: paired visual evidence, its method
+diagram, a compact VLM-input/output diagram and results. Longer explanations,
+exact excerpts, assumptions and interpretation are retained in expandable
+details rather than interleaved as large text blocks.
 The method map and evidence examples distinguish:
 
 - Bass: explicit event semantics and finite-horizon absence.
@@ -95,11 +100,12 @@ the same treatment as local improvements. `data/study-media.json` binds the
 eight selected illustrations to source IDs and code/media hashes. These are
 archived parser observations, not renderings of later simulations or proof that
 the later reasoner consumed those exact fields. Animation timing is not source
-video timing; Stephan uses the tested static diagram. Exact originals are also
-included for Wu (animated stimulus), Beller (MP4) and Stephan (PNG). Other
-panels show sampled original frames, not full original video files. Rebuild
-the byte-verified selection with
-`node scripts/build_study_media.mjs <delivery-directory> <research-artifacts-directory>`.
+video timing. All eight examples also include their exact original stimulus:
+six MP4 videos, Wu's original animated GIF and Stephan's tested static PNG.
+Rebuild the byte-verified selection with
+`node scripts/build_study_media.mjs <delivery-directory> <original-stimuli-directory>`.
+The original-stimuli directory contains `<panel_id>.mp4`, except `wu8.gif`
+and `stephan8.png`; the resulting public manifest retains SHA256 hashes.
 
 ## Files and provenance
 
