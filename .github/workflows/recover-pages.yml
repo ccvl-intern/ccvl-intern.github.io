@@ -1,4 +1,4 @@
-name: Inspect Pages deployment recovery
+name: Configure explicit Pages publication
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
 
 permissions:
   contents: read
-  pages: read
-  actions: read
+  pages: write
+  actions: write
 
 concurrency:
   group: pages-recovery-20261105
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Read Pages state without starting or cancelling deployments
+      - name: Stop stalled retry and enable official static-site workflow publication
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -48,9 +48,17 @@ jobs:
 
           const site = (await api('pages')).data;
           console.log(`::notice::Pages configuration: ${JSON.stringify({status:site.status,build_type:site.build_type,source:site.source,html_url:site.html_url})}`);
-          for (const path of [`pages/deployments/${stale}`, 'pages/builds/latest']) {
-            const response = await api(path, 'GET', [200,404]);
-            const data = response.data;
-            console.log(`::notice::${path}: ${JSON.stringify({http:response.status,status:data?.status,commit:data?.commit,error:data?.error,updated_at:data?.updated_at})}`);
+          if (site.source.branch !== 'main' || site.source.path !== '/' || site.build_type !== 'legacy') {
+            throw new Error('Unexpected Pages source; refusing to alter settings');
           }
+          const run = (await api('actions/runs/41931272054')).data;
+          if (run.head_sha !== stale || run.run_attempt !== 2) throw new Error('Unexpected retry target');
+          if (run.status !== 'completed') {
+            await api('actions/runs/41931272054/cancel', 'POST', [202]);
+            console.log('::notice::Cancellation accepted for this stalled retry only');
+          }
+          await api('pages', 'PUT', [204], {build_type:'workflow'});
+          const updated = (await api('pages')).data;
+          if (updated.build_type !== 'workflow' || updated.html_url !== site.html_url || updated.cname !== site.cname) throw new Error('Pages settings verification failed');
+          console.log(`::notice::Explicit workflow publication enabled; URL and custom domain unchanged: ${updated.html_url}`);
           JS
