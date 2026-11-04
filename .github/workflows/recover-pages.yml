@@ -9,7 +9,6 @@ permissions:
   contents: read
   pages: write
   actions: write
-  deployments: write
 
 concurrency:
   group: pages-recovery-20261105
@@ -20,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Clear the backed-up failed deployment record and retry publication
+      - name: Republish the original frozen artifact with identical site content
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -49,31 +48,18 @@ jobs:
           }
 
           const main = (await api('branches/main')).data;
-          const run = (await api('actions/runs/41932874935')).data;
-          const job = (await api('actions/jobs/126938555562')).data;
-          if (main.commit.sha !== expectedMain || run.head_sha !== expectedMain ||
+          const run = (await api('actions/runs/41931272054')).data;
+          const job = (await api('actions/jobs/126928569590')).data;
+          const originalCommit = (await api(`git/commits/${stale}`)).data;
+          const currentCommit = (await api(`git/commits/${expectedMain}`)).data;
+          if (main.commit.sha !== expectedMain || run.head_sha !== stale ||
               run.head_branch !== 'main' || run.conclusion !== 'failure' ||
+              originalCommit.tree.sha !== currentCommit.tree.sha ||
               job.run_id !== run.id || job.name !== 'deploy' || job.conclusion !== 'failure') {
             throw new Error('Frozen recovery target changed; refusing to cancel or retry another deployment');
           }
 
-          const path = 'deployments/7560318951';
-          const deployment = (await api(path)).data;
-          const statuses = (await api(`${path}/statuses`)).data;
-          const state = (await api(`pages/deployments/${stale}`)).data;
-          if (deployment.sha !== stale || deployment.environment !== 'github-pages' ||
-              statuses[0]?.state !== 'failure' || state.status !== 'deployment_cancelled') {
-            throw new Error('Refusing to remove a deployment that is not the verified failed/cancelled record');
-          }
-          console.log(`::notice::Verified failed record ${deployment.id} at ${deployment.sha}; backup retained locally`);
-          await api(`${path}/statuses`, 'POST', [201], {
-            state: 'inactive',
-            description: 'Cancelled Pages deployment: removing stale record after backup to unblock publication',
-            auto_inactive: false
-          });
-          await api(path, 'DELETE', [204]);
-          console.log('::notice::Removed only failed deployment record 7560318951; successful deployment and Pages site retained');
-
-          await api('actions/jobs/126938555562/rerun', 'POST', [201]);
-          console.log('::notice::Retry accepted for the failed publish job; successful build and site files are unchanged');
+          console.log(`::notice::Original and current commits have identical tree ${originalCommit.tree.sha}`);
+          await api('actions/jobs/126928569590/rerun', 'POST', [201]);
+          console.log('::notice::Retry accepted for the original artifact; no source or build changes');
           JS
