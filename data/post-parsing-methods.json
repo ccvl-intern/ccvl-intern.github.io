@@ -1,0 +1,574 @@
+{
+  "schema_version": 1,
+  "scope": "Completed pre-unification development methods, focusing on the boundary from parsed or source-supported fields to evidence consumed by Qwen3.5-27B. These are eight distinct implementations, not a tested unified pipeline. Every final judgment remains the VLM's. Saved excerpts are exact contiguous portions of prepared evidence, at most 1,000 characters, with no generated answers or human ratings. Questions are paraphrased. A schematic illustrates structure rather than an observed case. Hashes identify the named source document, not the excerpt alone; source_ids link the audited public reports.",
+  "methods": [
+    {
+      "panel_id": "bass42",
+      "family": "Explicit semantics for modeled events",
+      "change_summary": "Replace ambiguous event suffixes with separate occurrence, world and collision-relation statements. Reuse the already computed physical episodes; this completed contrast adds no simulation or new physical facts.",
+      "input_fields": [
+        "Frozen predicted or source-supported model initialization",
+        "Existing factual/removal event callbacks and time brackets",
+        "Object identities, positions, side exits and finite tail samples",
+        "Original question, requested world and endpoint"
+      ],
+      "stages": [
+        {
+          "title": "Bind the requested world",
+          "actor": "contract",
+          "input": "Original question and frozen episode inventory.",
+          "operation": "Bind the queried object and world. Physical removal of the gray cannonball is distinct from conditioning on a collision or a miss. Retrieve the existing factual or removal trace; do not generate another branch.",
+          "output": "Source-bound model episode with an explicit question contract."
+        },
+        {
+          "title": "Separate events from relations",
+          "actor": "program",
+          "input": "Recorded model callbacks, intervals, objects and collision brackets.",
+          "operation": "Preserve every positive callback. Store its relation to the first gray/pink collision separately, including no collision within the horizon. Preserve overlapping order as unresolved and distinguish witnessed side exits from initially off-screen states.",
+          "output": "Typed model-event records plus explicit finite-horizon absences."
+        },
+        {
+          "title": "Write the evidence",
+          "actor": "program",
+          "input": "Typed records, positions and preserved source header.",
+          "operation": "Serialize world, interval, event type, participants and positive occurrence on separate lines. State that these are modeled events, not video observations. Keep sensor entry, ground contact and finite rest separate from eventual destination.",
+          "output": "Readable event ledger, position tail and unresolved-endpoint statement."
+        },
+        {
+          "title": "Make the original judgment",
+          "actor": "vlm",
+          "input": "Original visual input and question, explicit event ledger and unchanged answer schema.",
+          "operation": "Qwen3.5-27B estimates the requested probability or selects the original categorical answer. The program supplies neither a calibrated probability nor a destination label.",
+          "output": "Native answer on the original response domain."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Named bodies and endpoint regions",
+          "Factual or removal model world",
+          "Callback events and whole-body side exits"
+        ],
+        "relations": [
+          "Event occurrence independent of collision relation",
+          "Before, after or overlapping collision brackets",
+          "Object/world/time bindings"
+        ],
+        "unknowns": [
+          "Order inside overlapping brackets",
+          "Eventual grass or hole residence",
+          "Uncertainty beyond the deterministic model and finite horizon"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "If the gray cannonball were absent, how likely would the pink sphere be to end up in the hole?",
+        "question_kind": "paraphrase",
+        "evidence": "Event 1: world=remove_gray; interval=[1.43, 1.44] seconds; type=pink_hole_sensor; objects=pink_sphere.\nEvent 1 occurrence: RECORDED positive native callback.\nEvent 1 relation to first gray/pink collision: no gray_cannonball / pink_sphere collision was recorded within t=0..5 seconds; this does not negate the recorded event.",
+        "explanation": "Exact saved evidence for the removal question. The hole-sensor callback occurred in the modeled world; absence of a gray/pink collision does not erase it. Sensor entry still does not certify eventual hole residence.",
+        "source_document": "prepared.json",
+        "sha256": "cc24c870a2384a45d53992b4f0ee9934e58909b8bd4600f615209f412b3517bb"
+      },
+      "boundary": "A sensor event is not terminal residence; no named collision does not mean no sensor event. The successful change is semantic disambiguation of existing modeled evidence, not better parsing or new physics. Conditional judgments remain imperfect, and partial-reference fields are not a physical upper bound.",
+      "source_ids": [
+        "bass"
+      ]
+    },
+    {
+      "panel_id": "ger2021_8",
+      "family": "Conditional static-arena execution",
+      "change_summary": "Turn observed boxes into a bounded counterfactual trajectory instead of asking the VLM to mentally execute raw coordinates. Source-supplied elastic-wall mechanics are an explicit additional input shared by the comparison arms.",
+      "input_fields": [
+        "Observed B boxes, centers and source times",
+        "Four retained wall boxes and source image axes",
+        "Question intervention: remove A",
+        "Shared source rules and original observation horizon"
+      ],
+      "stages": [
+        {
+          "title": "Bind motion and the intervention",
+          "actor": "program",
+          "input": "Question, observed B anchors, wall geometry and source rules.",
+          "operation": "Select observed motion anchors and retain provenance and units. Assume they initialize the intervened world: the pre-interaction state is not certified. Remove A as stipulated; derive the gate corridor from the wall opening, not an invented measured gate object.",
+          "output": "Intervened start state with a derived opening and declared assumptions."
+        },
+        {
+          "title": "Execute supported contacts",
+          "actor": "program",
+          "input": "Initial box/velocity, fixed walls and recorded horizon.",
+          "operation": "Propagate an axis-aligned B box between supported frictionless elastic face contacts, updating velocity after each contact. Check walls before whole-body exit through the left boundary. Stop on unsupported corner/contact geometry or the horizon.",
+          "output": "Conditional numerical timeline with an exit predicate or explicit unresolved stop."
+        },
+        {
+          "title": "Write the numerical timeline",
+          "actor": "program",
+          "input": "Computed contacts, states, velocities, stop reasons and source bindings.",
+          "operation": "Present initial motion, derived opening, event sequence and terminal predicate in pixels and seconds. Label the execution as a box approximation, not the source circular-body engine or an observed counterfactual.",
+          "output": "Compact program-aided timeline with limits and no assigned probability."
+        },
+        {
+          "title": "Judge counterfactual passage",
+          "actor": "vlm",
+          "input": "Original video/question, shared mechanics and the conditional timeline.",
+          "operation": "Qwen3.5-27B gives an evidence summary and the original slider judgment. It must interpret unresolved execution without converting a missing certificate into certain success or failure.",
+          "output": "Original 0-100 judgment with native explanation."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "A removed; B retained",
+          "Fixed wall faces and derived gate corridor",
+          "Successive conditional B states"
+        ],
+        "relations": [
+          "Motion derived from adjacent observed anchors",
+          "Supported contact followed by velocity change",
+          "Whole-box exit distinct from center alignment"
+        ],
+        "unknowns": [
+          "Unsupported corner/contact states",
+          "Earlier off-screen motion",
+          "Motion beyond the recorded horizon and subjective confidence"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "Would B have gone through the gate if A had been absent?",
+        "question_kind": "paraphrase",
+        "evidence": "Gate corridor derived from recorded wall boundaries, NOT a measured gate object: (0, 201, 20, 400) px.\nBounded chain ends at 6.43271 s with B box (20, 181.899, 86, 251.899) px; stop=unsupported_contact_geometry.\nThis bounded chain establishes no full-body exit; this is not proof of never exiting.",
+        "explanation": "Exact saved predicted-timeline excerpt. The opening is derived from observed walls. An unsupported contact ends this bounded computation without establishing either eventual exit or permanent failure.",
+        "source_document": "requests.json",
+        "sha256": "79cb9f848530c1d85e57ebb7bb78cc6e7b96023da0d02fefc106a5e84fa3902a"
+      },
+      "boundary": "This is conditional physical computation, not pure reformatting. Observed B state/velocity are assumed to initialize the intervened world; the pre-interaction state is not certified. Wall rules are source-assisted, the body is box-approximated, and unsupported stops remain. These eight exposed cases do not establish a general simulator or calibrated counterfactual probabilities.",
+      "source_ids": [
+        "ger2021"
+      ]
+    },
+    {
+      "panel_id": "ger2022_8",
+      "family": "Conditional contact-chain execution",
+      "change_summary": "Build and execute the scene with A removed, retaining the block and updating B after each supported contact. The interface exposes the resulting numerical chain rather than just a straight-line extrapolation or raw parsed code.",
+      "input_fields": [
+        "Parsed B geometry and observed initial motion",
+        "Retained walls, gate and block observations",
+        "Adjacent-anchor block motion and source clock",
+        "Removal premise and shared source-derived contact rules"
+      ],
+      "stages": [
+        {
+          "title": "Instantiate the changed scene",
+          "actor": "contract",
+          "input": "Original removal statement, parsed observations and common mechanics.",
+          "operation": "Remove only A. Assume observed B state/velocity can initialize the intervened world; this is not a certified pre-interaction state. Bind the opening and retained obstacles to source records. The kinematic block retains its factual adjacent-anchor motion.",
+          "output": "Explicit intervened state and assumptions about unchanged mechanisms."
+        },
+        {
+          "title": "Compute the next event",
+          "actor": "program",
+          "input": "Current B box/velocity and retained obstacle motions.",
+          "operation": "Search for the next supported face contact, propagate to it, compute the elastic response and repeat using the updated velocity. Check gate crossing with body fit; stop at the observation horizon or unsupported dependencies.",
+          "output": "Piecewise-linear conditional state chain with contacts and crossing/stop predicates."
+        },
+        {
+          "title": "Expose consequences and limits",
+          "actor": "program",
+          "input": "Computed chain and the assumptions used at each step.",
+          "operation": "Render initial values, ordered contacts, changed velocities, final state and stop reason. State that the chain is a modeled consequence, not counterfactual ground truth. Use the same explanation-first output schema across arms.",
+          "output": "Source-linked numerical evidence without probability or human-rating fields."
+        },
+        {
+          "title": "Apply the response scale",
+          "actor": "vlm",
+          "input": "Original video, statement, shared mechanisms and chain.",
+          "operation": "Qwen3.5-27B judges agreement with the original statement on its 0-100 scale. It supplies the final explanation and rating; no program replaces or repairs that rating.",
+          "output": "Native explanation followed by the continuous answer."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Removed A and retained B",
+          "Fixed walls, gate and possibly moving block",
+          "Conditional states and contact events"
+        ],
+        "relations": [
+          "Adjacent-anchor block motion",
+          "Contact-dependent velocity updates",
+          "Gate-plane crossing with opening clearance"
+        ],
+        "unknowns": [
+          "Unsupported contacts and dependencies",
+          "Whether retained factual mechanisms hold under intervention",
+          "Behavior beyond the horizon and probability calibration"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "To what extent do you agree that B would have gone through the gate if A had not been there?",
+        "question_kind": "paraphrase",
+        "evidence": "Removed identities: ball_A.\nInitial ball_B state at 1.4 s: box=(665, 269, 727, 331) px, velocity=(-147.009, -0.012545) px/s.\nResolved conditional path ends at 6.0664 s, box=(-21, 268.941, 41, 330.941) px; stop=conditional_gate_crossing.\nA gate-plane crossing with the body fitting the opening is computed under the stated assumptions. This is a model consequence, not directly observed counterfactual evidence or a certain human response.",
+        "explanation": "Exact saved predicted-chain excerpt. The reported crossing is a program consequence under declared contact rules, not an observed counterfactual or a supplied human rating.",
+        "source_document": "evidence.json",
+        "sha256": "1761859922f5c379ede0cfe01a15c1b0d797fc0147038a503b3882f7d6da1bb1"
+      },
+      "boundary": "This is source-assisted execution, not formatting alone. Using observed B motion to initialize the intervention and retaining factual block motion are assumptions, not verified counterfactual states. A reference response described unlikely passage yet emitted a strongly supporting rating: correct event prose does not guarantee correct polarity or calibration, and no answer was repaired.",
+      "source_ids": [
+        "ger2022"
+      ]
+    },
+    {
+      "panel_id": "wu8",
+      "family": "Action-state graph and bounded route search",
+      "change_summary": "Organize grid observations into legal action states, then add temporal route calculations. The graph includes frozen pixel-derived grid, OCR, actor and door observations beyond the older parsed-code controls.",
+      "input_fields": [
+        "Parsed identities and frozen pixel-derived grid cells",
+        "Observed actor locations, door states and step counters",
+        "Starts, goal, adjacency and action budget",
+        "Source transition order and original causal/counterfactual question"
+      ],
+      "stages": [
+        {
+          "title": "Bind action time to observations",
+          "actor": "program",
+          "input": "Grid/actor/door observations, OCR counters and source clocks.",
+          "operation": "Align observed states with discrete action steps, not GIF presentation timestamps. Preserve missing future door states. Attach the chosen path, starts and goal to the legal grid adjacency.",
+          "output": "Observed action-state graph with explicit temporal semantics."
+        },
+        {
+          "title": "Search conditional routes",
+          "actor": "program",
+          "input": "Graph, action budget and fixed/exogenous door-schedule assumption.",
+          "operation": "Search legal moves or waits, applying actions before door toggles. Compute earliest feasible arrival and route witnesses. Bound unknown future doors with all-open and all-closed completions; neither is a predicted schedule.",
+          "output": "Conditional reachability bounds and time-respecting route traces."
+        },
+        {
+          "title": "Separate facts from planning",
+          "actor": "program",
+          "input": "The unchanged graph plus computed route results.",
+          "operation": "Present observed states separately from route certificates. Mark exhaustive no-path results and distinguish them from an illustrative frontier trace. Explain that feasible paths are existential, not a model of the player's policy.",
+          "output": "Graph plus readable conditional action-by-action evidence."
+        },
+        {
+          "title": "Judge the original question",
+          "actor": "vlm",
+          "input": "Original visual input, instructions, graph and route calculations.",
+          "operation": "Qwen3.5-27B supplies the counterfactual or causal rating on the original scale. The route program does not turn feasibility into a human success probability or causal judgment.",
+          "output": "Native explanation and original-scale answer."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Grid cells, player, starts and goal",
+          "Doors with observed or unknown states",
+          "Action steps and candidate routes"
+        ],
+        "relations": [
+          "Legal adjacency and wait transitions",
+          "Action-before-toggle ordering",
+          "Earliest arrival and conditional feasibility bounds"
+        ],
+        "unknowns": [
+          "Door states after observation ends",
+          "Stochastic behavior or action-dependent door changes",
+          "Actual player policy and human probability"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "Would the player have reached the star if they had chosen the other path?",
+        "question_kind": "paraphrase",
+        "evidence": "Starting path blue, cell [0, 2]:\n  all_closed unknown completion: earliest feasible arrival at action 7.\n    0: start to [0, 2]\n    1: move to [1, 2]\n    2: move to [2, 2]\n    3: move to [3, 2]\n    4: move to [4, 2]\n    5: move to [5, 2]; door [5, 2] open at preceding state 4 (observed)\n    6: move to [6, 2]\n    7: move to [6, 1]",
+        "explanation": "Exact saved route excerpt, conditional on the recorded door schedule remaining exogenous. Unknown door states use extremal completions. Earliest legal arrival is a reachability calculation, not a player policy or success probability.",
+        "source_document": "effective_predicted_inputs.json",
+        "sha256": "aeea8686347b668d3c2f3ea6c65c60104fcebb486fb6a6f1e754c39dd7a8262d"
+      },
+      "boundary": "Only graph-only versus graph-plus-routes holds factual coverage fixed. The graph has more observed action states than older controls. Conditional feasibility is not behavior or causal necessity; same-input reference aliases are not an independent oracle, and the two experiments do not improve uniformly.",
+      "source_ids": [
+        "wu"
+      ]
+    },
+    {
+      "panel_id": "sosa22",
+      "family": "Complete observation graph with prospective clarification",
+      "change_summary": "Expand from target-pair measurements to every scene node and co-temporal relation, and explicitly frame the question as continuation after disappearance. The completed candidate changes both evidence coverage and task clarification; it does not simulate the future.",
+      "input_fields": [
+        "Saved object centers, boxes and source timestamps",
+        "Ball and goal identities plus slides/containers/context",
+        "Observed pair geometry and adjacent-sample motion",
+        "Original Yes/No question and participant instructions"
+      ],
+      "stages": [
+        {
+          "title": "Retrieve the complete scene",
+          "actor": "program",
+          "input": "Unchanged saved observation graph and original source-time mapping.",
+          "operation": "Retain all scene objects rather than only ball/goal measurements. Preserve context geometry when available and distinguish group names without separate geometry. Missing object states remain missing rather than stationary.",
+          "output": "Complete source-linked node/state inventory."
+        },
+        {
+          "title": "Organize observed relations",
+          "actor": "program",
+          "input": "Co-temporal boxes, centers and adjacent observations.",
+          "operation": "Compute separations, relative motion and box projections for observed pairs. Factor exactly repeated states/predicates while retaining their observation offsets. Do not interpolate gaps, roll trajectories forward or assign future contact.",
+          "output": "Compact observation graph with contextual spatial relationships."
+        },
+        {
+          "title": "Clarify what is being asked",
+          "actor": "contract",
+          "input": "Graph, original question and authoritative participant instructions.",
+          "operation": "Render the scene evidence and clarify that the judgment concerns continuation after disappearance, not whether contact was already visible. Preserve the original visual input and categorical answer choices.",
+          "output": "Complete-scene evidence with explicit prospective task framing."
+        },
+        {
+          "title": "Predict future contact",
+          "actor": "vlm",
+          "input": "Original video/question and clarified observation graph.",
+          "operation": "Qwen3.5-27B reasons about the unobserved continuation and selects the original Yes/No option. No simulator or graph field supplies the future outcome or a human response.",
+          "output": "Native categorical judgment, not a newly introduced likelihood scale."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Ball, goal and contextual scene objects",
+          "Recorded observation offsets and source times",
+          "All retained scene-node pairs"
+        ],
+        "relations": [
+          "Observed separation and relative motion",
+          "Along/across-motion box projections",
+          "Contextual overlap and spatial arrangement"
+        ],
+        "unknowns": [
+          "Unobserved motion after disappearance",
+          "Missing geometry or intervals",
+          "Hidden properties and actual future collision"
+        ]
+      },
+      "example": {
+        "kind": "schematic",
+        "question": "Would the ball contact the goal if the motion continued after the objects disappeared?",
+        "question_kind": "paraphrase",
+        "evidence": "Recorded sample t_i: ball and goal centers/boxes; observed slide and container geometry.\nDerived at t_i: pair separation and box projections.\nBetween supported t_i and t_j: observed relative motion; gaps stay unknown.\nTask: judge continuation after disappearance, not contact already visible.\nFuture contact: not computed by the graph.",
+        "explanation": "Schematic of the audited complete-scene interface, not a saved case or fabricated numeric observation. Symbolic times indicate recorded samples. The cited public extract documents both graph expansion and prospective clarification.",
+        "source_document": "sosa-complete-scene.md",
+        "sha256": "eecfb5883a96213ddacb429d92a74bf268c5e7be5c265dccd1ddd1bdcfaa6d93"
+      },
+      "boundary": "No complete-scene/no-clarification cell isolates the graph change, and equally clarified direct/full controls were not run. The candidate ties the saved direct control rather than beating it. Initial-only reference geometry is not a temporal upper bound.",
+      "source_ids": [
+        "sosa"
+      ]
+    },
+    {
+      "panel_id": "beller20",
+      "family": "Chronological interaction paths with measured anchors",
+      "change_summary": "Add source-pixel event measurements to parsed scene structure, then expose chronological candidate paths and event-local positions. This method extends perception as well as the reasoning interface; it is not just repackaging unchanged parser output.",
+      "input_fields": [
+        "Parsed object identities and sampled context boxes",
+        "Frozen circle measurements from original video frames",
+        "Near-contact windows and before/after motion fits",
+        "Original four-option causal-language question"
+      ],
+      "stages": [
+        {
+          "title": "Retrieve event observations",
+          "actor": "program",
+          "input": "Parsed identities/coarse motion and original video pixels.",
+          "operation": "Use the study-specific circle observer to measure source-frame positions and radii in the event-observation pass. Retain missing detections and ambiguous measurements. Other context objects keep their original sampled parser geometry.",
+          "output": "Time-stamped ball measurements plus unchanged contextual observations."
+        },
+        {
+          "title": "Build chronological candidates",
+          "actor": "program",
+          "input": "Near-contact measurements, motion windows and context geometry.",
+          "operation": "Derive candidate encounters and before/after velocity fits. Connect temporally supported paths between entities without reversing time or imposing order on overlap. Keep gate/button proximity distinct from actual triggering.",
+          "output": "Observed event ledger and time-respecting candidate paths."
+        },
+        {
+          "title": "Attach position evidence",
+          "actor": "program",
+          "input": "Candidate paths and saved before/encounter/after anchors.",
+          "operation": "Render event IDs, intervals, participant positions and velocities with source-frame bindings. Include geometry needed to assess possible passage; explicitly separate observed motion from any inference about removing A.",
+          "output": "Readable path constraints with event-local spatial anchors."
+        },
+        {
+          "title": "Choose the causal description",
+          "actor": "vlm",
+          "input": "Original video/question and anchored event evidence.",
+          "operation": "Qwen3.5-27B chooses one of the original four descriptions. It must distinguish an effect on outcome from an effect on manner or timing. The program supplies no category, removed-world outcome or human label.",
+          "output": "Native categorical causal-language answer."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Balls, contextual obstacles, gate and buttons",
+          "Near-contact event candidates",
+          "Before/encounter/after position anchors"
+        ],
+        "relations": [
+          "Chronological candidate influence paths",
+          "Observed velocity changes and local proximity",
+          "Spatial passage constraints"
+        ],
+        "unknowns": [
+          "Events between unqueried frames",
+          "Whether proximity caused contact or button activation",
+          "Necessity, sufficiency and the removed-A outcome"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "Which sentence best describes A's role in B's exit?",
+        "question_kind": "paraphrase",
+        "evidence": "MEASURED EVENT-LOCAL POSITIONS\nCoordinates are original image pixels: x rightward, y downward. These are actual observations, not positions in a world without A. The before/after anchors bound the velocity-fit windows described above. Use positions and velocities together; velocity alone cannot determine whether a path reaches the exit.\nE1, ball_A, before, t=2.44s (source frame 122): center (394.50, 219.50)px; radius 30.20px.\nE1, ball_B, before, t=2.44s (source frame 122): center (438.50, 305.50)px; radius 30.20px.",
+        "explanation": "Exact saved position-anchor excerpt for a near-contact event. These source-pixel measurements accompany the chronological candidate path; they are not a trajectory with A removed or a supplied causal-language choice.",
+        "source_document": "evidence.json",
+        "sha256": "0eed9f551ff22ba7b19fbad284c0525c1564fc3ee75ea728b163b30c957e2d04"
+      },
+      "boundary": "Near-contact and temporal order do not prove causal influence. Added circle measurements change perception coverage. Anchored paths improve several baselines but fail the frozen improvement gate; the partial ball-geometry reference is not a complete physical oracle.",
+      "source_ids": [
+        "beller"
+      ]
+    },
+    {
+      "panel_id": "smith5",
+      "family": "Image-coordinate observations for surprise judgment",
+      "change_summary": "Present source-aligned image centers, boxes, visibility gaps and observed pair relations instead of relying on uncertain reconstructed world coordinates. Compare predicted and recovered visible-reference observations under the same answer-only interface.",
+      "input_fields": [
+        "Saved image-plane centers and boxes",
+        "Object identities, occluders and parser confidence",
+        "Original sampled frames and timestamps",
+        "Source-aligned visible annotations for the separate reference arm"
+      ],
+      "stages": [
+        {
+          "title": "Bind visible observations",
+          "actor": "contract",
+          "input": "Original video clock and predicted or recovered visible-reference records.",
+          "operation": "Match source states to their image frames and retain all identities, including occluders. Keep annotation identity distinct from verified physical identity. Do not use administrative condition names or hidden simulator fields as evidence.",
+          "output": "Source-aligned visible-state inventory for each evidence arm."
+        },
+        {
+          "title": "Compute observation relations",
+          "actor": "program",
+          "input": "Image centers/boxes and adjacent supported observations.",
+          "operation": "Compute interval-average velocities, separations and box projections. Preserve unknown motion across missing states without interpolation. Distinguish a missing detection from disappearance and box overlap from physical contact.",
+          "output": "Observed state and pair-relation graph with explicit gaps."
+        },
+        {
+          "title": "Render image-space evidence",
+          "actor": "program",
+          "input": "Graph, observation offsets and coordinate convention.",
+          "operation": "State x-right/y-down pixel units, source frames and limits. Describe relevant transition windows while identifying unprinted intermediate comparisons. Mark parser claims as unverified; neither camera motion nor confidence becomes physical truth.",
+          "output": "Readable observation history without a physical verdict."
+        },
+        {
+          "title": "Rate surprise only",
+          "actor": "vlm",
+          "input": "Original video, participant expectations, question and image evidence.",
+          "operation": "Qwen3.5-27B returns only the original surprise rating. The answer-only schema does not produce an explanation, so this completed experiment supports no reconstructed rationale for its choices.",
+          "output": "Native 0-100 surprisingness rating."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Visible objects and occluder",
+          "Annotation tracks and recorded sample offsets",
+          "Observed centers, boxes and pair states"
+        ],
+        "relations": [
+          "Image-plane displacement and separation",
+          "Projected overlap and observation availability",
+          "Adjacent-sample velocity estimates"
+        ],
+        "unknowns": [
+          "Physical persistence behind an occluder",
+          "Camera contribution to apparent motion",
+          "Physical identity, hidden properties and unobserved trajectories"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "How surprising was the event in this video?",
+        "question_kind": "paraphrase",
+        "evidence": "2.88s/f72: pair center observation becomes unavailable, projected-overlap boundary; separation unknown; box projections: unknown. Surrounding recorded states: offsets 6..8 above.\n    occluder_screen velocity: before x left 49.9856, y up 12.8598; after x right 0.512255, y down 0.202207.\n    target_object velocity: before unknown; after unknown.",
+        "explanation": "Exact saved observation excerpt. A missing pair observation and unknown velocities remain unknown; they do not establish physical disappearance. The final model returned a rating only, not an explanation.",
+        "source_document": "requests.json",
+        "sha256": "eff04be27b56ca9d82f6e5d37d439566869995c1b95433e21e6a99e801a2ae5d"
+      },
+      "boundary": "Image geometry is not verified world geometry or hidden physics. The predicted candidate failed against the clean video control. Historical direct/full controls contain condition-bearing administrative identities and are not clean comparisons; improved visible-reference results do not certify an oracle.",
+      "source_ids": [
+        "smith"
+      ]
+    },
+    {
+      "panel_id": "stephan8",
+      "family": "Goal-conditioned straight-segment geometry",
+      "change_summary": "Append computed actor-to-marble segment/obstacle intersections to the existing scene evidence. In the reference arm only, repair the barrier through source-pixel evaluation and export before applying the same geometry operator.",
+      "input_fields": [
+        "Predicted static boxes and declared object centers",
+        "Original scene variant, diagram and image axes",
+        "Source-pixel-validated barrier for the reference arm",
+        "Original comparative-difficulty question and signed response scale"
+      ],
+      "stages": [
+        {
+          "title": "Bind scene and geometric roles",
+          "actor": "program",
+          "input": "Original diagram, blue/green players, gray marble, obstacles and source binding.",
+          "operation": "Use each actor's declared center and the gray marble as the segment endpoint. Preserve the original question and instructions. For the reference arm, obtain the barrier through the source-validated evaluator/exporter, not a post-hoc box override.",
+          "output": "Predicted or corrected-reference static geometry with matched task binding."
+        },
+        {
+          "title": "Compute segment intersections",
+          "actor": "program",
+          "input": "Actor-to-marble center segments and supplied obstacle boxes.",
+          "operation": "Test straight segments against obstacle boxes, recording entry/exit parameters and image positions. Keep the parameter dimensionless, not time. Do not infer radius, finite-body clearance, a strike, collision response or gate passage.",
+          "output": "Geometric intersection predicates with explicit unsupported physical quantities."
+        },
+        {
+          "title": "Append a geometric certificate",
+          "actor": "program",
+          "input": "Base observation evidence and computed predicates.",
+          "operation": "Add both players' segment results and unknown finite-body access to the matched base text. Label the paths hypothetical centerlines, not observed motion or optimal actions. Keep the gate goal explicitly unevaluated.",
+          "output": "Readable goal-conditioned geometry alongside the original scene evidence."
+        },
+        {
+          "title": "Map geometry to difficulty",
+          "actor": "vlm",
+          "input": "Original diagram, instructions, signed scale and certificate.",
+          "operation": "Qwen3.5-27B judges comparative difficulty: -50 means harder for blue and +50 harder for green. The program does not prescribe either direction or a rating, and native outputs are not corrected afterward.",
+          "output": "Native explanation and original signed difficulty judgment."
+        }
+      ],
+      "representation": {
+        "entities": [
+          "Blue and green player centers",
+          "Gray marble as the segment target",
+          "Barrier and wall boxes"
+        ],
+        "relations": [
+          "Hypothetical center-segment/box intersection",
+          "Entry/exit positions and path parameters",
+          "Question-scale polarity distinct from geometry"
+        ],
+        "unknowns": [
+          "Finite-body clearance and feasible actions",
+          "Collision response and knocking the marble through the gate",
+          "Subjective difficulty and calibrated probability"
+        ]
+      },
+      "example": {
+        "kind": "saved_excerpt",
+        "question": "For which player is it more difficult to knock the gray marble into the gate?",
+        "question_kind": "paraphrase",
+        "evidence": "Hypothetical blue_player -> gray_marble: declared-center segment (774.27027, 538.53483) -> (77.614986, 298.57387). The gate goal is not evaluated.\n  barrier: intersects supplied box at u=(0.34395107, 0.43563265); entry (534.65494, 456), exit (470.78448, 434) px.\n  bottom_left_wall: no intersection with supplied box.\n  bottom_wall: no intersection with supplied box.\n  top_left_wall: no intersection with supplied box.\n  top_wall: no intersection with supplied box.\n  Finite-body access: unknown; no complete body bound is certified.",
+        "explanation": "Exact saved predicted-geometry excerpt. The segment runs from the blue player's declared center to the gray marble, not to the gate. Its parameter u is not time; an intersected box does not supply a difficulty rating.",
+        "source_document": "inputs.json",
+        "sha256": "917c1f9fcb3b49ee7788fedb9a56f1f3ac3ef0120dbeb605247a3d6d4ccb39b1"
+      },
+      "boundary": "Two diagrams underlie eight question variants, with administrative prompt differences retained. Intersection is not a difficulty model. Two predicted outputs reverse their own verbal direction on the signed scale; reference geometry correction and matched certificate gains do not establish a general physical oracle or superiority over direct code.",
+      "source_ids": [
+        "stephan"
+      ]
+    }
+  ]
+}

@@ -4,11 +4,6 @@
   const $ = id => document.getElementById(id);
   const escape = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
   const conditionOrder = ["video", "saved_direct_code", "full_code", "predictedtask", "partialoracle"];
-  const media = {
-    bass42: "bass-cannonball", ger2021_8: "gerstenberg-collision", ger2022_8: "gerstenberg2022-what",
-    wu8: "wu-gridworld", sosa22: "sosa2025-blending", beller20: "beller2020-language",
-    smith5: "smith-discontinuity", stephan8: "stephan-counterfactual"
-  };
   const verdicts = {
     bass42: ["Local improvement", "passed"], ger2021_8: ["Local comparison passed", "passed"],
     ger2022_8: ["Undefined direct-code control", "caution"], wu8: ["Component gain; full-code control undefined", "caution"],
@@ -25,6 +20,8 @@
     not_the_corrected_reference_baseline: "Historical reference; not the corrected base"
   };
   let data;
+  let methodData;
+  let studyMedia;
   let activePanel = "bass42";
   let paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -44,6 +41,45 @@
 
   function label(panel) {
     return data.full_cohort.studies.find(study => study.id === panel.study_id).label;
+  }
+
+  function renderMethod(panel) {
+    const method = methodData.methods.find(row => row.panel_id === panel.id);
+    const actors = {program: "Program", vlm: "VLM", contract: "Input contract"};
+    $("study-representation-diagram").replaceChildren($("diagram-" + panel.id).content.cloneNode(true));
+    $("postparse-family").textContent = method.family;
+    $("postparse-change").textContent = method.change_summary;
+    $("postparse-flow").innerHTML = method.stages.map((stage, index) => `<li data-actor="${escape(stage.actor)}"><div class="stage-heading"><span class="stage-number">${index + 1}</span><span class="stage-actor">${actors[stage.actor]}</span></div><h5>${escape(stage.title)}</h5><dl><div><dt>Input</dt><dd>${escape(stage.input)}</dd></div><div><dt>Operation</dt><dd>${escape(stage.operation)}</dd></div><div><dt>Output</dt><dd>${escape(stage.output)}</dd></div></dl></li>`).join("");
+    const letter = String.fromCharCode(97 + data.panels.indexOf(panel));
+    $("postparse-caption").textContent = `Figure 2${letter}. ${label(panel)}: conceptual view of its completed method. Diagram positions and symbolic times do not encode measured geometry or timings. Programs build the evidence; the VLM supplies the final judgment.`;
+    $("postparse-inputs").innerHTML = method.input_fields.map(field => `<li>${escape(field)}</li>`).join("");
+    $("postparse-representation").innerHTML = [["Entities / states", method.representation.entities], ["Relations / events", method.representation.relations], ["Unknowns / limits", method.representation.unknowns]].map(([title, items]) => `<div><dt>${title}</dt><dd><ul>${items.map(item => `<li>${escape(item)}</li>`).join("")}</ul></dd></div>`).join("");
+    const example = method.example;
+    $("postparse-example-kind").textContent = example.kind === "saved_excerpt" ? "Saved input excerpt / not a model answer" : "Schematic example / not a recorded model input";
+    $("postparse-question").textContent = `${example.question_kind === "paraphrase" ? "Question, paraphrased" : "Recorded question"}: ${example.question}`;
+    $("postparse-evidence").textContent = example.evidence;
+    $("postparse-explanation").textContent = example.explanation;
+    $("postparse-example-source").textContent = `Source: ${example.source_document}`;
+    $("postparse-boundary").textContent = method.boundary;
+  }
+
+  function jumpToStudy(event) {
+    event.preventDefault();
+    selectStudy(event.currentTarget.dataset.studyLink, true);
+    $("studies").scrollIntoView();
+    $("study-panel").focus({preventScroll: true});
+  }
+
+  function renderMethodMap() {
+    $("method-map").innerHTML = data.panels.map(panel => {
+      const method = methodData.methods.find(row => row.panel_id === panel.id);
+      return `<tr><th scope="row"><a href="#study-${panel.id}" data-study-link="${panel.id}">${escape(label(panel))}</a></th><td>${escape(method.family)}</td><td>${escape(method.change_summary)}</td></tr>`;
+    }).join("");
+    $("method-map").querySelectorAll("a").forEach(link => link.addEventListener("click", jumpToStudy));
+    const developed = new Set(data.panels.map(panel => panel.study_id));
+    const others = data.full_cohort.studies.filter(study => !developed.has(study.id)).map(study => study.label);
+    $("other-study-methods").textContent = `The other five studies (${others.join(", ")}) remain in the earlier full-cohort comparison. No separate validated post-parsing development method is claimed for them here.`;
+    $("earlier-method-steps").innerHTML = data.full_cohort.method.process.map(step => `<li>${escape(step)}</li>`).join("");
   }
 
   function updateMotion(img) {
@@ -102,16 +138,29 @@
     $("study-title").textContent = label(panel);
     $("study-verdict").textContent = verdicts[id][0];
     $("study-verdict").dataset.kind = verdicts[id][1];
+    const candidate = panel.results.find(row => row.id === panel.headline.candidate_id);
+    $("study-scoreline").innerHTML = `<div><span>Study-specific method</span><strong>${number(candidate.r2_percent)}<small>% R&sup2;</small></strong></div><div><span>Signed correlation</span><strong>${number(candidate.signed_r, 4, "Not reported")}</strong></div><p>${id === "bass42" ? "Type-averaged over 42 questions. Slider-only R²: 44.28%." : escape(panel.metric_context)}</p>`;
     $("study-method-title").textContent = panel.method.name;
     $("study-description").textContent = panel.method.summary;
-    $("study-steps").innerHTML = panel.method.process.map(step => `<li>${escape(step)}</li>`).join("");
+    renderMethod(panel);
     $("study-finding").textContent = panel.gate.description;
     $("study-limitations").innerHTML = panel.limitations.map(item => `<li>${escape(item)}</li>`).join("");
     $("study-metric-note").textContent = panel.metric_context;
     $("study-model").textContent = `${data.model.reasoner} / FP16 / non-thinking greedy / ${panel.task}`;
     $("study-source").href = data.sources.find(source => source.id === panel.source_ids[0]).url;
-    $("study-image").alt = `${label(panel)} archived source and box-reconstruction comparison`;
-    setMedia($("study-image"), `assets/demos/${media[id]}.gif`);
+    const illustration = studyMedia.records.find(row => row.panel_id === id);
+    $("study-image").closest(".motion-frame").style.aspectRatio = `${illustration.width} / ${illustration.height}`;
+    $("study-image").alt = `${label(panel)}: ${illustration.source_id}, original at left and archived parsed boxes at right`;
+    $("study-media-caption").textContent = `${illustration.kind === "static_diagram" ? "Static original diagram" : "Sampled original frames; animation is not original video speed"} at left; same-source, prediction-only box reconstruction at right. ${illustration.relation_to_method}`;
+    setMedia($("study-image"), illustration.url);
+    $("study-original").replaceChildren();
+    if (illustration.original) {
+      const original = illustration.original;
+      const format = original.format === "mp4" ? "video" : original.format === "gif" ? "animated stimulus" : "static diagram";
+      const player = original.format === "mp4" ? `<video controls playsinline preload="metadata" src="${escape(original.url)}" aria-label="Original ${escape(label(panel))} stimulus"></video>` : original.format === "gif" ? `<div class="motion-frame"><img class="motion-image" alt="Original ${escape(label(panel))} animated stimulus"></div>` : `<img src="${escape(original.url)}" loading="lazy" alt="Original ${escape(label(panel))} stimulus">`;
+      $("study-original").innerHTML = `<details class="paper-details original-stimulus"><summary>Original ${format} at source resolution</summary>${player}<p class="caption">${escape(illustration.source_id)}</p></details>`;
+      if (original.format === "gif") setMedia($("study-original").querySelector(".motion-image"), original.url);
+    }
     studyRows(panel);
     $("study-diagnostic").hidden = panel.id !== "bass42";
     if (panel.id === "bass42") {
@@ -147,12 +196,7 @@
     }).join("");
     $("study-tabs").querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectStudy(button.dataset.study, true)));
     keyboardTabs($("study-tabs"), button => selectStudy(button.dataset.study, true));
-    $("development-table").querySelectorAll("a").forEach(link => link.addEventListener("click", event => {
-      event.preventDefault();
-      selectStudy(link.dataset.studyLink, true);
-      $("studies").scrollIntoView();
-      $("study-panel").focus({preventScroll: true});
-    }));
+    $("development-table").querySelectorAll("a").forEach(link => link.addEventListener("click", jumpToStudy));
   }
 
   function renderCohort() {
@@ -183,6 +227,13 @@
       const response = await fetch("data/research-20261105.json");
       if (!response.ok) throw new Error(`Research data: ${response.status}`);
       data = await response.json();
+      const methodsResponse = await fetch("data/post-parsing-methods.json");
+      if (!methodsResponse.ok) throw new Error(`Method data: ${methodsResponse.status}`);
+      methodData = await methodsResponse.json();
+      const mediaResponse = await fetch("data/study-media.json");
+      if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
+      studyMedia = await mediaResponse.json();
+      renderMethodMap();
       renderDevelopment();
       renderCohort();
       renderAggregate();

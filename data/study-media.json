@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "scope": "Archived source/prediction pairs from the parsing delivery. Animation timing is presentation timing, not original video speed. They illustrate observations, not later conditional computations or VLM answers. Exact original stimulus files are additionally included for Wu, Beller and Stephan; other panels show sampled source frames, not full original video files.",
+  "manifest_sha256": "ac7e00bb147d402ea77e867c93a1c18d462d1ef51ed83f11fd2974590abde316",
+  "records": [
+    {
+      "panel_id": "bass42",
+      "source_id": "Bass2022Partial_exp1_check5_clip_861ff0c834",
+      "url": "assets/studies/bass42-parsing.gif",
+      "sha256": "8b39310dafde44feff2a15c8854598e9acd97241ca079a5d427531eda4ca5373",
+      "code_sha256": "37625da2ec89668b725192e1a008bd8efe7471f66c06f431c36c3f4ad8510af4",
+      "frame_count": 16,
+      "width": 1292,
+      "height": 382,
+      "original": null,
+      "kind": "sampled_video",
+      "relation_to_method": "Matches the source of the saved event excerpt; the callbacks are modeled, not visible events in this reconstruction."
+    },
+    {
+      "panel_id": "ger2021_8",
+      "source_id": "Gerstenberg2021A_Counterfactual_exp1_study_clip10_1856e80ef3",
+      "url": "assets/studies/ger2021_8-parsing.gif",
+      "sha256": "20d8e474d04a09f3fbc79130d400f1d11603276cd9c2718a83903765d296c8ab",
+      "code_sha256": "fa9ce80dffa74afdd468c36b4aca0cb0782cf11f921b3f4fae68cd32100de87b",
+      "frame_count": 16,
+      "width": 1292,
+      "height": 536,
+      "original": null,
+      "kind": "sampled_video",
+      "relation_to_method": "Experiment-1 source of the saved timeline excerpt. The reconstruction is observed-state geometry, not the intervened trajectory."
+    },
+    {
+      "panel_id": "ger2022_8",
+      "source_id": "Gerstenberg2022What_exp2_hyp_count_clip_1_a71832f23f",
+      "url": "assets/studies/ger2022_8-parsing.gif",
+      "sha256": "7828fa4b2e6fb49e1bcb6408a33992fc1e106d1950b8d44284d08c730e0f8c91",
+      "code_sha256": "653bb1c4b8f5edd4ff088cb9bc978c0a5e882f0e2c50692e70cc140cdc94a512",
+      "frame_count": 16,
+      "width": 1292,
+      "height": 536,
+      "original": null,
+      "kind": "sampled_video",
+      "relation_to_method": "Source of the saved conditional-chain excerpt. The counterfactual computation is not part of this archived reconstruction."
+    },
+    {
+      "panel_id": "wu8",
+      "source_id": "Wu2022That_exp2_full_2ff1577458",
+      "url": "assets/studies/wu8-parsing.gif",
+      "sha256": "6e2c6226305f2e752720c11049b20bc5e95c96ed79648a56447f223c25a5ecd6",
+      "code_sha256": "1f9eca583f02c29b6d8c7a61dd15958fedebcd4554f71dd347862f7569f71e06",
+      "frame_count": 16,
+      "width": 1292,
+      "height": 252,
+      "original": {
+        "url": "assets/studies/wu8-original.gif",
+        "format": "gif",
+        "sha256": "49e0e5735de116ff45cc8231c68d88d5535f39d37484e0ea43bcd49e46162015"
+      },
+      "kind": "sampled_video",
+      "relation_to_method": "Experiment-2 trial 11. Later route evidence adds action-state observations; it is not the box visualization."
+    },
+    {
+      "panel_id": "sosa22",
+      "source_id": "Sosa2025Blending_exp2_scene_1_11_4ba5c56d77",
+      "url": "assets/studies/sosa22-parsing.gif",
+      "sha256": "e1ea6cd3fd3f121806f4ebfb955bdca417266ee81e1095a6b0132dfad33b4aba",
+      "code_sha256": "145625992c2753daf54f6ba9e8e4a8beb2755515e5f50b6dbffaf8d833e18333",
+      "frame_count": 16,
+      "width": 844,
+      "height": 576,
+      "original": null,
+      "kind": "sampled_video",
+      "relation_to_method": "Audited scene_1_11 example. The text example is schematic; no future continuation is depicted."
+    },
+    {
+      "panel_id": "beller20",
+      "source_id": "Beller2020Language_exp1_clip14_01e2aad5d0",
+      "url": "assets/studies/beller20-parsing.gif",
+      "sha256": "18de49945feed81ea40a83e7afe3fa9f8079b0865e2192a76aa8aacb6470eb2c",
+      "code_sha256": "4f80795eaf4a6c7ebcb5069358631fd9197eb047c62d241272239461b6d4ff1f",
+      "frame_count": 16,
+      "width": 1292,
+      "height": 536,
+      "original": {
+        "url": "assets/studies/beller20-original.mp4",
+        "format": "mp4",
+        "sha256": "cb86c54fddbe5f2230452293e493e2de9950e7d25e3b1cf0496519bfd0e7b6b6"
+      },
+      "kind": "sampled_video",
+      "relation_to_method": "Source clip14 matches the measured-anchor excerpt. Added circle observations belong to the later method, not this archived reconstruction."
+    },
+    {
+      "panel_id": "smith5",
+      "source_id": "Smith2019Modeling_exp1_vanish_geometric_cube_surprise_human_disappear_fixed_cube_1_b501d8fda3",
+      "url": "assets/studies/smith5-parsing.gif",
+      "sha256": "7cfe58192ecf83be19bb52400525c1f448960050d9fa646287a3c55d277de35f",
+      "code_sha256": "9bbe6fcca04dc88ca9d4ed6fc71e05e7b73afea7a77fe3dcfc6435b1121c736d",
+      "frame_count": 24,
+      "width": 1292,
+      "height": 483,
+      "original": null,
+      "kind": "sampled_video",
+      "relation_to_method": "Matches the source of the saved observation excerpt. No hidden state or surprise judgment is rendered."
+    },
+    {
+      "panel_id": "stephan8",
+      "source_id": "Stephan2021Counterfactual_exp3_barrier_bottom_f5e8f2889a",
+      "url": "assets/studies/stephan8-parsing.gif",
+      "sha256": "3bd404fc8f27f4481d0124b9bd0a5578a876a32e000d0eecf6eb377a59a0fc4c",
+      "code_sha256": "4249f27667127cc145422b816ba1ec3bc45572d880f2da127a31b9a3c494f456",
+      "frame_count": 1,
+      "width": 1292,
+      "height": 537,
+      "original": {
+        "url": "assets/studies/stephan8-original.png",
+        "format": "png",
+        "sha256": "4a1dc1fddec1a529b2d8a8c8319b89548ba398900d8e20f3032d8539f05b87a5"
+      },
+      "kind": "static_diagram",
+      "relation_to_method": "Static barrier_bottom task diagram, not the introductory video. Hypothetical segment predicates are explained separately."
+    }
+  ]
+}

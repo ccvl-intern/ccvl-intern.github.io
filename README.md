@@ -4,6 +4,10 @@ Static research site redesigned around methods, study-level results, limitations
 and source-linked evidence. Plain HTML, CSS and JavaScript; no build step,
 backend or GPU inference is needed to preview the saved results.
 
+The research focus is **after parsing**: converting saved object states into
+evidence that a VLM can align with the video and use. Parsing accuracy is
+supporting context, not the main claim of the current methods.
+
 ## Local preview
 
 Run from the repository root:
@@ -57,6 +61,45 @@ Study tabs include methods, controls, limitations and source records. Real
 archived study GIFs show source imagery at left and box reconstruction at right;
 they do not visualize new reasoning outputs. The saved-run viewer contains
 archived 8B/9B examples, not outputs from the newer 27B development experiments.
+
+## Post-Parsing Methods
+
+Figure 1 is a schematic of saved observations, a task-bound representation,
+computed evidence and readable input. It is not a saved scene, a model response
+or a claim that every study uses the same computation.
+
+Figures 2a-2h illustrate the eight actual development pipelines with distinct
+conceptual event, action-state, observation or geometry diagrams. Expand each
+method's exact steps for its actor (input contract, program or final VLM),
+inputs, operation and output. Adaptive Abstraction is not the current method;
+its old figure is no longer displayed.
+The method map and evidence examples distinguish:
+
+- Bass: explicit event semantics and finite-horizon absence.
+- Gerstenberg 2021/2022: conditional event timelines under shared mechanisms.
+- Wu: action-state graphs and route calculations.
+- Sosa: complete-scene evidence and prospective task clarification.
+- Beller: additional local pixel observations and chronological event paths.
+- Smith: source-aligned visible states without invented hidden outcomes.
+- Stephan: geometric intersection predicates, not subjective difficulty scores.
+
+`data/post-parsing-methods.json` holds the explanations and source provenance.
+Saved excerpts and schematic paraphrases are explicitly labeled. The final VLM
+receives the original visual input and question; human references are used for
+evaluation only. The other five studies remain in the earlier full-cohort
+method, without a separate validated development pipeline claimed here.
+
+Each study presents paired sampled-source / prediction-only box imagery, its
+method diagram, VLM-input evidence and recorded comparisons. Failures receive
+the same treatment as local improvements. `data/study-media.json` binds the
+eight selected illustrations to source IDs and code/media hashes. These are
+archived parser observations, not renderings of later simulations or proof that
+the later reasoner consumed those exact fields. Animation timing is not source
+video timing; Stephan uses the tested static diagram. Exact originals are also
+included for Wu (animated stimulus), Beller (MP4) and Stephan (PNG). Other
+panels show sampled original frames, not full original video files. Rebuild
+the byte-verified selection with
+`node scripts/build_study_media.mjs <delivery-directory> <research-artifacts-directory>`.
 
 ## Files and provenance
 

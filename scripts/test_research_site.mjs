@@ -1,10 +1,13 @@
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { test } from 'node:test';
+import { createHash } from 'node:crypto';
 
 const root = new URL('../', import.meta.url);
 const read = path => readFile(new URL(path, root), 'utf8');
 const data = JSON.parse(await read('data/research-20261105.json'));
+const methods = JSON.parse(await read('data/post-parsing-methods.json'));
+const media = JSON.parse(await read('data/study-media.json'));
 const html = await read('index.html');
 const conditionIds = ['video', 'saved_direct_code', 'full_code', 'predictedtask', 'partialoracle'];
 
@@ -74,6 +77,52 @@ test('unification preparation is not presented as an inference result', () => {
   assert.match(html, /No unified-method score is reported/);
 });
 
+test('each study has a distinct diagram, complete post-parsing route and sourced example', () => {
+  assert.deepEqual(methods.methods.map(method => method.panel_id), data.panels.map(panel => panel.id));
+  const sources = new Set(data.sources.map(source => source.id));
+  for (const method of methods.methods) {
+    assert.ok(html.includes(`id="diagram-${method.panel_id}"`));
+    assert.equal(method.stages.length, 4);
+    assert.equal(method.stages.at(-1).actor, 'vlm');
+    for (const stage of method.stages) {
+      assert.ok(['program', 'vlm', 'contract'].includes(stage.actor));
+      for (const field of ['title', 'input', 'operation', 'output']) assert.ok(stage[field]?.length > 10);
+    }
+    for (const key of ['entities', 'relations', 'unknowns']) assert.ok(method.representation[key].length >= 2);
+    assert.ok(['saved_excerpt', 'schematic'].includes(method.example.kind));
+    assert.equal(method.example.question_kind, 'paraphrase');
+    assert.ok(method.example.evidence.length > 100 && method.example.evidence.length <= 1000);
+    assert.match(method.example.sha256, /^[0-9a-f]{64}$/);
+    for (const id of method.source_ids) assert.ok(sources.has(id));
+  }
+  assert.equal(methods.methods.filter(method => method.example.kind === 'saved_excerpt').length, 7);
+  assert.equal(methods.methods.find(method => method.panel_id === 'sosa22').example.kind, 'schematic');
+  for (const id of ['ger2021_8', 'ger2022_8']) {
+    assert.match(methods.methods.find(method => method.panel_id === id).stages[0].operation, /pre-interaction state/);
+  }
+  assert.doesNotMatch(html, /<img[^>]+adaptive-abstraction/);
+});
+
+test('all eight paired illustrations are source-bound and byte-verified', async () => {
+  assert.deepEqual(media.records.map(row => row.panel_id), data.panels.map(row => row.id));
+  for (const record of media.records) {
+    const bytes = await readFile(new URL(record.url, root));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), record.sha256);
+    assert.match(record.code_sha256, /^[0-9a-f]{64}$/);
+    assert.ok(record.frame_count > 0);
+    assert.ok(record.width > 0 && record.height > 0);
+    assert.ok(record.relation_to_method.length > 30);
+    if (record.original) {
+      const originalBytes = await readFile(new URL(record.original.url, root));
+      assert.equal(createHash('sha256').update(originalBytes).digest('hex'), record.original.sha256);
+    }
+  }
+  assert.match(media.records.find(row => row.panel_id === 'ger2021_8').source_id, /_exp1_/);
+  assert.match(media.records.find(row => row.panel_id === 'wu8').source_id, /_exp2_/);
+  assert.equal(media.records.find(row => row.panel_id === 'stephan8').kind, 'static_diagram');
+  assert.deepEqual(media.records.filter(row => row.original).map(row => row.panel_id), ['wu8', 'beller20', 'stephan8']);
+});
+
 test('all public audit records exist and omit private operational details', async () => {
   const privateContent = /\/Users\/|\/scratch\/|\/home\/|ssh\s|Slurm|JobId=|Johns Hopkins|Stanford University|Jieneng Chen|Alan.{0,5}Yuille/i;
   for (const source of data.sources) {
@@ -83,6 +132,8 @@ test('all public audit records exist and omit private operational details', asyn
     for (const original of source.provenance) assert.match(original.sha256, /^[0-9a-f]{64}$/);
   }
   assert.doesNotMatch(JSON.stringify(data), privateContent);
+  assert.doesNotMatch(JSON.stringify(methods), privateContent);
+  assert.doesNotMatch(JSON.stringify(media), privateContent);
   assert.doesNotMatch(html, /Johns Hopkins|Stanford University|Jieneng Chen|Alan.{0,5}Yuille|class="authors?"/i);
 });
 

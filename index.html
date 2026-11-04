@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Unified and Adaptive Visual Parser for CogGym Reasoning. Methods, per-study experiments, auditable results and saved video-code examples.">
+  <meta name="description" content="From parsed code to VLM-readable evidence: task-bound graphs, computed events, readable representations and study-specific methods for CogGym physical reasoning.">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/research.css?v=20261105">
-  <script src="assets/research.js?v=20261105" defer></script>
+  <link rel="stylesheet" href="assets/research.css?v=20261105-interface">
+  <script src="assets/research.js?v=20261105-interface" defer></script>
   <script src="assets/examples.js?v=20261105" defer></script>
   <script src="assets/access.js?v=20261105" defer></script>
 </head>
@@ -26,7 +26,7 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="shell nav-inner">
-        <a class="wordmark" href="#top">Parse Anything<span> / CogGym</span></a>
+        <a class="wordmark" href="#top">Code to Evidence<span> / CogGym</span></a>
         <nav aria-label="Primary navigation">
           <a href="#method">Method</a><a href="#studies">Studies</a><a href="#results">Results</a><a href="#examples">Examples</a>
         </nav>
@@ -35,61 +35,72 @@
     <main id="main">
       <section class="masthead shell" id="top">
         <h1>Unified and Adaptive Visual Parser<br> <span>for CogGym Reasoning</span></h1>
-        <p class="hero-subtitle">From parsed scenes to evidence for physical reasoning.</p>
+        <p class="hero-subtitle">From parsed code to evidence a VLM can reason with.</p>
+        <p class="hero-focus">Our focus is the interface <strong>after parsing</strong>: binding, computing and communicating physical evidence.</p>
         <div class="hero-links">
           <a href="https://github.com/Yuzhou541/Unified-and-Adaptive-Visual-Parser-for-CogGym-Reasoning">Code <img src="assets/icons/arrow-up-right.svg" alt=""></a>
-          <a class="coral-link" href="#studies">Explore results <img src="assets/icons/arrow-up-right.svg" alt=""></a>
+          <a class="coral-link" href="#studies">Explore methods <img src="assets/icons/arrow-up-right.svg" alt=""></a>
           <a href="data/research-20261105.json" download>Data <img src="assets/icons/download.svg" alt=""></a>
         </div>
-        <figure class="hero-media">
-          <div class="media-labels"><span>Original video</span><span>Parsed-code visualization</span></div>
-          <div class="motion-frame"><img id="hero-image" class="motion-image" data-motion-src="assets/demos/hamrick-tower.gif" alt="Hamrick tower: original visual input at left, box-only reconstruction at right" width="1292" height="536"></div>
-          <figcaption><span>Geometry is a starting point. The question determines which evidence matters.</span><button class="icon-button" data-motion-toggle aria-label="Pause animations" title="Pause animations"><img src="assets/icons/pause.svg" alt=""></button></figcaption>
+        <figure class="interface-figure" aria-label="Schematic: saved parsing becomes task-bound evidence, then readable VLM input">
+          <ol class="interface-flow">
+            <li><h2><span>1</span> Saved parsing</h2><div class="mini-facts"><div><b>Identity</b><b>Position</b><b>Time</b></div><div><span>A</span><span>(x, y)</span><span>t</span></div><div><span>B</span><span>(x, y)</span><span>t</span></div><div><span>Wall</span><span>extent</span><span>t</span></div></div><p>Observations, not the answer.</p></li>
+            <li><h2><span>2</span> Task-bound graph</h2><div class="mini-graph" aria-label="Schematic relation: A near B at time t, with a contextual wall"><div class="graph-pair"><span class="graph-node">A</span><span class="graph-edge">near at t</span><span class="graph-node">B</span></div><div class="graph-wall">Wall / context</div></div><p>Bind objects, time and the question.</p></li>
+            <li><h2><span>3</span> Computed evidence</h2><dl class="evidence-kinds"><div><dt>Observed</dt><dd>Visible source state</dd></div><div><dt>Derived</dt><dd>Measured relation</dd></div><div><dt>Modeled</dt><dd>Conditional outcome</dd></div></dl><p>Keep assumptions and unknowns.</p></li>
+            <li><h2><span>4</span> Readable input</h2><blockquote>No A-B contact within the modeled horizon; later events remain unknown.</blockquote><p>Explicit meaning, not a JSON dump.</p></li>
+          </ol>
+          <div class="vlm-handoff"><span>Evidence + original video + question</span><img src="assets/icons/arrow-up-right.svg" alt="then" class="flow-arrow"><strong>VLM judgment</strong></div>
+          <figcaption><b>Figure 1.</b> Conceptual interface. Operators differ by study; no unified-method result is claimed.</figcaption>
         </figure>
-        <div class="scope-strip" aria-label="Research scope">
-          <div><strong>490</strong><span>reasoning questions</span></div>
-          <div><strong>13</strong><span>studies in the frozen cohort</span></div>
-          <div><strong>8</strong><span>separate development panels</span></div>
-        </div>
       </section>
 
       <section class="section shell" id="method">
         <div class="section-intro">
-          <h2>More than a scene description.</h2>
-          <p>Accurate geometry does not automatically produce accurate physical judgments. We study how parsed objects, motion and relations become evidence a vision-language model can actually use.</p>
+          <h2>Parsing is the starting point.</h2>
+          <p>The research question is what happens next: how do object states and relations become evidence that a VLM can align with the video and use for a physical judgment?</p>
         </div>
-        <ol class="method-flow">
-          <li><span>01 / Perceive</span><h3>Parse Anything</h3><p>Identify objects; estimate masks, geometry and trajectories.</p></li>
-          <li><span>02 / Organize</span><h3>Task-conditioned graph</h3><p>Bind identities, coordinates, time and question-relevant relations.</p></li>
-          <li><span>03 / Compute</span><h3>Bounded operations</h3><p>Calculate supported events, paths or geometry under explicit assumptions.</p></li>
-          <li><span>04 / Communicate</span><h3>Readable evidence</h3><p>Separate observations, modeled outcomes and unknown states.</p></li>
-          <li><span>05 / Reason</span><h3>VLM judgment</h3><p>Answer from the original video, question and supplied evidence.</p></li>
-        </ol>
-        <p class="caption"><b>Figure 1.</b> The current research direction. The completed development methods below use different operations; a single transferable pipeline is not yet validated.</p>
+        <div class="interface-principles">
+          <article><h3>Bind before reasoning</h3><p>Object IDs, timestamps, coordinate systems and interventions must refer to the same entities and world. A graph is an internal structure; it does not prescribe what the VLM sees.</p></article>
+          <article><h3>Compute what can be checked</h3><p>Programs calculate supported measurements, event timelines or paths. Some methods add physical assumptions or source-pixel observations: they are not merely a different serialization.</p></article>
+          <article><h3>Make evidence usable</h3><p>The final input states what was observed, derived or modeled and what remains unknown. The VLM still makes the requested rating or categorical judgment, without human targets.</p></article>
+        </div>
+        <div class="method-map-heading"><h3>What changes after parsing?</h3><a class="text-link" href="data/post-parsing-methods.json" download>Method records <img src="assets/icons/download.svg" alt=""></a></div>
+        <div class="table-scroll" role="region" aria-label="Study-specific post-parsing method map" tabindex="0"><table class="result-table method-map-table"><thead><tr><th scope="col">Study</th><th scope="col">Representation / operation</th><th scope="col">The specific change</th></tr></thead><tbody id="method-map"></tbody></table></div>
+        <p class="caption" id="other-study-methods"></p>
+        <details class="paper-details"><summary>Earlier shared method in the 490-question comparison</summary><ol id="earlier-method-steps" class="prose"></ol><p class="caption">This earlier question-conditioned method is not the combination of the eight later development methods below.</p></details>
         <details class="paper-details">
-          <summary>Parsing architecture &amp; earlier adaptive abstraction</summary>
+          <summary>Upstream parsing architecture</summary>
           <figure><img src="assets/figures/parse-anything.png" loading="lazy" alt="Parse Anything: identification, masks, geometry, tracking, sampling and lifting into object-centric code" width="1280" height="400"><figcaption>Parse Anything combines a VLM identifier, SAM3.1, VGGT-&Omega; and SpatialTrackerV2.</figcaption></figure>
-          <figure><img src="assets/figures/adaptive-abstraction.png" loading="lazy" alt="Earlier adaptive abstraction: iterative selection by confidence, length, importance and relevance"><figcaption>Earlier adaptive abstraction selects and derives code iteratively. The newer study-specific experiments add explicit evidence semantics and task operations.</figcaption></figure>
         </details>
       </section>
 
       <section class="section section-tint" id="studies">
         <div class="shell">
-          <div class="section-intro"><h2>Methods, study by study.</h2><p>Eight completed development panels. Each has its own frozen inputs, controls and method. These are not scores from one unified benchmark run.</p></div>
+          <div class="section-intro"><h2>Study by study, from scene to judgment.</h2><p>Original visual input, parsed reconstruction, the study-specific evidence interface and its result. Local successes and unresolved cases are shown together; these are not one unified benchmark run.</p></div>
           <div id="research-error" class="notice" role="alert" hidden>Research data could not be loaded. <button id="research-retry" class="text-button">Retry</button></div>
           <p id="research-loading" role="status">Loading audited experiment records...</p>
           <div id="research-content" hidden>
             <div id="study-tabs" class="tabs study-tabs" role="tablist" aria-label="Development study"></div>
             <article id="study-panel" role="tabpanel" tabindex="0">
               <div class="study-heading"><div><p id="study-scope" class="small-label"></p><h3 id="study-title"></h3></div><span id="study-verdict" class="verdict"></span></div>
-              <div class="study-layout">
-                <figure class="study-media">
-                  <div class="motion-frame"><img id="study-image" class="motion-image" alt=""></div>
-                  <figcaption>Archived study illustration: source at left, box reconstruction at right. Not a visualization of the new reasoning output.</figcaption>
-                </figure>
-                <div class="study-method"><h4 id="study-method-title"></h4><p id="study-description"></p><ol id="study-steps"></ol></div>
+              <div class="study-scoreline" id="study-scoreline"></div>
+              <div class="study-method"><p id="postparse-family" class="small-label"></p><h4 id="study-method-title"></h4><p id="study-description"></p></div>
+              <p class="method-change" id="postparse-change"></p>
+              <figure class="study-media">
+                <div class="media-heading"><h4>01 / Original input &amp; parsed visualization</h4><button class="icon-button" data-motion-toggle title="Pause animations" aria-label="Pause animations"><img src="assets/icons/pause.svg" alt=""></button></div>
+                <div class="media-labels"><span>Original visual input</span><span>Reconstructed from parsed boxes</span></div>
+                <div class="motion-frame"><img id="study-image" class="motion-image" alt=""></div>
+                <figcaption id="study-media-caption">Paired archived frames from one source and its parsed box reconstruction. This study illustration is separate from the input excerpt below and does not show a new reasoning output.</figcaption>
+                <div id="study-original"></div>
+              </figure>
+              <figure class="study-schematic"><div class="media-heading"><h4>02 / The post-parsing representation</h4><span class="small-label">Conceptual diagram, not measured scene geometry</span></div><div id="study-representation-diagram"></div><figcaption id="postparse-caption"></figcaption></figure>
+              <details class="paper-details stage-details"><summary>Exact steps: inputs, program operations and VLM responsibilities</summary><ol id="postparse-flow" class="postparse-flow"></ol></details>
+              <div class="evidence-explainer">
+                <div class="evidence-structure"><h4>What the representation contains</h4><dl id="postparse-representation"></dl><details class="paper-details"><summary>Input fields used by this method</summary><ul id="postparse-inputs"></ul></details></div>
+                <div class="evidence-readout"><p id="postparse-example-kind" class="small-label"></p><h4>03 / Evidence supplied to the VLM</h4><p id="postparse-question" class="method-question"></p><blockquote id="postparse-evidence"></blockquote><p id="postparse-explanation"></p><p id="postparse-example-source" class="caption"></p></div>
               </div>
-              <div class="study-result-heading"><h4>Recorded comparison</h4><label class="check-label"><input id="all-study-conditions" type="checkbox"> All recorded conditions</label></div>
+              <aside class="method-boundary"><strong>What this does not establish</strong><p id="postparse-boundary"></p></aside>
+              <div class="study-result-heading"><h4>04 / Recorded reasoning results</h4><label class="check-label"><input id="all-study-conditions" type="checkbox"> All recorded conditions</label></div>
               <div class="table-scroll" role="region" aria-label="Selected study comparison" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Condition</th><th scope="col">R&sup2; (%)</th><th scope="col">Signed r</th><th scope="col">nRMSE</th></tr></thead><tbody id="study-comparison"></tbody></table></div>
               <p id="study-metric-note" class="caption"></p>
               <div id="study-diagnostic" class="research-note" hidden></div>
@@ -135,7 +146,8 @@
 
       <section class="section section-tint" id="parsing">
         <div class="shell">
-          <div class="section-intro"><h2>Parsing is not the whole story.</h2><p>The original geometry benchmark measures reconstruction quality. Reasoning also requires temporal accuracy, valid physical assumptions and correct use of the evidence.</p></div>
+          <div class="section-intro"><h2>Upstream parsing &amp; computational cost.</h2><p>Parsing is the evidence source, not the focus of the new reasoning interface. Its geometry metrics and the cost of earlier refinement remain useful supporting measurements.</p></div>
+          <details class="paper-details"><summary>Original video and parsed-code reconstruction</summary><figure class="hero-media"><div class="media-labels"><span>Original video</span><span>Parsed-code visualization</span></div><div class="motion-frame"><img id="hero-image" class="motion-image" data-motion-src="assets/demos/hamrick-tower.gif" alt="Hamrick tower: original visual input at left, box-only reconstruction at right" width="1292" height="536"></div><figcaption><span>Archived reconstruction, before the post-parsing reasoning interface.</span><button class="icon-button" data-motion-toggle aria-label="Pause animations" title="Pause animations"><img src="assets/icons/pause.svg" alt=""></button></figcaption></figure></details>
           <div class="parsing-strip"><div><strong>84.14 <small>&plusmn; 10.88%</small></strong><span>mIoU / 280 samples / accepted-box merge</span></div><div><strong>7.26 <small>&plusmn; 11.43%</small></strong><span>Center RPE@1 / 130 temporal samples / 8B-Thinking</span></div></div>
           <details class="paper-details"><summary>Table 4. Archived parsing comparison</summary><div class="table-scroll" role="region" aria-label="Parsing comparison" tabindex="0"><table class="result-table"><thead><tr><th scope="col">Parser</th><th scope="col">mIoU (%)</th><th scope="col">Center RPE@1 (%)</th></tr></thead><tbody id="parsing-table"></tbody></table></div><p class="caption">Mean &plusmn; population SD across samples (ddof = 0), not seed uncertainty. Center RPE is displacement residual normalized by the source-frame diagonal. Parse Anything mIoU uses the accepted-box merge; temporal RPE uses a separate 8B-Thinking condition. These do not validate the dynamics of every reasoning question.</p></details>
           <div class="result-heading"><div><p class="small-label">Table 5</p><h3>Computational cost</h3></div></div>
@@ -187,6 +199,64 @@
         </div>
       </section>
     </main>
+    <template id="diagram-bass42">
+      <div class="representation-figure">
+        <div class="event-lanes">
+          <div class="event-lane"><b>Factual world</b><span class="diagram-node">Gray + pink</span><span class="diagram-edge">modeled events</span><span class="diagram-node">Callbacks + intervals</span></div>
+          <div class="event-lane"><b>Removal world</b><span class="diagram-node pink-node">Pink; gray absent</span><span class="diagram-edge">modeled events</span><span class="diagram-node">Callbacks + intervals</span></div>
+        </div>
+        <div class="semantic-split"><div><span class="diagram-tag">Occurrence</span><strong>Sensor event recorded</strong><small>A positive modeled callback.</small></div><span class="not-equal" aria-label="separate from">/</span><div><span class="diagram-tag">Relation</span><strong>No gray/pink collision recorded</strong><small>Within the modeled horizon. This does not cancel the event.</small></div></div>
+        <p class="diagram-output">World + time + event + relation + unknown endpoint <span class="diagram-arrow" aria-hidden="true"></span> readable event ledger</p>
+      </div>
+    </template>
+    <template id="diagram-ger2021_8">
+      <div class="representation-figure">
+        <div class="entity-strip"><span class="diagram-node removed-node">A removed</span><span class="diagram-node">B: box + velocity</span><span class="diagram-node context-node">Fixed walls / opening</span></div>
+        <ol class="event-chain"><li><span class="event-dot">t0</span><b>Initialize B</b><small>Observed motion; assumed start state</small></li><li><span class="event-dot">t1</span><b>Wall contact</b><small>Update direction under elastic rules</small></li><li><span class="event-dot">t2</span><b>Next supported contact</b><small>Recompute from changed velocity</small></li><li><span class="event-dot unknown-dot">?</span><b>Exit or unresolved</b><small>Entire B exits the left boundary, or horizon / unsupported stop</small></li></ol>
+        <p class="diagram-output">Conditional event chain, not a factual video trajectory <span class="diagram-arrow" aria-hidden="true"></span> numerical timeline + limits</p>
+      </div>
+    </template>
+    <template id="diagram-ger2022_8">
+      <div class="representation-figure">
+        <div class="entity-strip"><span class="diagram-node removed-node">A removed</span><span class="diagram-node">B: box + velocity</span><span class="diagram-node context-node">Walls + retained block</span></div>
+        <div class="dependency-row"><span class="diagram-tag">Block motion</span><span class="diagram-edge">factual adjacent anchors retained as an assumption</span><span class="diagram-node">Contact state</span></div>
+        <ol class="event-chain"><li><span class="event-dot">t0</span><b>Intervened scene</b><small>Observed B motion initializes the model</small></li><li><span class="event-dot">t1</span><b>B meets a face</b><small>Program computes elastic response</small></li><li><span class="event-dot">t2</span><b>Updated path</b><small>Next contact depends on new velocity</small></li><li><span class="event-dot unknown-dot">?</span><b>Gate crossing?</b><small>Body fit, horizon and stop reason</small></li></ol>
+        <p class="diagram-output">Contacts + changed velocities + crossing predicate <span class="diagram-arrow" aria-hidden="true"></span> conditional evidence, not a probability</p>
+      </div>
+    </template>
+    <template id="diagram-wu8">
+      <div class="representation-figure">
+        <div class="action-graph"><div class="action-row"><span class="diagram-node">Start at step k</span><span class="diagram-edge">legal move / wait</span><span class="diagram-node">Next cell + step</span><span class="diagram-edge">search legal states</span><span class="diagram-node goal-node">Goal</span></div><div class="action-row action-conditions"><span class="diagram-tag">Grid adjacency</span><span class="diagram-tag">Door open / closed / unknown</span><span class="diagram-tag">Action budget</span></div></div>
+        <div class="semantic-split"><div><span class="diagram-tag">Unknown future doors</span><strong>All-open completion</strong><small>Optimistic bound, not a prediction.</small></div><span class="not-equal" aria-label="and">/</span><div><span class="diagram-tag">Unknown future doors</span><strong>All-closed completion</strong><small>Restrictive bound, not a prediction.</small></div></div>
+        <p class="diagram-output">Earliest feasible arrival + route witness + bounds <span class="diagram-arrow" aria-hidden="true"></span> action-state evidence for the VLM</p>
+      </div>
+    </template>
+    <template id="diagram-sosa22">
+      <div class="representation-figure">
+        <div class="scene-graph"><div class="graph-context"><span class="diagram-node context-node">Context objects / boundaries</span></div><div class="graph-caption">Keep the complete visible scene, not just the queried pair.</div><div class="graph-center"><span class="round-entity">A</span><span class="diagram-edge">time-indexed relative position</span><span class="round-entity coral-entity">B</span></div><div class="graph-context"><span class="diagram-node">Other visible objects</span><span class="diagram-node">Observation ends / disappearance</span></div></div>
+        <div class="question-contract"><span class="diagram-tag">Prospective question</span><strong>Judge what happens after the disappearance.</strong><small>The graph describes the observed prefix; it does not provide the future outcome.</small></div>
+        <p class="diagram-output">Complete scene + coordinate/time bindings + clarified task <span class="diagram-arrow" aria-hidden="true"></span> VLM Yes / No judgment</p>
+      </div>
+    </template>
+    <template id="diagram-beller20">
+      <div class="representation-figure">
+        <div class="dependency-row"><span class="diagram-node">Parsed identities + coarse motion</span><span class="diagram-edge">guide extra source-pixel measurements</span><span class="diagram-node">Circle centers + times</span></div>
+        <ol class="event-chain"><li><span class="event-dot">t0</span><b>Before interaction</b><small>Positions and local motion</small></li><li><span class="event-dot">t1</span><b>A near B</b><small>Measured proximity, not a causal label</small></li><li><span class="event-dot">t2</span><b>B near context</b><small>Ordered path through the scene</small></li><li><span class="event-dot">t3</span><b>After interaction</b><small>Event-local position anchors</small></li></ol>
+        <p class="diagram-output">Chronological interaction path + numerical anchors <span class="diagram-arrow" aria-hidden="true"></span> evidence for causal-language judgment</p>
+      </div>
+    </template>
+    <template id="diagram-smith5">
+      <div class="representation-figure">
+        <div class="observation-panels"><div><span class="diagram-tag">Observed time t1</span><div class="observation-scene"><span class="observed-object">ID</span><span class="occluder">Context</span></div><b>Visible box + center</b><small>Image coordinates and source time</small></div><div><span class="diagram-tag">Observed time t2</span><div class="observation-scene"><span class="observed-object shifted-object">ID</span><span class="occluder">Context</span></div><b>Next supported observation</b><small>Preserve identity and relation bindings</small></div><div><span class="diagram-tag">Unobserved interval</span><div class="observation-scene unknown-scene">?</div><b>Keep unknown</b><small>No invented hidden motion or surprise label</small></div></div>
+        <p class="diagram-output">Visible states + pair relations + explicit unknowns <span class="diagram-arrow" aria-hidden="true"></span> answer-only surprise rating</p>
+      </div>
+    </template>
+    <template id="diagram-stephan8">
+      <div class="representation-figure">
+        <div class="geometry-branches"><div class="geometry-row"><span class="round-entity blue-entity">Blue</span><span class="diagram-edge">hypothetical center-to-target segment</span><span class="round-entity gray-entity">Marble</span></div><div class="barrier-predicate"><span class="diagram-node context-node">Barrier boxes</span><b>Program tests intersection for each segment</b><small>Entry / exit parameters are dimensionless, not time.</small></div><div class="geometry-row"><span class="round-entity green-entity">Green</span><span class="diagram-edge">hypothetical center-to-target segment</span><span class="round-entity gray-entity">Marble</span></div></div>
+        <p class="diagram-output">Geometric certificate; finite-body access remains unknown <span class="diagram-arrow" aria-hidden="true"></span> VLM comparative-difficulty rating</p>
+      </div>
+    </template>
     <footer class="shell site-footer"><div><strong>Unified and Adaptive Visual Parser</strong><span>for CogGym Reasoning</span></div><div><a href="data/research-20261105.json" download>Research data</a><a href="https://coggym.org/">CogGym</a><a href="#top">Back to top <img src="assets/icons/arrow-up-right.svg" alt=""></a></div><p>Research in progress. Results are tied to their recorded cohort, method and evaluation protocol.</p></footer>
   </template>
 </body>
