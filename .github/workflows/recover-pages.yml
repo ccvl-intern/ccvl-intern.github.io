@@ -1,4 +1,4 @@
-name: Configure explicit Pages publication
+name: Inspect Pages recovery blocker
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  actions: write
+  pages: read
+  actions: read
 
 concurrency:
   group: pages-recovery-20261105
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Stop stalled retry and enable official static-site workflow publication
+      - name: Inspect configuration failure without changing Pages or workflows
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -48,17 +48,16 @@ jobs:
 
           const site = (await api('pages')).data;
           console.log(`::notice::Pages configuration: ${JSON.stringify({status:site.status,build_type:site.build_type,source:site.source,html_url:site.html_url})}`);
-          if (site.source.branch !== 'main' || site.source.path !== '/' || site.build_type !== 'legacy') {
-            throw new Error('Unexpected Pages source; refusing to alter settings');
-          }
-          const run = (await api('actions/runs/41931272054')).data;
-          if (run.head_sha !== stale || run.run_attempt !== 2) throw new Error('Unexpected retry target');
-          if (run.status !== 'completed') {
-            await api('actions/runs/41931272054/cancel', 'POST', [202]);
-            console.log('::notice::Cancellation accepted for this stalled retry only');
-          }
-          await api('pages', 'PUT', [204], {build_type:'workflow'});
-          const updated = (await api('pages')).data;
-          if (updated.build_type !== 'workflow' || updated.html_url !== site.html_url || updated.cname !== site.cname) throw new Error('Pages settings verification failed');
-          console.log(`::notice::Explicit workflow publication enabled; URL and custom domain unchanged: ${updated.html_url}`);
+          const response = await fetch(`https://api.github.com/repos/${repo}/actions/jobs/126942740020/logs`, {
+            headers: {Authorization:`Bearer ${process.env.GH_TOKEN}`, Accept:'application/vnd.github+json'},
+            redirect:'manual', signal:AbortSignal.timeout(20000)
+          });
+          if (response.status !== 302) throw new Error(`Log download status ${response.status}`);
+          const downloadUrl = response.headers.get('location');
+          if (new URL(downloadUrl).protocol !== 'https:') throw new Error('Non-HTTPS log URL');
+          const download = await fetch(downloadUrl, {signal:AbortSignal.timeout(20000)});
+          if (!download.ok) throw new Error(`Log body status ${download.status}`);
+          const lines = (await download.text()).split('\n');
+          const error = lines.find(line => /Error: PUT pages:/.test(line));
+          console.log(`::notice::Configuration API result: ${error || 'Expected configuration error line not found'}`);
           JS
