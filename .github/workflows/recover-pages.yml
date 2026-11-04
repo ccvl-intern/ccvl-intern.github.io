@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   actions: write
+  deployments: write
 
 concurrency:
   group: pages-recovery-20261105
@@ -19,7 +20,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Cancel the stale deployment and retry only the failed publish job
+      - name: Clear the backed-up failed deployment record and retry publication
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -29,14 +30,16 @@ jobs:
           const expectedMain = 'd56cf154e1f6efbc6efc09991878c857da2a51b3';
           if (repo !== 'ccvl-intern/ccvl-intern.github.io') throw new Error('Unexpected repository');
 
-          async function api(path, method = 'GET', accepted = [200]) {
+          async function api(path, method = 'GET', accepted = [200], body) {
             const response = await fetch(`https://api.github.com/repos/${repo}/${path}`, {
               method,
               headers: {
                 Authorization: `Bearer ${process.env.GH_TOKEN}`,
                 Accept: 'application/vnd.github+json',
+                'Content-Type': 'application/json',
                 'X-GitHub-Api-Version': '2026-03-10'
               },
+              body: body === undefined ? undefined : JSON.stringify(body),
               redirect: 'error',
               signal: AbortSignal.timeout(20000)
             });
@@ -47,30 +50,30 @@ jobs:
 
           const main = (await api('branches/main')).data;
           const run = (await api('actions/runs/41932874935')).data;
-          const job = (await api('actions/jobs/126936885630')).data;
+          const job = (await api('actions/jobs/126938555562')).data;
           if (main.commit.sha !== expectedMain || run.head_sha !== expectedMain ||
               run.head_branch !== 'main' || run.conclusion !== 'failure' ||
               job.run_id !== run.id || job.name !== 'deploy' || job.conclusion !== 'failure') {
             throw new Error('Frozen recovery target changed; refusing to cancel or retry another deployment');
           }
 
-          const path = `pages/deployments/${stale}`;
-          const terminal = new Set(['succeed', 'failed', 'cancelled', 'canceled', 'deployment_failed', 'deployment_cancelled', 'deployment_canceled']);
-          let state = await api(path);
-          console.log(`::notice::Stale Pages deployment before cancellation: ${JSON.stringify(state.data)}`);
-          // A failed status has not released this deployment's backend lock.
-          await api(`${path}/cancel`, 'POST', [204]);
-          console.log('::notice::Cancellation accepted for the exact stale deployment');
-          for (let attempt = 0; attempt < 24; attempt++) {
-            await new Promise(resolve => setTimeout(resolve, 5000));
-            state = await api(path, 'GET', [200, 404]);
-            console.log(`Cancellation check: ${state.data?.status || state.status}`);
-            if (state.status === 404 || terminal.has(state.data.status)) break;
+          const path = 'deployments/7560318951';
+          const deployment = (await api(path)).data;
+          const statuses = (await api(`${path}/statuses`)).data;
+          const state = (await api(`pages/deployments/${stale}`)).data;
+          if (deployment.sha !== stale || deployment.environment !== 'github-pages' ||
+              statuses[0]?.state !== 'failure' || state.status !== 'deployment_cancelled') {
+            throw new Error('Refusing to remove a deployment that is not the verified failed/cancelled record');
           }
-          console.log(`::notice::Stale Pages deployment after cancellation: ${JSON.stringify(state.data)}`);
-          if (state.status !== 404 && !terminal.has(state.data.status)) throw new Error('Pages cancellation has not completed');
-          await new Promise(resolve => setTimeout(resolve, 30000));
+          console.log(`::notice::Verified failed record ${deployment.id} at ${deployment.sha}; backup retained locally`);
+          await api(`${path}/statuses`, 'POST', [201], {
+            state: 'inactive',
+            description: 'Cancelled Pages deployment: removing stale record after backup to unblock publication',
+            auto_inactive: false
+          });
+          await api(path, 'DELETE', [204]);
+          console.log('::notice::Removed only failed deployment record 7560318951; successful deployment and Pages site retained');
 
-          await api('actions/jobs/126936885630/rerun', 'POST', [201]);
+          await api('actions/jobs/126938555562/rerun', 'POST', [201]);
           console.log('::notice::Retry accepted for the failed publish job; successful build and site files are unchanged');
           JS
