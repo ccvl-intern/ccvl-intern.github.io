@@ -31,6 +31,7 @@
   };
   let data;
   let methodData;
+  let animationData;
   let studyMedia;
   let storyData;
   let activePanel = "bass42";
@@ -68,7 +69,12 @@
     $("postparse-change").textContent = method.change_summary;
     $("postparse-flow").innerHTML = method.stages.map((stage, index) => `<li data-actor="${escape(stage.actor)}"><div class="stage-heading"><span class="stage-number">${index + 1}</span><span class="stage-actor">${actors[stage.actor]}</span></div><h5>${escape(stage.title)}</h5><dl><div><dt>Input</dt><dd>${escape(stage.input)}</dd></div><div><dt>Operation</dt><dd>${escape(stage.operation)}</dd></div><div><dt>Output</dt><dd>${escape(stage.output)}</dd></div></dl></li>`).join("");
     const letter = String.fromCharCode(97 + data.panels.indexOf(panel));
-    $("postparse-caption").textContent = `Figure 2${letter}. ${label(panel)} method schematic. Positions and symbolic times are illustrative, not measured.`;
+    const animation = animationData.records.find(row => row.panel_id === panel.id);
+    $("study-method-animation").alt = animation.alt;
+    setMedia($("study-method-animation"), animation.url, animation.poster);
+    $("study-method-open").href = animation.url;
+    $("study-method-download").href = animation.url;
+    $("postparse-caption").textContent = `Figure 2${letter}. ${label(panel)}: parsed fields → representation → operation → VLM input. ${animation.example_kind === "schematic" ? "Schematic example; no recorded numeric case." : "Saved evidence, paraphrased; geometry and animation timing are schematic."} Not a source-video replay or a new model result.`;
     $("postparse-inputs").innerHTML = method.input_fields.map(field => `<li>${escape(field)}</li>`).join("");
     $("postparse-representation").innerHTML = [["Entities / states", method.representation.entities], ["Relations / events", method.representation.relations], ["Unknowns / limits", method.representation.unknowns]].map(([title, items]) => `<div><dt>${title}</dt><dd><ul>${items.map(item => `<li>${escape(item)}</li>`).join("")}</ul></dd></div>`).join("");
     const example = method.example;
@@ -151,6 +157,11 @@
     const frame = img.closest(".motion-frame");
     frame.querySelector("canvas")?.remove();
     img.style.visibility = "visible";
+    if (img.dataset.motionPoster) {
+      const src = paused ? img.dataset.motionPoster : img.dataset.motionSrc;
+      if (img.getAttribute("src") !== src) img.src = src;
+      return;
+    }
     if (!paused || !img.complete || !img.naturalWidth) return;
     const canvas = document.createElement("canvas");
     canvas.width = img.naturalWidth;
@@ -161,11 +172,14 @@
     img.style.visibility = "hidden";
   }
 
-  function setMedia(img, src) {
+  function setMedia(img, src, poster) {
     img.onload = () => updateMotion(img);
     img.closest(".motion-frame").querySelector("canvas")?.remove();
     img.style.visibility = "visible";
-    img.src = src;
+    img.dataset.motionSrc = src;
+    if (poster) img.dataset.motionPoster = poster;
+    else delete img.dataset.motionPoster;
+    img.src = paused && poster ? poster : src;
     if (img.complete) updateMotion(img);
   }
 
@@ -305,6 +319,9 @@
       const methodsResponse = await fetch("data/post-parsing-methods.json");
       if (!methodsResponse.ok) throw new Error(`Method data: ${methodsResponse.status}`);
       methodData = await methodsResponse.json();
+      const animationResponse = await fetch("data/method-animations.json?v=20261105-method-gifs");
+      if (!animationResponse.ok) throw new Error(`Method animations: ${animationResponse.status}`);
+      animationData = await animationResponse.json();
       const mediaResponse = await fetch("data/study-media.json?v=20261105-stimuli");
       if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
       studyMedia = await mediaResponse.json();

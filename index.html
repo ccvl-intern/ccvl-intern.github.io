@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#ffffff">
   <title>Unified and Adaptive Visual Parser for CogGym Reasoning</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/research.css?v=20261105-five-conditions">
-  <script src="assets/research.js?v=20261105-five-conditions" defer></script>
+  <link rel="stylesheet" href="assets/research.css?v=20261105-method-gifs">
+  <script src="assets/research.js?v=20261105-method-gifs" defer></script>
   <script src="assets/examples.js?v=20261105" defer></script>
   <script src="assets/access.js?v=20261105" defer></script>
 </head>
@@ -106,7 +106,16 @@ Walls, times, visibility...</pre></div><img class="flow-arrow" src="assets/icons
                 <figcaption id="study-media-caption">Paired archived frames from one source and its parsed box reconstruction. This study illustration is separate from the input excerpt below and does not show a new reasoning output.</figcaption>
                 <div id="study-original"></div>
               </figure>
-              <figure class="study-schematic"><div class="media-heading"><h4>02 / Convert observations into evidence</h4><span class="small-label">Conceptual diagram, not measured scene geometry</span></div><ol id="study-recipe" class="study-recipe"></ol><div id="study-representation-diagram"></div><figcaption id="postparse-caption"></figcaption></figure>
+              <figure class="study-schematic">
+                <div class="media-heading"><h4>02 / Convert observations into evidence</h4><div class="method-media-actions">
+                  <button class="icon-button" data-motion-toggle title="Pause animations" aria-label="Pause animations"><img src="assets/icons/pause.svg" alt=""></button>
+                  <a id="study-method-open" class="icon-button" target="_blank" rel="noopener" title="Open method animation at full size" aria-label="Open method animation at full size"><img src="assets/icons/arrow-up-right.svg" alt=""></a>
+                  <a id="study-method-download" class="icon-button" download title="Download method GIF" aria-label="Download method GIF"><img src="assets/icons/download.svg" alt=""></a>
+                </div></div>
+                <div class="motion-frame method-animation-frame"><img id="study-method-animation" class="motion-image" width="1000" height="760" alt=""></div>
+                <figcaption id="postparse-caption"></figcaption>
+                <details class="paper-details"><summary>Static method overview</summary><ol id="study-recipe" class="study-recipe"></ol><div id="study-representation-diagram"></div></details>
+              </figure>
               <figure class="reasoning-figure"><h4>03 / What the VLM receives and decides</h4><div class="evidence-bridge"><div><p id="evidence-highlight-label" class="small-label"></p><dl id="evidence-highlights"></dl></div><div class="evidence-boundary"><strong>Evidence is not the answer.</strong><p>The program supplies observations or conditional calculations. The VLM still maps them to the requested judgment.</p></div></div><div class="reasoning-handoff"><div class="vlm-input-stack"><span>Original visual input</span><span>Original question</span><strong id="handoff-evidence"></strong></div><img class="flow-arrow" src="assets/icons/arrow-up-right.svg" alt="input to"><div class="vlm-node"><strong>Qwen3.5-27B</strong><span>Frozen reasoner / no training</span></div><img class="flow-arrow" src="assets/icons/arrow-up-right.svg" alt="outputs"><div class="prediction-node"><strong>VLM judgment</strong><span id="handoff-domain"></span></div></div></figure>
               <details class="paper-details method-details"><summary>Method details &amp; recorded VLM input</summary>
                 <p id="study-description" class="method-change"></p><p class="method-change" id="postparse-change"></p>

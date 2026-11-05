@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { test } from 'node:test';
 import { createHash } from 'node:crypto';
+import { SCENES, WIDTH, HEIGHT } from './method_animation_scenes.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = path => readFile(new URL(path, root), 'utf8');
@@ -9,8 +10,84 @@ const data = JSON.parse(await read('data/research-20261105.json'));
 const methods = JSON.parse(await read('data/post-parsing-methods.json'));
 const media = JSON.parse(await read('data/study-media.json'));
 const stories = JSON.parse(await read('data/study-story.json'));
+const animations = JSON.parse(await read('data/method-animations.json'));
 const html = await read('index.html');
 const conditionIds = ['video', 'saved_direct_code', 'full_code', 'predictedtask', 'partialoracle'];
+
+function inspectGif(bytes) {
+  assert.equal(bytes.subarray(0, 6).toString(), 'GIF89a');
+  let offset = 13 + ((bytes[10] & 128) ? 3 * 2 ** ((bytes[10] & 7) + 1) : 0);
+  let frames = 0, duration = 0;
+  function skipBlocks() {
+    while (bytes[offset] > 0) offset += bytes[offset] + 1;
+    assert.equal(bytes[offset++], 0);
+  }
+  while (offset < bytes.length) {
+    const marker = bytes[offset++];
+    if (marker === 0x3b) return {frames, duration};
+    if (marker === 0x21) {
+      const extension = bytes[offset++];
+      if (extension === 0xf9) {
+        assert.equal(bytes[offset], 4);
+        duration += bytes.readUInt16LE(offset + 2) * 10;
+      }
+      skipBlocks();
+    } else if (marker === 0x2c) {
+      const packed = bytes[offset + 8];
+      offset += 9 + ((packed & 128) ? 3 * 2 ** ((packed & 7) + 1) : 0);
+      offset++;
+      skipBlocks();
+      frames++;
+    } else assert.fail(`Unexpected GIF block: ${marker}`);
+  }
+  assert.fail('Missing GIF trailer');
+}
+
+test('every method animation has four distinct stages bound to existing evidence', async () => {
+  const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+  assert.equal(animations.methods_sha256, hash(await read('data/post-parsing-methods.json')));
+  assert.deepEqual(animations.records.map(row => row.panel_id), data.panels.map(row => row.id));
+  assert.deepEqual(SCENES.map(row => row.id), data.panels.map(row => row.id));
+  for (const record of animations.records) {
+    const method = methods.methods.find(row => row.panel_id === record.panel_id);
+    const scene = SCENES.find(row => row.id === record.panel_id);
+    assert.equal(record.evidence_source_sha256, method.example.sha256);
+    assert.equal(record.example_kind, method.example.kind);
+    assert.deepEqual(record.source_ids, method.source_ids);
+    assert.equal(record.kind, 'method_schematic');
+    assert.deepEqual(record.stages, scene.stages);
+    assert.equal(new Set(record.stage_sha256).size, 4);
+    assert.equal(record.alt, scene.alt);
+    for (const term of scene.terms) assert.ok(method.example.evidence.includes(term), `${scene.id}: ${term}`);
+    const bytes = await readFile(new URL(record.url, root));
+    const poster = await readFile(new URL(record.poster, root));
+    assert.equal(hash(bytes), record.sha256);
+    assert.equal(hash(poster), record.poster_sha256);
+    assert.equal(record.poster_sha256, record.stage_sha256.at(-1));
+    assert.equal(bytes.readUInt16LE(6), WIDTH);
+    assert.equal(bytes.readUInt16LE(8), HEIGHT);
+    assert.equal(poster.readUInt32BE(16), WIDTH);
+    assert.equal(poster.readUInt32BE(20), HEIGHT);
+    const gif = inspectGif(bytes);
+    assert.equal(gif.frames, record.frame_count);
+    assert.equal(gif.duration, record.duration_ms);
+    assert.ok(gif.frames >= 80 && gif.duration >= 15000 && gif.duration <= 25000);
+    assert.ok(bytes.length < 5 * 1024 * 1024, 'Keep each lazy-selected GIF below 5 MiB');
+  }
+});
+
+test('method figures offer motion controls, downloads and a static overview', async () => {
+  for (const id of ['study-method-animation', 'study-method-open', 'study-method-download']) {
+    assert.ok(html.includes(`id="${id}"`));
+  }
+  assert.match(html, /Static method overview/);
+  assert.match(html, /id="study-method-download"[^>]*download/);
+  assert.match(html, /id="study-method-open"[^>]*rel="noopener"/);
+  const script = await read('assets/research.js');
+  assert.match(script, /prefers-reduced-motion: reduce/);
+  assert.match(script, /paused \? img.dataset.motionPoster : img.dataset.motionSrc/);
+  assert.match(script, /setMedia\(\$\("study-method-animation"\), animation.url, animation.poster\)/);
+});
 
 test('the frozen inventory retains every study and diagnostic question', () => {
   const cohort = data.full_cohort;

@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "scope": "Animated explanations of eight distinct development methods. Geometry and animation timing are schematic, not source-video replay. Saved facts are paraphrased from the cited evidence; Sosa is wholly schematic. No new parsing, simulation, VLM inference or answer is produced.",
+  "methods_sha256": "301c9df6e8d5b4e293e0237c0c9a8865d48e3c39569db25bfe4751f708952dc7",
+  "records": [
+    {
+      "panel_id": "bass42",
+      "url": "assets/methods/bass42-method.gif",
+      "poster": "assets/methods/bass42-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "b5fdc461428e6b9d2489bedf554a051afea767fc45697a3e693e4d22035b5b5c",
+      "poster_sha256": "8e2850bc36a87e1a778c848455e9acf3c359e2f093ca64842113d2fce584297f",
+      "stage_sha256": [
+        "913747b1cb0a9aee419cd8b87f4c4b01356472dcf5463fe16ba24e424f83994c",
+        "1d44c134a3114ed8c17aa8de5c44a3320da69c555ea5f71b1e446829e4ff4fef",
+        "60543a6ef998fa4d3bbae1d214976c56b73cf53475ae45ada632243f15a2edcc",
+        "8e2850bc36a87e1a778c848455e9acf3c359e2f093ca64842113d2fce584297f"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read parse + cached episodes",
+        "Bind the requested world",
+        "Split occurrence and relation",
+        "Pass explicit evidence to the VLM"
+      ],
+      "alt": "Cached removal-world events are split into occurrence, collision relation and an unknown endpoint before VLM judgment.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "cc24c870a2384a45d53992b4f0ee9934e58909b8bd4600f615209f412b3517bb",
+      "source_ids": [
+        "bass"
+      ]
+    },
+    {
+      "panel_id": "ger2021_8",
+      "url": "assets/methods/ger2021_8-method.gif",
+      "poster": "assets/methods/ger2021_8-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "30287e926393f3b3323b3528f4870c20e91919aa639a2bc36db61ad431a551b9",
+      "poster_sha256": "4fea28b391b16e101c503e7b0b2dc26e9cc0374ffc9a0353b2542a01eabc65d3",
+      "stage_sha256": [
+        "5acefca6a0341fc6a2f3051c2fc3b9e2d9cafd20ed5f00ef256cfa06dd6d15f0",
+        "1e5674cbabb9bd97a2ec002aa4562b641127301662b75572c0b7b5d09d382f9f",
+        "e55e1237b60e3f1e9e820f251108339444883a1c852f7614a29fde5d80f613ec",
+        "4fea28b391b16e101c503e7b0b2dc26e9cc0374ffc9a0353b2542a01eabc65d3"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read B, walls and source time",
+        "Remove A; bind the opening",
+        "Update after supported contacts",
+        "Report the bounded stop to the VLM"
+      ],
+      "alt": "B and wall records define an intervened scene; a supported contact loop produces a bounded timeline with an unresolved stop.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "79cb9f848530c1d85e57ebb7bb78cc6e7b96023da0d02fefc106a5e84fa3902a",
+      "source_ids": [
+        "ger2021"
+      ]
+    },
+    {
+      "panel_id": "ger2022_8",
+      "url": "assets/methods/ger2022_8-method.gif",
+      "poster": "assets/methods/ger2022_8-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "2eeb0d2b3521609ad55bf90966506d2a09c9f29900393754086fb2cb0e765479",
+      "poster_sha256": "d69d1621299c3d96d2a664e8fa7999c33f6a7f83d7958cebcce880b42365a38f",
+      "stage_sha256": [
+        "ae1753468d5a2b7a9b93eb7d58d768979f8dcee0bebc3345a07fd7218148c89a",
+        "12495e58ae6af9f17f25d92d685a482d52b15100432a2523ead08c7f67b5d44e",
+        "3bb990d9a4ac97edf14303b676b79146016bf9962be845d6cb3d5b3b063b894f",
+        "d69d1621299c3d96d2a664e8fa7999c33f6a7f83d7958cebcce880b42365a38f"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read B and retained obstacles",
+        "Bind the changed scene",
+        "Execute the contact chain",
+        "Report the conditional crossing"
+      ],
+      "alt": "Remove only A, retain the block, recompute supported contacts and deliver a conditional gate-crossing certificate to the VLM.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "1761859922f5c379ede0cfe01a15c1b0d797fc0147038a503b3882f7d6da1bb1",
+      "source_ids": [
+        "ger2022"
+      ]
+    },
+    {
+      "panel_id": "wu8",
+      "url": "assets/methods/wu8-method.gif",
+      "poster": "assets/methods/wu8-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "50f07502d0ab76d47791e622fa967a6e66319ffc7ff67ce905d2b296f630ed5b",
+      "poster_sha256": "beaa7d7c0f698dc771c8286e7b9a29579634d6c909af95d667d6c5a4049551cb",
+      "stage_sha256": [
+        "e245415aad74f757ba24d57ef3f15b500a61f73e8a94c6e7f3dee9aaf8406c32",
+        "27034c0df042b315f80faeb41ef3ccba29302fe92a5b735275e488421be14ce0",
+        "325a5902a5958d5433cce7beef275c298398bb2969b6f28286e33b2fbbab9628",
+        "beaa7d7c0f698dc771c8286e7b9a29579634d6c909af95d667d6c5a4049551cb"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read cells, doors and action steps",
+        "Build legal move / wait states",
+        "Search time-respecting routes",
+        "Pass reachability, not probability"
+      ],
+      "alt": "Grid cells become time-indexed action states; legal moves and waits yield a conditional route ending at action seven.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "aeea8686347b668d3c2f3ea6c65c60104fcebb486fb6a6f1e754c39dd7a8262d",
+      "source_ids": [
+        "wu"
+      ]
+    },
+    {
+      "panel_id": "sosa22",
+      "url": "assets/methods/sosa22-method.gif",
+      "poster": "assets/methods/sosa22-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "bd3ca36796fb88e1c0a1b10f2b714a01d24411af6c568877b02e3c5846abfefe",
+      "poster_sha256": "697d925d4c11a3bf9bb193a87c6ffdc0a4f6a79505334152b71783cf3d7c5e56",
+      "stage_sha256": [
+        "fe80e783566ba13075c7dd31b12ada1d45fa38c163122372ab2f8e7a24815b4c",
+        "7a7ad2f282df08680887513239a20688f84a30281e6c7c1bd98d6a1e553f8580",
+        "23470b142bae77c2f8a09ed75cb58b7ef13143c0dc957482ea28f17dd55a6434",
+        "697d925d4c11a3bf9bb193a87c6ffdc0a4f6a79505334152b71783cf3d7c5e56"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read all observed scene nodes",
+        "Add context, not just the pair",
+        "Bind relations to observed time",
+        "Ask about the unseen continuation"
+      ],
+      "alt": "A ball-goal pair expands to include slide and container nodes; observed relations stop at disappearance, leaving continuation to the VLM.",
+      "example_kind": "schematic",
+      "evidence_source_sha256": "eecfb5883a96213ddacb429d92a74bf268c5e7be5c265dccd1ddd1bdcfaa6d93",
+      "source_ids": [
+        "sosa"
+      ]
+    },
+    {
+      "panel_id": "beller20",
+      "url": "assets/methods/beller20-method.gif",
+      "poster": "assets/methods/beller20-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "69c608564b8d9a265fd2668f6fe23ee469e067a0adfd99602f44abea0c9b0a00",
+      "poster_sha256": "511ec6c8cbf57e6f7afbb8790f8a988794dd295bc2f19be21e21f71c773bdfc2",
+      "stage_sha256": [
+        "d993f955fe13443ce523566eca558c0a747f2406c856720fa49f7d4c6e0bb854",
+        "15b1a1809d23fe588c762edf6c1fb0365eaf8c088cfe74a38558c7081c790336",
+        "4ae65d2091e82b0dce2ef3fd5e421845bf622eb2f2ef5aa3985216fff6d987a0",
+        "511ec6c8cbf57e6f7afbb8790f8a988794dd295bc2f19be21e21f71c773bdfc2"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read identities; add pixel measures",
+        "Bind before / encounter / after",
+        "Attach positions to event paths",
+        "Leave the causal judgment to VLM"
+      ],
+      "alt": "Parsed identities and extra circle measurements bind to event E1, then to a chronological candidate path without assigning causation.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "0eed9f551ff22ba7b19fbad284c0525c1564fc3ee75ea728b163b30c957e2d04",
+      "source_ids": [
+        "beller"
+      ]
+    },
+    {
+      "panel_id": "smith5",
+      "url": "assets/methods/smith5-method.gif",
+      "poster": "assets/methods/smith5-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "ab22f5772230ee6be9f2a03499d0aad9026fde6ff23e922882bc25c1f127ced3",
+      "poster_sha256": "19b2d3aa1918a4698d72186064f9740704532158d6554dc8addbaec47d59d16e",
+      "stage_sha256": [
+        "84ca49efc7f6b15be98bf559388fb0d5b81bb4ab2e21590e8b3f1df407af1c6d",
+        "6e0d3b9da54654f5301d4d1e364a85e678935cb6646db2194f75e33acda17105",
+        "42166241329768599f53ba3c41c2ce63a200caaff4d6d19ad784111ae4b3de6c",
+        "19b2d3aa1918a4698d72186064f9740704532158d6554dc8addbaec47d59d16e"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read visible image-space records",
+        "Bind identities to source frames",
+        "Preserve observation gaps",
+        "Supply evidence without a verdict"
+      ],
+      "alt": "Visible target and occluder records are aligned by time; the missing pair observation remains a gap rather than an invented trajectory.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "eff04be27b56ca9d82f6e5d37d439566869995c1b95433e21e6a99e801a2ae5d",
+      "source_ids": [
+        "smith"
+      ]
+    },
+    {
+      "panel_id": "stephan8",
+      "url": "assets/methods/stephan8-method.gif",
+      "poster": "assets/methods/stephan8-method.png",
+      "width": 1000,
+      "height": 760,
+      "frame_count": 96,
+      "duration_ms": 19200,
+      "sha256": "46ed4f2f217d4f8e0265c0e9c4bb51dc5b8a12755c0840e77d4be01bbc82aa29",
+      "poster_sha256": "de51f862bea77271abfa4654d73a7bf53d764355c2d59d99250df05f224690ac",
+      "stage_sha256": [
+        "07feec63e06b042f5e82a9e4373265cc0b18d6542a666a87c76e58ab0790e095",
+        "02f1ba55dc596abebf773978b0f9b03e7060e870a52f6698ad14fcf182620906",
+        "45b78ed62e25ea998d9f0aeba4d45612f0657a1f5beb88985c7dc88655079f91",
+        "de51f862bea77271abfa4654d73a7bf53d764355c2d59d99250df05f224690ac"
+      ],
+      "kind": "method_schematic",
+      "stages": [
+        "Read centers and obstacle boxes",
+        "Construct a hypothetical segment",
+        "Test the segment against boxes",
+        "Report geometry, not difficulty"
+      ],
+      "alt": "The hypothetical player-to-marble center segment is intersected with obstacle boxes; the resulting interval is evidence, not a difficulty score.",
+      "example_kind": "saved_excerpt",
+      "evidence_source_sha256": "917c1f9fcb3b49ee7788fedb9a56f1f3ac3ef0120dbeb605247a3d6d4ccb39b1",
+      "source_ids": [
+        "stephan"
+      ]
+    }
+  ]
+}

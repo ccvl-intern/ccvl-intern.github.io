@@ -68,8 +68,12 @@ Figure 1 is a schematic of saved observations, a task-bound representation,
 computed evidence and readable input. It is not a saved scene, a model response
 or a claim that every study uses the same computation.
 
-Figures 2a-2h illustrate the eight actual development pipelines with distinct
-conceptual event, action-state, observation or geometry diagrams. Expand each
+Figures 2a-2h animate the eight actual development pipelines with distinct
+event, action-state, observation or geometry diagrams. Each GIF progresses from
+parsed fields to representation, operation and VLM input. The controls pause
+animations, open the full-size GIF or download it. Reduced-motion preferences
+show the final evidence frame instead. The static overview remains expandable.
+Expand each
 method's exact steps for its actor (input contract, program or final VLM),
 inputs, operation and output. Adaptive Abstraction is not the current method;
 its old figure is no longer displayed.
@@ -106,6 +110,23 @@ Rebuild the byte-verified selection with
 `node scripts/build_study_media.mjs <delivery-directory> <original-stimuli-directory>`.
 The original-stimuli directory contains `<panel_id>.mp4`, except `wu8.gif`
 and `stephan8.png`; the resulting public manifest retains SHA256 hashes.
+
+### Rebuild method animations
+
+```bash
+npm ci
+npm run render:methods -- --qa-dir=/tmp/coggym-method-qa
+npm test
+```
+
+The deterministic Canvas/GIF renderer uses no inference or simulation. Its
+saved numeric facts are checked against the method excerpts. Layout and timing
+are schematic, not reconstructions; Sosa is entirely a schematic example.
+`data/method-animations.json` binds all eight GIFs and reduced-motion PNGs to
+the source evidence and records their dimensions, duration and SHA256 hashes.
+The QA directory contains four stage stills and a contact sheet per study.
+`--posters-only` checks layouts without encoding GIFs. Dependencies are needed
+only to regenerate media, not to run or deploy the static site.
 
 ## Files and provenance
 
