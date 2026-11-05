@@ -45,7 +45,7 @@ nav a { color: var(--ink); text-decoration: none; font-size: 14px; padding-block
 nav a:hover, nav a[aria-current] { color: var(--teal); }
 .masthead { text-align: center; padding-top: 42px; }
 .masthead h1 { font-size: 46px; max-width: 1080px; margin-inline: auto; text-wrap: balance; }
-.masthead h1 span { color: var(--teal-dark); }
+.masthead h1 span { display: block; color: var(--teal-dark); text-wrap: balance; }
 .hero-subtitle { font-family: var(--serif); font-size: 23px; margin-top: 22px; }
 .hero-focus { max-width: 720px; margin: 12px auto 0; color: var(--muted); font-size: 15px; }
 .hero-focus strong { color: var(--ink); }
