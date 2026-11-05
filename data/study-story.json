@@ -15,10 +15,10 @@
       "takeaway": "Explicit event meaning improves the local comparison.",
       "limit": "The 72.14% score includes two perfect categorical checks; the 40 slider questions alone score 44.28%.",
       "comparison_ids": ["video", "saved_direct_code", "full_code", "predicted_event_semantics", "reference_event_semantics"],
-      "comparison_labels": ["Video only", "8B-Instruct direct code", "Full code", "Event semantics (ours)", "Partial reference + semantics"],
+      "comparison_labels": ["Video only", "8B-Instruct direct code", "Full code", "Event semantics (ours)", "GT/source state + event semantics"],
       "comparison_note": "All answers use the 27B reasoner. The matched factual-event baselines are retained under Detailed metrics & ablations.",
-      "reference_scope": "Partial scene / event reference",
-      "reference_note": "Partial source-supported events, not complete GT. Source headers and content differ from the predicted arm. Slider-only R²: predicted 44.28%, reference 33.91%."
+      "reference_scope": "Source-verified state; 5 s modeled events",
+      "reference_note": "Source positions, velocities, gravity and scene geometry feed the same event-semantic method. Five-second events, including object-removal events, are model-derived, not observed outcome GT. Source headers differ between arms; this is not a verified upper bound. Slider-only R²: predicted 44.28%, reference 33.91%."
     },
     {
       "panel_id": "ger2021_8",

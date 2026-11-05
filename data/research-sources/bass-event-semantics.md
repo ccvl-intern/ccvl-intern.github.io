@@ -34,7 +34,9 @@ All42 is the equal-weight mean of categorical and slider R2. The displayed nrmse
 | Reference factual events | 54.6541 | 0.6525 | 0.2281 | partial reference not upper bound |
 | Reference conditional events | 54.4431 | 0.6490 | 0.2299 | partial reference not upper bound |
 | Predicted explicit event semantics | 72.1411 | 0.8327 | 0.1695 | matched input contract |
-| Reference explicit event semantics | 66.9571 | 0.7912 | 0.1877 | partial reference not upper bound |
+| GT/source state + event semantics | 66.9571 | 0.7912 | 0.1877 | source-state reference, not a verified upper bound |
+
+This arm uses source-verified positions, velocities, gravity and scene geometry with the same event-semantic method. Its five-second factual and object-removal events are computed, not directly observed outcome GT. It is distinct from the earlier partial-reference evidence arm.
 
 ## Decision
 
@@ -45,7 +47,7 @@ Each semantic arm exceeds its matched factual arm by at least 5 percentage point
 - Two categorical checks contribute four perfect one-hot items in every arm. All42 R2 = (1 + slider40 R2)/2, so 72.14% is neither accuracy nor slider-only performance.
 - Predicted slider40 R2 is 44.28%, signed r +0.6654, nRMSE 0.3391. Conditional9 R2 is 52.72%, below video 78.91%; conditional reasoning is not solved.
 - The explicit handoff changes interpretation, not parsing, simulation or physical facts in this contrast.
-- Reference evidence is partial; differing source headers and content prevent an isolated parser-quality or oracle ranking claim.
+- Source-verified states do not make the computed events or human probabilities ground truth. Differing source headers prevent an isolated parser-quality or oracle ranking claim.
 - All 42 questions were exposed development data. No source-cluster uncertainty or held-out gain is established.
 
 ## Slider Diagnostic
@@ -64,7 +66,7 @@ All40 sliders are retained. This is reported alongside, not instead of, the all4
 | Reference factual events | 9.3083 | 0.3051 | 0.4561 | fixed 40 slider questions |
 | Reference conditional events | 8.8863 | 0.2981 | 0.4597 | fixed 40 slider questions |
 | Predicted explicit event semantics | 44.2822 | 0.6654 | 0.3391 | fixed 40 slider questions |
-| Reference explicit event semantics | 33.9142 | 0.5824 | 0.3755 | fixed 40 slider questions |
+| GT/source state + event semantics | 33.9142 | 0.5824 | 0.3755 | fixed 40 slider questions |
 
 Conditional9: predicted explicit semantics 52.7218% R2, reference explicit semantics 48.5438%, video 78.9113%. This negative conditional comparison is retained.
 ## Provenance

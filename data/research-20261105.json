@@ -2183,15 +2183,15 @@
         },
         {
           "id": "reference_event_semantics",
-          "label": "Reference explicit event semantics",
-          "role": "partial_reference",
+          "label": "GT/source state + event semantics",
+          "role": "source_state_reference",
           "r2_percent": 66.9571147182888,
           "signed_r": 0.791179624272448,
           "nrmse": 0.18772955438683003,
           "nrmse_scalar": 0.35798621400717645,
           "undefined_experiments": [],
           "status": "complete",
-          "comparability": "partial_reference_not_upper_bound",
+          "comparability": "source_state_not_upper_bound",
           "source_ids": [
             "bass"
           ]
@@ -2520,7 +2520,7 @@
         "Two categorical checks contribute four perfect one-hot items in every arm. All42 R2 = (1 + slider40 R2)/2, so 72.14% is neither accuracy nor slider-only performance.",
         "Predicted slider40 R2 is 44.28%, signed r +0.6654, nRMSE 0.3391. Conditional9 R2 is 52.72%, below video 78.91%; conditional reasoning is not solved.",
         "The explicit handoff changes interpretation, not parsing, simulation or physical facts in this contrast.",
-        "Reference evidence is partial; differing source headers and content prevent an isolated parser-quality or oracle ranking claim.",
+        "Reference positions, velocities, gravity and scene geometry are source-verified; five-second factual and object-removal events are model-derived. Differing source headers prevent an isolated parser-quality comparison; this is not a verified upper bound.",
         "All 42 questions were exposed development data. No source-cluster uncertainty or held-out gain is established."
       ],
       "source_ids": [

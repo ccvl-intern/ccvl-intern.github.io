@@ -157,6 +157,28 @@ test('Bass type weighting and slider-only diagnostic remain numerically consiste
   assert.equal(slider.results.find(row => row.id === panel.headline.candidate_id).r2_percent.toFixed(2), '44.28');
 });
 
+test('Bass source-state reference is distinguished from partial evidence and outcome GT', async () => {
+  const panel = data.panels.find(row => row.id === 'bass42');
+  const story = stories.stories.find(row => row.panel_id === panel.id);
+  const reference = panel.results.find(row => row.id === panel.headline.reference_id);
+  const label = 'GT/source state + event semantics';
+  assert.equal(story.comparison_labels[story.comparison_ids.indexOf(reference.id)], label);
+  assert.equal(reference.label, label);
+  assert.equal(reference.role, 'source_state_reference');
+  assert.equal(reference.comparability, 'source_state_not_upper_bound');
+  assert.equal(reference.r2_percent, 66.9571147182888);
+  assert.equal(panel.diagnostics.find(row => row.id === 'slider40').results.find(row => row.id === reference.id).r2_percent.toFixed(2), '33.91');
+  assert.equal(story.reference_scope, 'Source-verified state; 5 s modeled events');
+  assert.match(story.reference_note, /model-derived, not observed outcome GT/);
+  assert.match(story.reference_note, /Source headers differ/);
+  assert.match(story.reference_note, /not a verified upper bound/);
+  assert.match(panel.results.find(row => row.id === 'partialoracle').label, /Previous partial-reference/);
+  const source = await read('data/research-sources/bass-event-semantics.md');
+  assert.ok(source.includes(label));
+  assert.match(source, /distinct from the earlier partial-reference/);
+  assert.doesNotMatch(JSON.stringify(story), /Partial reference \+ semantics/);
+});
+
 test('unification preparation is not presented as an inference result', () => {
   assert.equal(data.snapshot.live, false);
   assert.equal(data.unification.question_count, 50);

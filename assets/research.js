@@ -24,6 +24,7 @@
     observation_coverage_differs: "Observation coverage differs from the candidate",
     added_observation_coverage_in_candidate: "Candidate adds observed evidence",
     historical_reference_presentation: "Earlier reference presentation; not a matched Oracle",
+    source_state_not_upper_bound: "Source-verified state; modeled events, not a verified upper bound",
     unmatched_clarification: "Original wording; not the clarified candidate contract",
     administrative_condition_labels_leak: "Clean comparison unavailable",
     not_run: "Matched condition not run",
@@ -310,7 +311,7 @@
     $("research-loading").hidden = false;
     $("research-error").hidden = true;
     try {
-      const response = await fetch("data/research-20261105.json");
+      const response = await fetch("data/research-20261105.json?v=20261105-bass-source-state");
       if (!response.ok) throw new Error(`Research data: ${response.status}`);
       data = await response.json();
       const methodsResponse = await fetch("data/post-parsing-methods.json");
@@ -322,7 +323,7 @@
       const mediaResponse = await fetch("data/study-media.json?v=20261105-stimuli");
       if (!mediaResponse.ok) throw new Error(`Study media: ${mediaResponse.status}`);
       studyMedia = await mediaResponse.json();
-      const storyResponse = await fetch("data/study-story.json?v=20261105-five-conditions");
+      const storyResponse = await fetch("data/study-story.json?v=20261105-bass-source-state");
       if (!storyResponse.ok) throw new Error(`Study story: ${storyResponse.status}`);
       storyData = await storyResponse.json();
       renderProgress();
