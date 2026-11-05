@@ -14,6 +14,16 @@ const animations = JSON.parse(await read('data/method-animations.json'));
 const html = await read('index.html');
 const conditionIds = ['video', 'saved_direct_code', 'full_code', 'predictedtask', 'partialoracle'];
 
+test('Code2Evidence branding is consistent and the snapshot banner is removed', async () => {
+  const title = 'Code2Evidence: Cognitive Spatial Reasoning in Physical World';
+  assert.ok(html.includes(`<title>${title}</title>`));
+  assert.ok(html.includes('<h1>Code2Evidence:<br> <span>Cognitive Spatial Reasoning in Physical World</span></h1>'));
+  assert.match(html, /class="wordmark"[^>]*>Code2Evidence/);
+  assert.ok((await read('README.md')).startsWith(`# ${title}\n`));
+  assert.doesNotMatch(html, /Research snapshot|progress-date|Unified and Adaptive Visual Parser/);
+  assert.doesNotMatch(await read('assets/research.js'), /progress-date|snapshotDate/);
+});
+
 function inspectGif(bytes) {
   assert.equal(bytes.subarray(0, 6).toString(), 'GIF89a');
   let offset = 13 + ((bytes[10] & 128) ? 3 * 2 ** ((bytes[10] & 7) + 1) : 0);

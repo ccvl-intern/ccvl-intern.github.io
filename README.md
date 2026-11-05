@@ -1,4 +1,4 @@
-# Unified and Adaptive Visual Parser for CogGym Reasoning
+# Code2Evidence: Cognitive Spatial Reasoning in Physical World
 
 Static research site redesigned around methods, study-level results, limitations
 and source-linked evidence. Plain HTML, CSS and JavaScript; no build step,

@@ -118,9 +118,6 @@
   }
 
   function renderProgress() {
-    const snapshotDate = new Date(data.snapshot.as_of);
-    $("progress-date").dateTime = data.snapshot.as_of;
-    $("progress-date").textContent = new Intl.DateTimeFormat("en-GB", {dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Shanghai"}).format(snapshotDate) + " CST (UTC+8)";
     $("progress-cohort-count").textContent = `${data.full_cohort.studies.reduce((total, study) => total + study.question_count, 0)} questions`;
     $("progress-method-count").textContent = `${data.panels.length} study panels`;
     $("progress-unified-count").textContent = `${data.unification.question_count} questions`;
