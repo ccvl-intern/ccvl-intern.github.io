@@ -391,7 +391,7 @@ export function paintScene(ctx, scene, stage, progress = 1) {
     }));
     line(660,238,660,568,C.line,2);
     reveal(.35,()=>{
-      text('+ original video',805,260,26,C.muted,400,270,'center');
+      text(scene.id === 'stephan8' ? '+ original diagram' : '+ original video',805,260,26,C.muted,400,270,'center');
       text('+ question',805,305,26,C.muted,400,270,'center');
       arrow(805,350,805,385,C.coral,3);
       card(700,403,215,75,'VLM',C.coral,36);

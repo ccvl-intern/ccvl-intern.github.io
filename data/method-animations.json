@@ -221,13 +221,13 @@
       "height": 760,
       "frame_count": 96,
       "duration_ms": 19200,
-      "sha256": "46ed4f2f217d4f8e0265c0e9c4bb51dc5b8a12755c0840e77d4be01bbc82aa29",
-      "poster_sha256": "de51f862bea77271abfa4654d73a7bf53d764355c2d59d99250df05f224690ac",
+      "sha256": "0eeba03c29c2f44bd341291a0eeac1e1ab7360c7420c88c5c088130fd99be2a4",
+      "poster_sha256": "bdadd71347ee9aa8ef123039c32020e9ffe62985427fc8b451f63f74bbf6bdbb",
       "stage_sha256": [
         "07feec63e06b042f5e82a9e4373265cc0b18d6542a666a87c76e58ab0790e095",
         "02f1ba55dc596abebf773978b0f9b03e7060e870a52f6698ad14fcf182620906",
         "45b78ed62e25ea998d9f0aeba4d45612f0657a1f5beb88985c7dc88655079f91",
-        "de51f862bea77271abfa4654d73a7bf53d764355c2d59d99250df05f224690ac"
+        "bdadd71347ee9aa8ef123039c32020e9ffe62985427fc8b451f63f74bbf6bdbb"
       ],
       "kind": "method_schematic",
       "stages": [
